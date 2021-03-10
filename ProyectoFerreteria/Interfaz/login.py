@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # #!/usr/bin/env python
+#si ves esto ana_
 from Tkinter import  *
 class Usuarios:
     def __init__(self):
@@ -11,7 +12,7 @@ class Usuarios:
         Msg=Label(Raiz, text='Bienvenido', font=('Arial Black', 20))
         Msg.grid(row=0, column=2)
         espacio=Label(Raiz)
-        Nl=Label(Raiz, text='Nombre de usuario:' ,font=18)
+        Nl=Label(Raiz, text='Nombre de usuario:', font=18)
         Nl.grid(row=2, column=0)
         Raiz.mainloop()
 
