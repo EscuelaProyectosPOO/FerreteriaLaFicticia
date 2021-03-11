@@ -8,7 +8,7 @@ class Pantalla_de_inicio:
     def __init__(self):
         self.raiz = Tk()
         self.raiz.geometry('1000x700')
-        self.raiz.config(bg="beige")
+        self.raiz.config(bg="#3C5CE4")
         self.raiz.title("Inicio")
         self.frame = Frame(self.raiz)
         self.frame.pack()
