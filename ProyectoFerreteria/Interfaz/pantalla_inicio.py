@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from pantalla_administrador import Pantalla_administrador
 
 from Tkinter import *
 
@@ -19,24 +20,27 @@ class Pantalla_de_inicio:
 
     def ventana_principal(self):
         """ Muestra los botones de las distintas pestañas que tenemos,asi como el nombre de la ferreteria"""
-        Imagen_provedores = Image.open(file="Ventas.GIF")
-        Boton_provedores = Button(self.raiz, image=Imagen_provedores, width=20)
+        #imagen_provedores = PhotoImage(file="fondo.GIF").subsample(2,2)
+        Boton_provedores = Button(self.raiz, bg="#FFFF00", text="Provedor",font="Arial", cursor="hand2", border=0 , width=20, command=lambda:instaciaciones())
         Boton_provedores.place(x=20, y=35)
 
-        Boton_productos = Button(self.raiz, text="Productos", width=20, height=1, relief="ridge", borderwidth=5, bg="black", fg="white", font="Arial" )
+        Boton_productos = Button(self.raiz, bg="#FFFF00", text="Productos",font="Arial", cursor="hand2", border=0 , width=20,  command=lambda:instaciaciones() )
         Boton_productos.place(x=20, y=135)
 
-        Boton_inventario = Button(self.raiz, text="Inventario", width=20, height=1, relief="ridge", borderwidth=5, bg="black", fg="white", font="Arial")
+        Boton_inventario = Button(self.raiz, bg="#FFFF00", text="Inventario",font="Arial", cursor="hand2", border=0 , width=20,  command=lambda:instaciaciones())
         Boton_inventario.place(x=20, y=235)
 
-        Boton_ventas = Button(self.raiz, text="Ventas", width=20, height=1, relief="ridge", borderwidth=5, bg="black", fg="white", font="Arial" )
+        Boton_ventas = Button(self.raiz, bg="#FFFF00", text="Ventas",font="Arial", cursor="hand2", border=0 , width=20, command=lambda:instaciaciones() )
         Boton_ventas.place(x=20, y=335)
 
-        Boton_admin = Button(self.raiz, text="Administrador", width=20, height=1, relief="ridge", borderwidth=5, bg="black", fg="white", font="Arial" )
+        Boton_admin = Button(self.raiz, bg="#FFFF00", text="Administrador",font="Arial", cursor="hand2", border=0 , width=20, command=lambda:instaciaciones())
         Boton_admin.place(x=20, y=435)
+
+        def instaciaciones():
+            uno = Pantalla_administrador()
         
 
-       
+
 
 
 uno = Pantalla_de_inicio()
