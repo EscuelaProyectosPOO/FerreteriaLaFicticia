@@ -10,7 +10,7 @@ class Pantalla_de_inicio:
         self.raiz = Tk()
         self.raiz.geometry('1169x563')
         self.raiz.title("Inicio")
-        self.raiz.resizable(False, False)
+        self.raiz.resizable(False, False) 
         self.imagen = PhotoImage(file="fondo.GIF")
         self.fondo = Label(self.raiz, image=self.imagen).place(x=0, y=0)
         self.ventana_principal()
