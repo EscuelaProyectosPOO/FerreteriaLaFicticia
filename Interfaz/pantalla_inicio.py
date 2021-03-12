@@ -40,7 +40,7 @@ class Pantalla_de_inicio:
             uno = Pantalla_administrador()
         
 
-       
+    
 
 
 uno = Pantalla_de_inicio()
