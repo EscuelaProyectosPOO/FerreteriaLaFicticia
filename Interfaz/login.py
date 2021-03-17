@@ -34,8 +34,16 @@ class Usuarios:
         self.tc.grid(row=3, column=1)
         self.tc.config(show='*')
 
-        def comprueba():
+        
+        self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:comprueba())
+        self.be.grid(row=4, column=0, pady=20)
+
+        self.br = Button(self.raiz, text='Registrar usuario', font=18)
+        self.br.grid(row=4, column=1, pady=20)
+
+    def comprueba(self):
             print '...'
+<<<<<<< HEAD
             nom = self.nombretext.get()
             cont = self.contra.get()
             if nom == 'Ana' and cont == 'Sistemas':
@@ -47,6 +55,18 @@ class Usuarios:
             else:
                 print 'nombre incorrecto'
                 print cont
+=======
+            self.nom = self.nombretext.get()
+            if nom == 'Ana':
+                print 'Bienvenida'
+                uno = Pantalla_de_inicio().ventana_principal()
+            elif nom == '' or nom ==' ':
+                print 'vacío'
+            else:
+                print 'nombre incorrecto'
+       
+
+>>>>>>> 68f2ae03b9640c7cd9a2a6c52ad5959d91aa7c1d
 
         self.be = Button(self.raiz, text='Entrar', font=18, command=lambda: comprueba())
         self.be.grid(row=4, column=1, pady=20)
