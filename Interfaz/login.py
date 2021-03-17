@@ -37,21 +37,24 @@ class Usuarios:
         self.tc.grid(row=3, column=1)
         self.tc.config(show='*')
 
-        def comprueba():
+         def comprueba():
             print '...'
             nom = self.nombretext.get()
             if nom == 'Ana':
                 print 'Bienvenida'
-                uno = Pantalla_de_inicio()
+                uno = Pantalla_de_inicio().ventana_principal()
             elif nom == '' or nom ==' ':
                 print 'vacío'
             else:
                 print 'nombre incorrecto'
+        
         self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:comprueba())
         self.be.grid(row=4, column=0, pady=20)
 
         self.br = Button(self.raiz, text='Registrar usuario', font=18)
         self.br.grid(row=4, column=1, pady=20)
+
+       
 
 
 

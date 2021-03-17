@@ -13,8 +13,6 @@ class Pantalla_de_inicio:
         self.raiz.resizable(False, False) 
         self.imagen = PhotoImage(file="fondo.GIF")
         self.fondo = Label(self.raiz, image=self.imagen).place(x=0, y=0)
-        self.ventana_principal()
-        self.raiz.mainloop()
 
     def ventana_principal(self):
         """ Muestra los botones de las distintas pestañas que tenemos,asi como el nombre de la ferreteria"""
@@ -37,9 +35,11 @@ class Pantalla_de_inicio:
         self.imagen_admin = PhotoImage(file="Administrador.GIF")
         self.Boton_admin = Button(self.raiz, image=self.imagen_admin, width=169, height=26,cursor="hand2",border=0,  command=lambda:instaciaciones() )
         self.Boton_admin.place(x=33, y=443)
+        self.raiz.mainloop()
 
-        def instaciaciones():
-            uno = Pantalla_administrador()
+        def instaciaciones(self):
+            self.uno = Pantalla_administrador()
+            
         
 
 
