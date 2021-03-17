@@ -34,19 +34,15 @@ class Pantalla_de_inicio:
         self.imagen_admin = PhotoImage(file="Administrador.GIF")
         self.Boton_admin = Button(self.raiz, image=self.imagen_admin, width=169, height=26,cursor="hand2",border=0,  command=lambda:instaciaciones() )
         self.Boton_admin.place(x=33, y=443)
-<<<<<<< HEAD
+
         def instaciaciones():
-            uno = Pantalla_administrador()
-=======
+            uno = Pantalla_administrador
         self.raiz.mainloop()
 
-        def instaciaciones(self):
+    def instaciaciones(self):
             self.uno = Pantalla_administrador()
             
-        
 
-
->>>>>>> 68f2ae03b9640c7cd9a2a6c52ad5959d91aa7c1d
 
 
 #uno = Pantalla_de_inicio()
