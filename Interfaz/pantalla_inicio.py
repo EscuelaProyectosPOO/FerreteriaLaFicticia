@@ -45,6 +45,6 @@ class Pantalla_de_inicio:
 
 
 
-uno = Pantalla_de_inicio()
+#uno = Pantalla_de_inicio()
 
 
