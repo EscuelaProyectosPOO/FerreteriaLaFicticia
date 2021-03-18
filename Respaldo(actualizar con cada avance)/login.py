@@ -3,31 +3,39 @@
 
 from pantalla_inicio import Pantalla_de_inicio
 from Tkinter import *
-from Tkinter import Message as ms
+
 class Usuarios:
     def __init__(self):
         self.raiz = Tk()
         self.raiz.title('Inicio de sesión')
-        self.raiz.geometry('250x180')
+        self.raiz.geometry('250x200')
         self.fondo = PhotoImage(file="login.gif")
         self.Lfondo = Label(self.raiz, image=self.fondo)
         self.Lfondo.place(x=0, y=0)
         self.raiz.resizable(False, False)
-
+        
         self.ventana()
 
         self.raiz.mainloop()
 
     def ventana(self):
+        self.espacio = Label(self.raiz)
+        self.espacio.grid(row=1)
+        #self.espacio.config(bg='#f0ab3f')
+
         self.nombretext = StringVar()
         self.nombre = self.nombretext.get()
         self.contra = StringVar()
 
+        self.nl = Label(self.raiz, text='Usuario:', font=18)
+        self.nl.grid(row=2, column=0, padx=10, pady=5, sticky='e')
         self.tn = Entry(self.raiz, textvariable=self.nombretext)
-        self.tn.place(x=95, y=27)
+        self.tn.grid(row=2, column=1)
 
+        self.cl = Label(self.raiz, text='Contraseña', font=18)
+        self.cl.grid(row=3, column=0, sticky='e', padx=10, pady=5)
         self.tc = Entry(self.raiz, textvariable=self.contra)
-        self.tc.place(x=95, y=60)
+        self.tc.grid(row=3, column=1)
         self.tc.config(show='*')
 
         def comprueba():
@@ -44,10 +52,10 @@ class Usuarios:
             else:
                 print 'nombre incorrecto'
                 print cont
-                error = ms(self.raiz, message='Hola')
+        
         self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:comprueba())
-        self.be.place(x=105, y=110)
-        self.be.config(width=10, bg='#1953a7')
+        self.be.grid(row=4, column=1, pady=20)
+        self.be.config(width=10)
 
 
 
