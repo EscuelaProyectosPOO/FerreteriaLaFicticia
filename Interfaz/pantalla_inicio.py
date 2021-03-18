@@ -6,7 +6,7 @@ from Tkinter import *
 class Pantalla_de_inicio:
 
     def __init__(self):
-        self.raiz = Tk()
+        self.raiz = Toplevel()
         self.raiz.geometry('1169x563')
         self.raiz.title("Inicio")
         self.raiz.resizable(False, False) 
@@ -42,9 +42,6 @@ class Pantalla_de_inicio:
     def instaciaciones(self):
             self.uno = Pantalla_administrador()
             
-
-
-
-#uno = Pantalla_de_inicio()
+#inicio = Pantalla_de_inicio()
 
 

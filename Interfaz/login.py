@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # #!/usr/bin/env python
+
 from pantalla_inicio import Pantalla_de_inicio
 from Tkinter import *
 
@@ -40,7 +41,8 @@ class Usuarios:
             cont = self.contra.get()
             if nom == 'Ana' and cont == 'Sistemas':
                 print 'Bienvenida'
-                uno = Pantalla_de_inicio()
+                llamas = Pantalla_de_inicio()
+                llamas.ventana_principal()
                 print cont
             elif nom == '' and nom == ' ':
                 print 'vacío'
@@ -51,7 +53,7 @@ class Usuarios:
         self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:comprueba())
         self.be.grid(row=4, column=0, pady=20)
 
-        
+
 
 
 Inicio = Usuarios()
