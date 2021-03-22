@@ -41,13 +41,12 @@ class Usuarios:
                 llamas = Pantalla_de_inicio()
                 llamas.ventana_principal()
                 print cont
-            elif nom == '' or nom == ' ' and cont == '' or cont == ' ':
+            elif nom == '' and nom == ' ':
                 print 'vacío'
             else:
                 print 'nombre incorrecto'
                 print cont
-                ms.showinfo('ERROR', 'Nombre de usuario o Contraseña incorrectos')
-
+                ms.showinfo('Error', 'Nombre de usuario o Contraseña incorrectos')
         self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:comprueba())
         self.be.place(x=105, y=110)
         self.be.config(width=10, bg='#1953a7')

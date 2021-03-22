@@ -13,4 +13,5 @@ class Pantalla_administrador:
         #self.frame = Frame(self.raiz)
        # self.frame.pack(fill="both", expand=1)
         self.raiz.mainloop()
-
+    def Registrar_usuarios(self):
+        pass
