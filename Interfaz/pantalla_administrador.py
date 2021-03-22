@@ -12,5 +12,5 @@ class Pantalla_administrador:
         self.raiz.resizable(False, False)
         #self.frame = Frame(self.raiz)
        # self.frame.pack(fill="both", expand=1)
-        self.raiz.mainloop()
+        #self.raiz.mainloop()
 
