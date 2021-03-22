@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-class proveedores:
+class Proveedores:
     def __init__(self, Nombre_proveedor, Direccion_proveedor, Producto_proveedor, Precio_mayoreo):
         self.nombre=Nombre_proveedor
         self.direccion=Direccion_proveedor

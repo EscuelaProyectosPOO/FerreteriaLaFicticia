@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-class productos:
+class Productos:
     def __init__(self, Nombre_producto, Precio, Codigo_producto, Cantidad_existencia, Marca_producto, Modelo_producto):
         self.nombre=Nombre_producto
         self.precio=Precio
