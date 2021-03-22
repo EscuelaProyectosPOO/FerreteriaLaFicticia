@@ -3,7 +3,9 @@
 
 from pantalla_inicio import Pantalla_de_inicio
 from Tkinter import *
-from Tkinter import Message as ms
+import tkMessageBox as ms
+
+
 class Usuarios:
     def __init__(self):
         self.raiz = Tk()
@@ -39,12 +41,13 @@ class Usuarios:
                 llamas = Pantalla_de_inicio()
                 llamas.ventana_principal()
                 print cont
-            elif nom == '' and nom == ' ':
+            elif nom == '' or nom == ' ' and cont == '' or cont == ' ':
                 print 'vacío'
             else:
                 print 'nombre incorrecto'
                 print cont
-                error = ms(self.raiz, message='Hola')
+                ms.showinfo('ERROR', 'Nombre de usuario o Contraseña incorrectos')
+
         self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:comprueba())
         self.be.place(x=105, y=110)
         self.be.config(width=10, bg='#1953a7')
