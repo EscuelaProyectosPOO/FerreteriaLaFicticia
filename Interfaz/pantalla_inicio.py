@@ -35,8 +35,6 @@ class Pantalla_de_inicio:
         self.imagen_admin = PhotoImage(file="Administrador.GIF")
         self.Boton_admin = Button(self.raiz, image=self.imagen_admin, width=169, height=26,cursor="hand2",border=0,  command=lambda:instaciaciones() )
         self.Boton_admin.place(x=33, y=443)
-
-        
         self.raiz.mainloop()
 
     def instaciaciones(self):

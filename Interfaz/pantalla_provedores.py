@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 class Proveedores:
     def __init__(self, Nombre_proveedor, Direccion_proveedor, Producto_proveedor, Precio_mayoreo):
-        self.nombre=Nombre_proveedor
-        self.direccion=Direccion_proveedor
-        self.productos=Producto_proveedor
-        self.precio=Precio_mayoreo
+        self.Nombre_proveedor=Nombre_proveedor
+        self.Direccion_proveedor=Direccion_proveedor
+        self.producto_proveedor=Producto_proveedor
+        self.Precio_mayoreo=Precio_mayoreo
     def Pedido_proveedor(self):
         pass
 
