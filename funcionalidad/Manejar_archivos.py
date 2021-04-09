@@ -10,23 +10,27 @@ import os #borrar archivos
 class Manejar_archivos():
     def __init__(self):
         self.__linea_antigua = ""
+
     def abrir_archivo(self, nombre_del_archivo):
         """Abre el archivo """
         self.__nombre_archivo_de_texto = nombre_del_archivo 
-        self.archivo = open(self.__nombre_archivo_de_texto + ".txt", "w")
+        try:
+            self.archivo = open(self.__nombre_archivo_de_texto + ".txt", "r+")
+        except:
+            self.archivo = open(self.__nombre_archivo_de_texto + ".txt", "w")
+            self.archivo.close()
+            self.archivo = open(self.__nombre_archivo_de_texto + ".txt", "r+")
+        
+       
 
     def __leer_archivo(self):
         """lee el archivo de texto """
-        self.__cerrar_archivo()
-        self.archivo = open(self.__nombre_archivo_de_texto + ".txt", "r")
         self.informacion_del_archivo = self.archivo.read()
-        
-       
        
 
     def __escribir_en_archivo(self, linea_a_escribir):
         """Escribe en el archivo """
-        self.archivo.write(linea_a_escribir)
+        self.archivo.writelines(linea_a_escribir)
        
         
 
@@ -35,13 +39,13 @@ class Manejar_archivos():
         self.archivo.close()
 
     def __eliminar_archivo_de_texto(self):
-        print(os.getcwd())
+        """elimina el archivo de texto """
         self.__direccion_archivo = os.getcwd() +"/" + self.__nombre_archivo_de_texto + ".txt"
         os.remove(self.__direccion_archivo)
     
     def insertar_linea_en_archivo_de_texto(self, linea_a_insertar):
         """incerta la linea mandada en el archivo"""
-        self.__linea_a_insertar = unicode("\n"+ linea_a_insertar)
+        self.__linea_a_insertar = unicode("\n"+ linea_a_insertar)#por alguna razon me pide unicode
         self.__escribir_en_archivo(self.__linea_a_insertar)
         self.__cerrar_archivo()
         
@@ -57,7 +61,7 @@ class Manejar_archivos():
         for linea in self.informacion_del_archivo_en_lineas:
         
             self.__valoresdei = linea.split("  ")
-            print(self.__valoresdei)
+           
             for lista_de_linea in self.__valoresdei:
                 if(lista_de_linea == indentificador):
                     break
@@ -76,22 +80,24 @@ class Manejar_archivos():
           
     def modificar_linea_en_archivo_texto(self, linea_modificada_a_insertar, identificador):
         """modifica la linea anterior, remplazandola con la nueva linea en el archivo """
-        self.__linea_modificada_a_insertar = unicode("\n" + linea_modificada_a_insertar)
+        self.__linea_modificada_a_insertar = unicode(linea_modificada_a_insertar)
         self.__leer_devolver_linea_a_antigua(identificador)
-        
-        self.informacion_del_archivo = self.informacion_del_archivo.replace(self.__linea_antigua, self.__linea_modificada_a_insertar )
-        
-
-        self.__actualizar_archivo_texto()
+        if(self.__existe):
+            self.informacion_del_archivo = self.informacion_del_archivo.replace(self.__linea_antigua, self.__linea_modificada_a_insertar )
+            self.__actualizar_archivo_texto()
+        else:
+            print("dato no ha podido ser modificado")
 
 
     def eliminar_linea_en_archivo_texto(self, identificador):
         """borra la linea en el archivo, basandose en un identificador """
         self.__leer_devolver_linea_a_antigua(identificador)
-        self.__posicion_cadena_a_eliminar = re.search(self.__linea_antigua, self.informacion_del_archivo)
-        self.informacion_del_archivo = self.informacion_del_archivo[:self.__posicion_cadena_a_eliminar.start()] + self.informacion_del_archivo[(self.__posicion_cadena_a_eliminar.end()+1):]
+        if(self.__existe):
+            self.__posicion_cadena_a_eliminar = re.search(self.__linea_antigua, self.informacion_del_archivo)
+            self.informacion_del_archivo = self.informacion_del_archivo[:self.__posicion_cadena_a_eliminar.start()] + self.informacion_del_archivo[(self.__posicion_cadena_a_eliminar.end()+1):]
+        else:
+            print("dato no ha podido ser eliminado")
         
-        self.__cerrar_archivo()
         self.__actualizar_archivo_texto()
         
 
@@ -100,6 +106,7 @@ class Manejar_archivos():
             para regresarla, con el objetivo de utilizarla en el futuro"""
         self.__leer_archivo()
         self.__cerrar_archivo()
+        self.__existe = False
         
         self.informacion_del_archivo_dividida = self.informacion_del_archivo.splitlines()
         
@@ -108,7 +115,10 @@ class Manejar_archivos():
             for lista_de_linea in self.__valoresdei:
                 if(lista_de_linea == identificador):
                     self.__linea_antigua = linea
+                    self.__existe = True
                     break
+
+
 
 
     def __actualizar_archivo_texto(self):
@@ -117,18 +127,20 @@ class Manejar_archivos():
         self.__eliminar_archivo_de_texto()
         self.abrir_archivo(self.__nombre_archivo_de_texto)
         self.__escribir_en_archivo(self.informacion_del_archivo)
+        self.__cerrar_archivo()
 
 
 
 
-
-uno = Manejar_archivos()
-uno.abrir_archivo("prueba1")
-#uno.insertar_linea_en_archivo_de_texto("Nombre del usuario:Maria Juana Hernandez Sanchez  Password:1shsuh8u37gw7w7d")
+#-----------------------------------------------------ejemplo de uso de los metodos de la clase---------------------------------------------------------
+#uno = Manejar_archivos()
+#uno.abrir_archivo("prueba1")
+#uno.insertar_linea_en_archivo_de_texto("Nombre del usuario:Maria Juana Hernandez Sanchez  Password:hola")
 #lista = uno.buscar_linea_en_archivo_de_texto("Nombre del usuario:Maria Juana Hernandez Sanchez")
 #print(lista)
 
-uno.modificar_linea_en_archivo_texto("Nombre del usuario:A chuchita la bolsearon Juana Hernandez Sanchez  Password:1shsuh8u37gw7w7d", "Nombre del usuario:Mariana")
+#uno.modificar_linea_en_archivo_texto("Nombre del usuario:A chuchita la bolsearon Juana Hernandez Sanchez  Password:1shsuh8u37gw7w7d", "Nombre del usuario:Maria Juana Hernandez Sanchez")
+#uno.eliminar_linea_en_archivo_texto("Nombre del usuario:A chuchita la bolsearon Juana Hernandez Sanchez")
 
 
 
