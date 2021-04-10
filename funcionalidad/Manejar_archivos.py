@@ -4,6 +4,8 @@ import re #para usar expresiones reguares
 import os #borrar archivos
 
 
+
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -43,60 +45,63 @@ class Manejar_archivos():
         self.__direccion_archivo = os.getcwd() +"/" + self.__nombre_archivo_de_texto + ".txt"
         os.remove(self.__direccion_archivo)
     
-    def insertar_linea_en_archivo_de_texto(self, linea_a_insertar):
+    def insertar_linea_en_archivo_de_texto(self, linea_a_insertar, identificador):
         """incerta la linea mandada en el archivo"""
-        self.__linea_a_insertar = unicode("\n"+ linea_a_insertar)#por alguna razon me pide unicode
-        self.__escribir_en_archivo(self.__linea_a_insertar)
+        self.__leer_devolver_linea_a_antigua(identificador)
+        if(self.__existe == False):
+            self.__linea_a_insertar = unicode("\n"+ linea_a_insertar)#por alguna razon me pide unicode
+            self.__escribir_en_archivo(self.__linea_a_insertar)
+            self.__cerrar_archivo()
+            return True
+        else:
+            return False
         self.__cerrar_archivo()
+            
+            
         
-        
-        
-    def buscar_linea_en_archivo_de_texto(self, indentificador):
+    def buscar_linea_en_archivo_de_texto(self, identificador):
         """Busca lo que se le manda en el archivo """
-        self.__leer_archivo()
+        self.__leer_devolver_linea_a_antigua(identificador)
         self.__cerrar_archivo()
-        
-        self.informacion_del_archivo_en_lineas = self.informacion_del_archivo.splitlines()
-        
-        for linea in self.informacion_del_archivo_en_lineas:
-        
-            self.__valoresdei = linea.split("  ")
-           
-            for lista_de_linea in self.__valoresdei:
-                if(lista_de_linea == indentificador):
-                    break
-
-        self.__inicio = []
-        
-        for dato in self.__valoresdei:
+        if(self.__existe):
+            self.__inicio = []
             
-            self.__dato_inicio = dato.find(":") +1
+            for dato in self.__valoresdei:
+                
+                self.__dato_inicio = dato.find(":") +1
 
-            self.__inicio += [dato[self.__dato_inicio:]]
-            
+                self.__inicio += [dato[self.__dato_inicio:]]
+            return self.__inicio, True
+        else:
+            return 0, False
+        
 
-        return self.__inicio
+        
 
           
     def modificar_linea_en_archivo_texto(self, linea_modificada_a_insertar, identificador):
         """modifica la linea anterior, remplazandola con la nueva linea en el archivo """
         self.__linea_modificada_a_insertar = unicode(linea_modificada_a_insertar)
         self.__leer_devolver_linea_a_antigua(identificador)
+        self.__cerrar_archivo()
         if(self.__existe):
             self.informacion_del_archivo = self.informacion_del_archivo.replace(self.__linea_antigua, self.__linea_modificada_a_insertar )
             self.__actualizar_archivo_texto()
+            return True
         else:
-            print("dato no ha podido ser modificado")
+            return False
 
 
     def eliminar_linea_en_archivo_texto(self, identificador):
         """borra la linea en el archivo, basandose en un identificador """
         self.__leer_devolver_linea_a_antigua(identificador)
+        self.__cerrar_archivo()
         if(self.__existe):
             self.__posicion_cadena_a_eliminar = re.search(self.__linea_antigua, self.informacion_del_archivo)
             self.informacion_del_archivo = self.informacion_del_archivo[:self.__posicion_cadena_a_eliminar.start()] + self.informacion_del_archivo[(self.__posicion_cadena_a_eliminar.end()+1):]
+            return True
         else:
-            print("dato no ha podido ser eliminado")
+            return False 
         
         self.__actualizar_archivo_texto()
         
@@ -105,7 +110,7 @@ class Manejar_archivos():
         """busca con ayuda del identificador la linea que le corresponde
             para regresarla, con el objetivo de utilizarla en el futuro"""
         self.__leer_archivo()
-        self.__cerrar_archivo()
+
         self.__existe = False
         
         self.informacion_del_archivo_dividida = self.informacion_del_archivo.splitlines()
@@ -135,12 +140,12 @@ class Manejar_archivos():
 #-----------------------------------------------------ejemplo de uso de los metodos de la clase---------------------------------------------------------
 #uno = Manejar_archivos()
 #uno.abrir_archivo("prueba1")
-#uno.insertar_linea_en_archivo_de_texto("Nombre del usuario:Maria Juana Hernandez Sanchez  Password:hola")
+#uno.insertar_linea_en_archivo_de_texto("Nombre del usuario:Maria Juana Hernandez Sanchez  Password:hola", "Nombre del usuario:Maria Juana Hernandez Sanchez")
 #lista = uno.buscar_linea_en_archivo_de_texto("Nombre del usuario:Maria Juana Hernandez Sanchez")
 #print(lista)
 
-#uno.modificar_linea_en_archivo_texto("Nombre del usuario:A chuchita la bolsearon Juana Hernandez Sanchez  Password:1shsuh8u37gw7w7d", "Nombre del usuario:Maria Juana Hernandez Sanchez")
-#uno.eliminar_linea_en_archivo_texto("Nombre del usuario:A chuchita la bolsearon Juana Hernandez Sanchez")
+#print(uno.modificar_linea_en_archivo_texto("Nombre del usuario:A chuchita la bolsearon Juana Hernandez Sanchez  Password:1shsuh8u37gw7w7d", "Nombre del usuario:Maria Juana Hernandez Sanchez"))
+#print(uno.eliminar_linea_en_archivo_texto("Nombre del usuario:A chuchita la bolsearon Juana Hernandez Sanchez"))
 
 
 
