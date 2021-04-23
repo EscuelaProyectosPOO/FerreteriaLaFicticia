@@ -49,7 +49,10 @@ class Manejar_archivos():
         """incerta la linea mandada en el archivo"""
         self.__leer_devolver_linea_a_antigua(identificador)
         if(self.__existe == False):
-            self.__linea_a_insertar = unicode("\n"+ linea_a_insertar)#por alguna razon me pide unicode
+            if(os.stat(self.__nombre_archivo_de_texto + ".txt").st_size == 0):#para saber si esta vacio el documento
+                self.__linea_a_insertar = unicode(linea_a_insertar)
+            else:
+                self.__linea_a_insertar = unicode("\n"+ linea_a_insertar)#por alguna razon me pide unicode
             self.__escribir_en_archivo(self.__linea_a_insertar)
             self.__cerrar_archivo()
             return True
@@ -68,12 +71,10 @@ class Manejar_archivos():
             
             for dato in self.__valoresdei:
                 
-                self.__dato_inicio = dato.find(":") +1
-
-                self.__inicio += [dato[self.__dato_inicio:]]
-            return self.__inicio, True
+                self.__inicio += [dato]
+            return self.__inicio
         else:
-            return 0, False
+            return 0
         
 
         
@@ -86,7 +87,7 @@ class Manejar_archivos():
         self.__cerrar_archivo()
         if(self.__existe):
             self.informacion_del_archivo = self.informacion_del_archivo.replace(self.__linea_antigua, self.__linea_modificada_a_insertar )
-            self.__actualizar_archivo_texto()
+            self.__actualizar_archivo_texto(self.informacion_del_archivo)
             return True
         else:
             return False
@@ -99,11 +100,11 @@ class Manejar_archivos():
         if(self.__existe):
             self.__posicion_cadena_a_eliminar = re.search(self.__linea_antigua, self.informacion_del_archivo)
             self.informacion_del_archivo = self.informacion_del_archivo[:self.__posicion_cadena_a_eliminar.start()] + self.informacion_del_archivo[(self.__posicion_cadena_a_eliminar.end()+1):]
+            self.__actualizar_archivo_texto(self.informacion_del_archivo)
             return True
         else:
             return False 
         
-        self.__actualizar_archivo_texto()
         
 
     def __leer_devolver_linea_a_antigua(self, identificador):
@@ -126,12 +127,12 @@ class Manejar_archivos():
 
 
 
-    def __actualizar_archivo_texto(self):
+    def __actualizar_archivo_texto(self, informacion_sin_linea):
         """se elimina el anterior y se crea uno totalmente nuevo con el mismo nombre
             que el archivo eliminado anteriormente"""
         self.__eliminar_archivo_de_texto()
         self.abrir_archivo(self.__nombre_archivo_de_texto)
-        self.__escribir_en_archivo(self.informacion_del_archivo)
+        self.__escribir_en_archivo(informacion_sin_linea)
         self.__cerrar_archivo()
 
 
@@ -140,12 +141,12 @@ class Manejar_archivos():
 #-----------------------------------------------------ejemplo de uso de los metodos de la clase---------------------------------------------------------
 #uno = Manejar_archivos()
 #uno.abrir_archivo("prueba1")
-#uno.insertar_linea_en_archivo_de_texto("Nombre del usuario:Maria Juana Hernandez Sanchez  Password:hola", "Nombre del usuario:Maria Juana Hernandez Sanchez")
-#lista = uno.buscar_linea_en_archivo_de_texto("Nombre del usuario:Maria Juana Hernandez Sanchez")
+#uno.insertar_linea_en_archivo_de_texto("Maria Juana Hernandez Sanchez  hola", "Maria Juana Hernandez Sanchez")
+#lista = uno.buscar_linea_en_archivo_de_texto("Maria Juana Hernandez Sanchez")
 #print(lista)
 
-#print(uno.modificar_linea_en_archivo_texto("Nombre del usuario:A chuchita la bolsearon Juana Hernandez Sanchez  Password:1shsuh8u37gw7w7d", "Nombre del usuario:Maria Juana Hernandez Sanchez"))
-#print(uno.eliminar_linea_en_archivo_texto("Nombre del usuario:A chuchita la bolsearon Juana Hernandez Sanchez"))
+#print(uno.modificar_linea_en_archivo_texto("A chuchita la bolsearon Juana Hernandez Sanchez  1shsuh8u37gw7w7d", "Maria Juana Hernandez Sanchez"))
+#print(uno.eliminar_linea_en_archivo_texto("A chuchita la bolsearon Juana Hernandez Sanchez"))
 
 
 
