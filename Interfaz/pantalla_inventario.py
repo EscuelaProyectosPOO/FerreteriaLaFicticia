@@ -7,7 +7,7 @@ import sys
 from funcionalidad.Manejar_archivo_inventario import Manejar_archivo_inventario
 class Inventario:
 
-    def __init__(self):
+    def __init__(self, pantalla_principal):
         self.raiz = tk.Toplevel(pantalla_principal)
         self.raiz.geometry('1169x563')
         self.raiz.title("Inventario")
