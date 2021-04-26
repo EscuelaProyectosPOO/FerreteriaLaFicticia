@@ -68,10 +68,12 @@ class Manejar_archivos():
         self.__cerrar_archivo()
         if(self.__existe):
             self.__inicio = []
-            
+
             for dato in self.__valoresdei:
                 
                 self.__inicio += [dato]
+
+            
             return self.__inicio
         else:
             return 0
@@ -113,16 +115,20 @@ class Manejar_archivos():
         self.__leer_archivo()
 
         self.__existe = False
+        self.__banderaFor = False
         
         self.informacion_del_archivo_dividida = self.informacion_del_archivo.splitlines()
-        
+
         for linea in self.informacion_del_archivo_dividida:
             self.__valoresdei = linea.split("  ")
             for lista_de_linea in self.__valoresdei:
                 if(lista_de_linea == identificador):
                     self.__linea_antigua = linea
                     self.__existe = True
+                    self.__banderaFor = True
                     break
+            if(self.__banderaFor):
+                break
 
 
 
@@ -140,9 +146,9 @@ class Manejar_archivos():
 
 #-----------------------------------------------------ejemplo de uso de los metodos de la clase---------------------------------------------------------
 #uno = Manejar_archivos()
-#uno.abrir_archivo("prueba1")
-#uno.insertar_linea_en_archivo_de_texto("Maria Juana Hernandez Sanchez  hola", "Maria Juana Hernandez Sanchez")
-#lista = uno.buscar_linea_en_archivo_de_texto("Maria Juana Hernandez Sanchez")
+#uno.abrir_archivo("Base_Productos")
+#print uno.insertar_linea_en_archivo_de_texto("Maria Juana Hernandez Sanchez", "0")
+#lista = uno.buscar_linea_en_archivo_de_texto("0")
 #print(lista)
 
 #print(uno.modificar_linea_en_archivo_texto("A chuchita la bolsearon Juana Hernandez Sanchez  1shsuh8u37gw7w7d", "Maria Juana Hernandez Sanchez"))

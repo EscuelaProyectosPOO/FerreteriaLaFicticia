@@ -16,9 +16,9 @@ class Pantalla_de_inicio:
 
     def ventana_principal(self):
         """ Muestra los botones de las distintas pestañas que tenemos,asi como el nombre de la ferreteria"""
-        self.imagen_provedores = PhotoImage(file="Provedores.GIF")
-        self.Boton_provedores = Button(self.raiz, image=self.imagen_provedores, width=234, height=91, cursor="hand2", border=0, command=lambda:instaciaciones())
-        self.Boton_provedores.place(x=0, y=50)
+        self.imagen_proveedores = PhotoImage(file="Proveedores.GIF")
+        self.Boton_proveedores = Button(self.raiz, image=self.imagen_proveedores, width=234, height=91, cursor="hand2", border=0, command=lambda:instaciaciones())
+        self.Boton_proveedores.place(x=0, y=50)
 
         self.imagen_productos = PhotoImage(file="Productos.GIF")
         self.Boton_productos = Button(self.raiz, image=self.imagen_productos, width=228, height=87,cursor="hand2",border=0,  command=lambda:instaciaciones() )

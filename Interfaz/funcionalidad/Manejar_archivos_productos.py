@@ -8,11 +8,11 @@ class Manejar_archivos_productos(Manejar_archivos):
     def __init__(self):
         Manejar_archivos()
 
-    def insertar_nuevo_producto(self, codigo, nombre, precio, tipo_de_producto, cantidad, marca):
+    def insertar_nuevo_producto(self, codigo, nombre, precio, cantidad, marca, proveedor, fecha_de_entrega):
     
         try:
             self.abrir_archivo("Base_Productos")
-            self.registro_nuevo = codigo + "  "+ nombre + "  "+ precio + "  " + tipo_de_producto + "  "+ cantidad + "  "+ marca 
+            self.registro_nuevo = codigo + "  "+ nombre + "  "+ precio +  "  "+ cantidad + "  "+ marca + "  " + proveedor + "  " + fecha_de_entrega
             self.identificador_producto = codigo
             self.bandera = self.insertar_linea_en_archivo_de_texto(self.registro_nuevo, self.identificador_producto)
             return self.bandera
@@ -29,11 +29,11 @@ class Manejar_archivos_productos(Manejar_archivos):
         except:
             print("Error en buscar productos")
 
-    def modificar_producto(self, codigo, nombre, precio, tipo_de_producto, cantidad, marca):
+    def modificar_producto(self, codigo, nombre, precio, cantidad, marca, proveedor, fecha_de_entrega):
         
         try:
             self.abrir_archivo("Base_Productos")
-            self.registro_nuevo = codigo + "  "+ nombre + "  "+ precio + "  " + tipo_de_producto + "  "+ cantidad + "  "+ marca
+            self.registro_nuevo = codigo + "  "+ nombre + "  "+ precio +  "  "+ cantidad + "  "+ marca + "  " + proveedor + "  " + fecha_de_entrega
             self.identificador_producto = codigo
             self.bandera = self.modificar_linea_en_archivo_texto(self.registro_nuevo, self.identificador_producto)
             return self.bandera

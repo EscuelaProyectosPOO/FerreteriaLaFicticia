@@ -18,22 +18,24 @@ class Inventario:
         
     def ventana_principal(self):
         """ Muestra todos los productos"""
-        self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6"))
+        self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6", "#7"))
         self.tabla.place(x=120, y=30, height=450)
 
-        self.tabla.column("#1", width=200, anchor="center")
-        self.tabla.column("#2", width=200, anchor="center")
-        self.tabla.column("#3", width=150, anchor="center")
-        self.tabla.column("#4", width=150, anchor="center")
+        self.tabla.column("#1", width=150, anchor="center")
+        self.tabla.column("#2", width=150, anchor="center")
+        self.tabla.column("#3", width=100, anchor="center")
+        self.tabla.column("#4", width=100, anchor="center")
         self.tabla.column("#5", width=150, anchor="center")
         self.tabla.column("#6", width=150, anchor="center")
+        self.tabla.column("#7", width=100, anchor="center")
 
         self.tabla.heading("#1", text="Codigo de Producto")
         self.tabla.heading("#2", text="Nombre")
         self.tabla.heading("#3", text="Precio")
-        self.tabla.heading("#4", text="Tipo")
-        self.tabla.heading("#5", text="Cantidad")
-        self.tabla.heading("#6", text="Marca")
+        self.tabla.heading("#4", text="Cantidad")
+        self.tabla.heading("#5", text="Marca")
+        self.tabla.heading("#6", text="Proveedor")
+        self.tabla.heading("#7", text="Fecha de entrega")
         self.Actualizar_inventario()
 
         self.imagen_boton_regresar = tk.PhotoImage(file="boton_regresar.GIF")
@@ -49,10 +51,9 @@ class Inventario:
             for linea in self.informacion:
                 #self.tabla.insert("",tk.END,text="", values=("12gjgee8","Creama Ponss", "345", "cuidado personal", "200", "Ponss" ))
                 self.nueva_linea = linea.split("  ")
-                self.tabla.insert("",tk.END,text="", values=(self.nueva_linea[0], self.nueva_linea[1], self.nueva_linea[2], self.nueva_linea[3], self.nueva_linea[4], self.nueva_linea[5] ))
+                self.tabla.insert("",tk.END,text="", values=(self.nueva_linea[0], self.nueva_linea[1], self.nueva_linea[2], self.nueva_linea[3], self.nueva_linea[4], self.nueva_linea[5], self.nueva_linea[6] ))
         except:
             print ("Error en actualizar inventario")
 
             
-
 
