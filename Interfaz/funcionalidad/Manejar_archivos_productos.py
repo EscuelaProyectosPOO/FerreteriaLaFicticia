@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 import os
 from Manejar_archivos import Manejar_archivos
+from interfaz_CRUD import CRUD
 
-class Manejar_archivos_productos(Manejar_archivos):
+class Manejar_archivos_productos(Manejar_archivos, CRUD):
 
     def __init__(self):
         Manejar_archivos()
 
-    def insertar_nuevo_producto(self, codigo, nombre, precio, cantidad, marca, proveedor, fecha_de_entrega):
+    def Insertar(self, codigo, nombre, precio, cantidad, marca, proveedor, fecha_de_entrega):
     
         try:
             self.abrir_archivo("Base_Productos")
@@ -19,7 +20,7 @@ class Manejar_archivos_productos(Manejar_archivos):
         except:
             print("Error en insertar producto")
 
-    def buscar_producto(self, codigo_producto):
+    def Buscar(self, codigo_producto):
         
         try:
             self.abrir_archivo("Base_Productos")
@@ -29,7 +30,7 @@ class Manejar_archivos_productos(Manejar_archivos):
         except:
             print("Error en buscar productos")
 
-    def modificar_producto(self, codigo, nombre, precio, cantidad, marca, proveedor, fecha_de_entrega):
+    def Modificar(self, codigo, nombre, precio, cantidad, marca, proveedor, fecha_de_entrega):
         
         try:
             self.abrir_archivo("Base_Productos")
@@ -40,7 +41,7 @@ class Manejar_archivos_productos(Manejar_archivos):
         except:
             print("Error en modificar productos")
 
-    def eliminar_producto(self, codigo_producto):
+    def Eliminar(self, codigo_producto):
 
         try:
             self.abrir_archivo("Base_Productos")

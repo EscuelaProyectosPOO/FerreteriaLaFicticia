@@ -83,7 +83,7 @@ class Productos:
         self.Fecha_de_entrega.set("")
 
     def crear_registro(self):
-        self.bandera = self.instanciaManejarProductos.insertar_nuevo_producto(self.Codigo_producto.get(),
+        self.bandera = self.instanciaManejarProductos.Insertar(self.Codigo_producto.get(),
             self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
         if(self.bandera):
             ms.showinfo("", "El producto se ha registrado con exito!")
@@ -92,7 +92,7 @@ class Productos:
         self.Borrar_entrys()
 
     def Modificar_registro(self):
-        self.bandera = self.instanciaManejarProductos.modificar_producto(self.Codigo_producto.get(),
+        self.bandera = self.instanciaManejarProductos.Modificar(self.Codigo_producto.get(),
             self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
         if(self.bandera):
             ms.showinfo("", "El producto se ha modificado con exito!")
@@ -102,7 +102,7 @@ class Productos:
 
 
     def Buscar_registro(self):
-        self.listaDevuelta = self.instanciaManejarProductos.buscar_producto(self.Codigo_producto.get())
+        self.listaDevuelta = self.instanciaManejarProductos.Buscar(self.Codigo_producto.get())
         if(self.listaDevuelta != 0):
             ms.showinfo("", "Los datos se ha encontrado!")
             self.Codigo_producto.set(self.listaDevuelta[0])
@@ -117,7 +117,7 @@ class Productos:
             ms.showerror("ERROR!!!", "Este producto no exite, porfavor revise el codigo del producto" )
     
     def Eliminar_registro(self):
-        self.bandera = self.instanciaManejarProductos.eliminar_producto(self.Codigo_producto.get())
+        self.bandera = self.instanciaManejarProductos.Eliminar(self.Codigo_producto.get())
         if(self.bandera):
             ms.showinfo("", "El producto se ha borrado con exito!")
         else:
