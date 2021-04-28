@@ -54,6 +54,7 @@ class Manejar_archivos():
             else:
                 self.__linea_a_insertar = unicode("\n"+ linea_a_insertar)#por alguna razon me pide unicode
             self.__escribir_en_archivo(self.__linea_a_insertar)
+
             self.__cerrar_archivo()
             return True
         else:

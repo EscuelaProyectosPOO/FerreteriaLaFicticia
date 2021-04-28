@@ -46,7 +46,7 @@ class Usuarios:
             else:
                 print 'nombre incorrecto'
                 print cont
-                ms.showinfo('Error', 'Nombre de usuario o Contraseña incorrectos')
+                ms.showerror('Error', 'Nombre de usuario o Contraseña incorrectos')
         self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:comprueba())
         self.be.place(x=105, y=110)
         self.be.config(width=10, bg='#1953a7')
