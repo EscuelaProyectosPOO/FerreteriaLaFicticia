@@ -71,7 +71,7 @@ class Productos:
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2",border=0,  command=lambda:instaciaciones() )
         self.Boton_regresar.place(x=2, y=340)
         
-        self.raiz.mainloop()
+        self.raiz.withdraw()
 
     def Borrar_entrys(self):
         self.Codigo_producto.set("")
@@ -125,4 +125,3 @@ class Productos:
         self.Borrar_entrys()
 
         
-

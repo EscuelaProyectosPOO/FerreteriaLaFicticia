@@ -12,14 +12,15 @@ class Inventario:
         self.raiz.geometry('1169x563')
         self.raiz.title("Inventario")
         self.raiz.resizable(False, False) 
-        self.imagen = tk.PhotoImage(file="fondo.GIF")
+        self.imagen = tk.PhotoImage(file="fondo_sin_nada.GIF")
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0)
         self.ventana_principal()
         
     def ventana_principal(self):
         """ Muestra todos los productos"""
-        self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6", "#7"))
-        self.tabla.place(x=120, y=30, height=450)
+        label = tk.Label(self.raiz).grid(row=0, column=30)
+        self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6", "#7"), height=20)
+        self.tabla.grid(row=1, column=30)
 
         self.tabla.column("#1", width=150, anchor="center")
         self.tabla.column("#2", width=150, anchor="center")
@@ -36,11 +37,16 @@ class Inventario:
         self.tabla.heading("#5", text="Marca")
         self.tabla.heading("#6", text="Proveedor")
         self.tabla.heading("#7", text="Fecha de entrega")
+
+        self.scrollbar = tk.Scrollbar(self.raiz, orient="vertical", command=self.tabla.yview)
+        self.scrollbar.grid(row=1, column=31, sticky='ns')
+        self.tabla.config(yscrollcommand=self.scrollbar.set)
+
         self.Actualizar_inventario()
 
         self.imagen_boton_regresar = tk.PhotoImage(file="boton_regresar.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2",border=0,  command=lambda:instaciaciones() )
-        self.Boton_regresar.place(x=2, y=500)
+        self.Boton_regresar.grid(row=2, column=10, sticky='we')
         
         self.raiz.withdraw()
 
@@ -55,5 +61,8 @@ class Inventario:
         except:
             print ("Error en actualizar inventario")
 
-            
+
+    def regresar(self):
+        pass
+
 
