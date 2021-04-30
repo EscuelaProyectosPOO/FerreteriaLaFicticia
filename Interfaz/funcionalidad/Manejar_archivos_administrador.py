@@ -43,3 +43,14 @@ class Archivos_administrador(Manejar_archivos):
 
         except:
             print 'Error al editar usuario'
+
+    def buscar(self, Nombre):
+        try:
+            self.abrir_archivo('Base_empleados')
+            self.identificador = Nombre
+            print self.identificador
+            self.linea = self.buscar_linea_en_archivo_de_texto(self.identificador)
+            print self.linea
+            return self.linea
+        except:
+            print 'Usuario no encontrado'

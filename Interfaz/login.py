@@ -3,7 +3,8 @@
 
 from pantalla_inicio import Pantalla_de_inicio
 from Tkinter import *
-import tkMessageBox as ms
+import tkMessageBox as mensajes
+from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
 
 
 class Usuarios:
@@ -19,7 +20,13 @@ class Usuarios:
         self.ventana()
 
         self.raiz.mainloop()
-
+    def comprueba(self):
+        comp = Archivos_administrador()
+        self.linea_retornada = comp.buscar(self.nombretext.get())
+        if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
+            llamada = Pantalla_de_inicio()
+        else:
+            mensajes.showerror('ERROR', 'Usuario o contraseña incorrectos')
     def ventana(self):
         self.nombretext = StringVar()
         self.nombre = self.nombretext.get()
@@ -31,23 +38,7 @@ class Usuarios:
         self.tc = Entry(self.raiz, textvariable=self.contra)
         self.tc.place(x=95, y=60)
         self.tc.config(show='*')
-
-        def comprueba():
-            print '...'
-            nom = self.nombretext.get()
-            cont = self.contra.get()
-            if nom == 'Ana' and cont == 'Sistemas':
-                print 'Bienvenida'
-                llamas = Pantalla_de_inicio()
-                llamas.ventana_principal()
-                print cont
-            elif nom == '' and nom == ' ':
-                print 'vacío'
-            else:
-                print 'nombre incorrecto'
-                print cont
-                ms.showerror('Error', 'Nombre de usuario o Contraseña incorrectos')
-        self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:comprueba())
+        self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:self.comprueba())
         self.be.place(x=105, y=110)
         self.be.config(width=10, bg='#1953a7')
 
