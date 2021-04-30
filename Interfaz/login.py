@@ -11,7 +11,7 @@ class Usuarios:
     def __init__(self):
         self.raiz = Tk()
         self.raiz.title('Inicio de sesión')
-        self.raiz.geometry('250x180')
+        self.raiz.geometry('260x180')
         self.fondo = PhotoImage(file="login.gif")
         self.Lfondo = Label(self.raiz, image=self.fondo)
         self.Lfondo.place(x=0, y=0)
@@ -33,11 +33,12 @@ class Usuarios:
         self.contra = StringVar()
 
         self.tn = Entry(self.raiz, textvariable=self.nombretext)
-        self.tn.place(x=95, y=27)
+        self.tn.place(x=125, y=27)
 
         self.tc = Entry(self.raiz, textvariable=self.contra)
-        self.tc.place(x=95, y=60)
+        self.tc.place(x=125, y=73)
         self.tc.config(show='*')
+
         self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:self.comprueba())
         self.be.place(x=105, y=110)
         self.be.config(width=10, bg='#1953a7')

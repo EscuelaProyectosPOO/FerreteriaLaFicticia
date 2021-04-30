@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+from pantalla_inicio import Pantalla_de_inicio
 from Tkinter import *
 import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
@@ -8,7 +8,7 @@ from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
 
 class Administrador():
     def __init__(self):
-        self.Raiz = Tk()
+        self.Raiz = Toplevel(Pantalla_de_inicio)
         self.Raiz.geometry('390x280')
         self.Raiz.title('Administrar usuarios')
         self.Raiz.resizable(0, 0)
@@ -48,7 +48,7 @@ class Administrador():
         else:
             mensajes.showerror('ERROR', 'No se encuentra el usuario')
 
-    def ventana(self):
+    def ventana_principal(self):
         self.fodo_crear = PhotoImage(file='Boton_crear_usuario.gif')
         self.Bagregar = Button(self.Raiz, image=self.fodo_crear, command=lambda: self.registrar())
         self.Bagregar.place(x=20, y=205)
