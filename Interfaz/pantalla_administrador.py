@@ -1,24 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from pantalla_inicio import Pantalla_de_inicio
+
 from Tkinter import *
 import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
+from funcionalidad.Evento_regresar import Cerrar_Ventanas
 
-
-class Administrador():
-    def __init__(self):
-        self.Raiz = Toplevel(Pantalla_de_inicio)
+class Administrador(Cerrar_Ventanas):
+    def __init__(self, Pantalla_principal):
+        self.pantalla_inicio = Pantalla_principal
+        self.Raiz = Toplevel(self.pantalla_inicio)
         self.Raiz.geometry('390x280')
         self.Raiz.title('Administrar usuarios')
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_admin.GIF')
         self.fondo = Label(self.Raiz, image=self.imagen)
         self.fondo.place(x=0, y=0)
-
-        self.ventana()
-
-        self.Raiz.mainloop()
 
     def registrar(self):
         print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
@@ -77,4 +74,7 @@ class Administrador():
         self.Rango = Entry(self.Raiz, textvariable=self.rangoText, width=30)
         self.Rango.place(x=170, y=150)
 
-objeto = Administrador()
+    def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
+        nombre_ventana_anterior.deiconify()
+        nombre_ventana_actual.destroy()
+
