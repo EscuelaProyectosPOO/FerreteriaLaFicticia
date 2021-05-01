@@ -5,16 +5,17 @@ import ttk
 import os
 import sys
 from funcionalidad.Manejar_archivo_inventario import Manejar_archivo_inventario
-class Inventario:
+from funcionalidad.Evento_regresar import Cerrar_Ventanas
+class Inventario(Cerrar_Ventanas):
 
     def __init__(self, pantalla_principal):
-        self.raiz = tk.Toplevel(pantalla_principal)
+        self.pantalla_principal1 = pantalla_principal
+        self.raiz = tk.Toplevel(self.pantalla_principal1)
         self.raiz.geometry('1169x563')
         self.raiz.title("Inventario")
         self.raiz.resizable(False, False) 
         self.imagen = tk.PhotoImage(file="fondo_sin_nada.GIF")
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0)
-        self.ventana_principal()
         
     def ventana_principal(self):
         """ Muestra todos los productos"""
@@ -45,10 +46,10 @@ class Inventario:
         self.Actualizar_inventario()
 
         self.imagen_boton_regresar = tk.PhotoImage(file="boton_regresar.GIF")
-        self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2",border=0,  command=lambda:instaciaciones() )
+        self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2",border=0,  command=lambda:self.volver(self.raiz, self.pantalla_principal1) )
         self.Boton_regresar.grid(row=2, column=10, sticky='we')
         
-        self.raiz.withdraw()
+        self.pantalla_principal1.withdraw()
 
     def Actualizar_inventario(self):
         try:
@@ -61,8 +62,8 @@ class Inventario:
         except:
             print ("Error en actualizar inventario")
 
-
-    def regresar(self):
-        pass
+    def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
+        nombre_ventana_anterior.deiconify()
+        nombre_ventana_actual.destroy()
 
 

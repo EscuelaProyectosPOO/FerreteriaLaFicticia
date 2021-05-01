@@ -4,12 +4,13 @@ import Tkinter as tk
 import ttk
 import tkMessageBox as ms
 from funcionalidad.Manejar_archivos_productos import Manejar_archivos_productos
-
-class Productos:
+from funcionalidad.Evento_regresar import Cerrar_Ventanas
+class Productos(Cerrar_Ventanas):
 
 
     def __init__(self, pantalla_principal):
-        self.raiz = tk.Toplevel(pantalla_principal)
+        self.pantalla_principal1 = pantalla_principal
+        self.raiz = tk.Toplevel(self.pantalla_principal1)
         self.raiz.geometry('533x425')
         self.raiz.title("Registro Productos")
         self.raiz.resizable(False, False) 
@@ -25,7 +26,6 @@ class Productos:
         self.Fecha_de_entrega = tk.StringVar()
 
 
-        self.ventana_principal()
 
     def ventana_principal(self):
         """ muestra los campos para insertar informacion de los productos"""
@@ -68,10 +68,12 @@ class Productos:
         self.Boton_regresar.place(x=280, y=269)
 
         self.imagen_boton_regresar = tk.PhotoImage(file="boton_regresar.GIF")
-        self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2",border=0,  command=lambda:instaciaciones() )
+        self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2",border=0,  command=lambda:self.volver(self.raiz, self.pantalla_principal1) )
         self.Boton_regresar.place(x=2, y=340)
         
-        self.raiz.withdraw()
+        
+        self.pantalla_principal1.withdraw()
+        self.raiz.protocol( "WM_DELETE_WINDOW", self.volver_con_cerrado_ventana(self.raiz, self.pantalla_principal1))
 
     def Borrar_entrys(self):
         self.Codigo_producto.set("")
@@ -125,3 +127,7 @@ class Productos:
         self.Borrar_entrys()
 
         
+    
+    def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
+        nombre_ventana_anterior.deiconify()
+        nombre_ventana_actual.destroy()
