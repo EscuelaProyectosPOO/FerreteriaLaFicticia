@@ -5,6 +5,7 @@ from Tkinter import *
 import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
+from pantalla_inicio import Pantalla_de_inicio
 
 
 class Administrador(Cerrar_Ventanas):
@@ -63,6 +64,12 @@ class Administrador(Cerrar_Ventanas):
         self.Beditar.place(x=260, y=205)
         self.Beditar.config(bd=0)
 
+        self.imagen_boton_regresar = PhotoImage(file="boton_regresar.GIF")
+        self.Boton_regresar = Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,
+                                        cursor="hand2", border=0,
+                                        command=lambda: self.volver(self.raiz, self.pantalla_principal1))
+        self.Boton_regresar.place(x=2, y=340)
+
         self.NombreText = StringVar()
         self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30)
         self.Nombre.place(x=170, y=35)
@@ -81,4 +88,7 @@ class Administrador(Cerrar_Ventanas):
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
         nombre_ventana_actual.destroy()
+
+    def m(event):
+        print "m"
 

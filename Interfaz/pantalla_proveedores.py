@@ -3,21 +3,21 @@
 from Tkinter import *
 import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_proveedores import Archivos_proveedores
+from funcionalidad.Evento_regresar import Cerrar_Ventanas
 
-
-class Proveedores():
-    def __init__(self):
-        self.Raiz = Tk()
+class Proveedores(Cerrar_Ventanas):
+    def __init__(self, pantalla_principal):
+        self.pantalla_principal1 = pantalla_principal
+        self.Raiz = Toplevel(self.pantalla_principal1)
         self.Raiz.geometry('390x310')
         self.Raiz.title('Proveedores')
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_proveeores.gif')
         self.fondo = Label(self.Raiz, image=self.imagen)
         self.fondo.place(x=0, y=0)
+        self.Raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
 
-        self.ventana()
 
-        self.Raiz.mainloop()
     def limpiar(self):
         self.NombreText.set('')
         self.direcText.set('')
@@ -51,7 +51,7 @@ class Proveedores():
             mensajes.showerror('ERROR', 'No se encuentra el proveedor')
         self.limpiar()
 
-    def ventana(self):
+    def ventana_principal(self):
         self.fondo_crear = PhotoImage(file='Boton_crear_usuario.gif')
         self.Bagregar = Button(self.Raiz, image=self.fondo_crear, command=lambda: self.registrar())
         self.Bagregar.place(x=20, y=240)
@@ -72,6 +72,12 @@ class Proveedores():
         self.Beditar.place(x=260, y=240)
         self.Beditar.config(bd=0)
 
+        self.imagen_boton_regresar = PhotoImage(file="boton_regresar.GIF")
+        self.Boton_regresar = Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,
+                                        cursor="hand2", border=0,
+                                        command=lambda: self.volver(self.raiz, self.pantalla_principal1))
+        self.Boton_regresar.place(x=2, y=340)
+
         self.NombreText = StringVar()
         self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30)
         self.Nombre.place(x=170, y=25)
@@ -88,4 +94,11 @@ class Proveedores():
         self.Precio = Entry(self.Raiz, textvariable=self.precioText, width=30)
         self.Precio.place(x=170, y=170)
 
-pruba = Proveedores()
+        self.pantalla_principal1.withdraw()
+
+    def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
+        nombre_ventana_anterior.deiconify()
+        nombre_ventana_actual.destroy()
+
+    def m(event):
+        print "m"
