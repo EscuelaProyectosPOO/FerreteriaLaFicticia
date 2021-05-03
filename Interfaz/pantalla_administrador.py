@@ -6,6 +6,7 @@ import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
 
+
 class Administrador(Cerrar_Ventanas):
     def __init__(self, Pantalla_principal):
         self.pantalla_Pincipal1 = Pantalla_principal
@@ -74,6 +75,8 @@ class Administrador(Cerrar_Ventanas):
         self.rangoText = StringVar()
         self.Rango = Entry(self.Raiz, textvariable=self.rangoText, width=30)
         self.Rango.place(x=170, y=150)
+
+        self.pantalla_principal1.withdraw()
 
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
