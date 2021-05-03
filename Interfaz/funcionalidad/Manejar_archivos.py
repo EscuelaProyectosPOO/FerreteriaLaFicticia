@@ -67,7 +67,7 @@ class Manejar_archivos():
         """Busca lo que se le manda en el archivo """
         self.__leer_devolver_linea_a_antigua(identificador)
         self.__cerrar_archivo()
-        print 'la informacion si llega'
+        
         if(self.__existe):
             self.__inicio = []
 

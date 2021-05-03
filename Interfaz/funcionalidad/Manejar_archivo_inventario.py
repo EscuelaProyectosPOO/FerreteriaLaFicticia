@@ -10,6 +10,7 @@ class Manejar_archivo_inventario(Manejar_archivos):
 
     
     def __leer_archivo(self):
+        """Reescribe este metodo para que le entregue la informacion en lineas"""
         self.informacion_del_archivo = self.archivo.readlines()
         self.archivo.close()
     

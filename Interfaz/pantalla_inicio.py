@@ -3,6 +3,7 @@
 #from pantalla_administrador import Pantalla_administrador
 from pantalla_inventario import Inventario
 from pantalla_productos import Productos
+from pantalla_administrador import  Administrador
 from Tkinter import *
 
 class Pantalla_de_inicio:
@@ -56,7 +57,8 @@ class Pantalla_de_inicio:
         pass
 
     def administrador_llamada(self):
-        pass
+        self.administrador_llamada_objeto =  Administrador(self.raiz_pantalle_inicio)
+        self.administrador_llamada_objeto.ventana_principal()
 
 
 

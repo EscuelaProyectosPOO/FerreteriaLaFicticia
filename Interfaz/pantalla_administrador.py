@@ -5,12 +5,12 @@ from Tkinter import *
 import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
-from pantalla_inicio import Pantalla_de_inicio
+
 
 
 class Administrador(Cerrar_Ventanas):
     def __init__(self, Pantalla_principal):
-        self.pantalla_Pincipal1 = Pantalla_principal
+        self.pantalla_principal1 = Pantalla_principal
         self.Raiz = Toplevel(self.pantalla_principal1)
         self.Raiz.geometry('390x280')
         self.Raiz.title('Administrar usuarios')
@@ -88,7 +88,4 @@ class Administrador(Cerrar_Ventanas):
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
         nombre_ventana_actual.destroy()
-
-    def m(event):
-        print "m"
 
