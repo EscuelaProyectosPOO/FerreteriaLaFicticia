@@ -8,14 +8,15 @@ from funcionalidad.Evento_regresar import Cerrar_Ventanas
 
 class Administrador(Cerrar_Ventanas):
     def __init__(self, Pantalla_principal):
-        self.pantalla_inicio = Pantalla_principal
-        self.Raiz = Toplevel(self.pantalla_inicio)
+        self.pantalla_Pincipal1 = Pantalla_principal
+        self.Raiz = Toplevel(self.pantalla_principal1)
         self.Raiz.geometry('390x280')
         self.Raiz.title('Administrar usuarios')
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_admin.GIF')
         self.fondo = Label(self.Raiz, image=self.imagen)
         self.fondo.place(x=0, y=0)
+        self.Raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
 
     def registrar(self):
         print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
