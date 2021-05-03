@@ -16,6 +16,7 @@ class Inventario(Cerrar_Ventanas):
         self.raiz.resizable(False, False) 
         self.imagen = tk.PhotoImage(file="fondo_sin_nada.GIF")
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0)
+        self.raiz.bind("<Destroy>",lambda event: self.volver_con_cerrado_ventana(event,self.pantalla_principal1))
         
     def ventana_principal(self):
         """ Muestra todos los productos"""

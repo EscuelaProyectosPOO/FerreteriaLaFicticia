@@ -24,6 +24,9 @@ class Productos(Cerrar_Ventanas):
         self.Marca_producto =  tk.StringVar()
         self.Proveedor = tk.StringVar() 
         self.Fecha_de_entrega = tk.StringVar()
+        self.raiz.bind("<Destroy>",lambda event: self.volver_con_cerrado_ventana(event,self.pantalla_principal1))
+        
+        
 
 
 
@@ -73,7 +76,8 @@ class Productos(Cerrar_Ventanas):
         
         
         self.pantalla_principal1.withdraw()
-        self.raiz.protocol( "WM_DELETE_WINDOW", self.volver_con_cerrado_ventana(self.raiz, self.pantalla_principal1))
+        
+       
 
     def Borrar_entrys(self):
         self.Codigo_producto.set("")
@@ -131,3 +135,6 @@ class Productos(Cerrar_Ventanas):
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
         nombre_ventana_actual.destroy()
+
+    def m(event):
+        print "m"
