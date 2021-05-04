@@ -68,14 +68,14 @@ class Proveedores(Cerrar_Ventanas):
         self.Bborrar.config(bd=0)
 
         self.fondo_editar = PhotoImage(file='Boton_editar_usuario.gif')
-        self.Beditar = Button(self.Raiz, image=self.fondo_editar, command=lambda: self.editar())
+        self.Beditar = Button(self.Raiz, image=self.fondo_editar, cursor="hand2", command=lambda: self.editar())
         self.Beditar.place(x=260, y=240)
         self.Beditar.config(bd=0)
 
         self.imagen_boton_regresar = PhotoImage(file="boton_regresar.GIF")
-        self.Boton_regresar = Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,
+        self.Boton_regresar = Button(self.Raiz, image=self.imagen_boton_regresar, width=120, height=65,
                                         cursor="hand2", border=0,
-                                        command=lambda: self.volver(self.raiz, self.pantalla_principal1))
+                                        command=lambda: self.volver(self.Raiz, self.pantalla_principal1))
         self.Boton_regresar.place(x=2, y=340)
 
         self.NombreText = StringVar()
