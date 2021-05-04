@@ -5,6 +5,7 @@ from Tkinter import *
 import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
+<<<<<<< HEAD
 
 
 
@@ -12,13 +13,22 @@ class Administrador(Cerrar_Ventanas):
     def __init__(self, Pantalla_principal):
         self.pantalla_principal1 = Pantalla_principal
         self.Raiz = Toplevel(self.pantalla_principal1)
+=======
+#from pantalla_inicio import Pantalla_de_inicio
+
+
+class Administrador(Cerrar_Ventanas):
+    def __init__(self, pantalla_principal):
+        self.pantalla_Principal1 = pantalla_principal
+        self.Raiz = Toplevel(self.pantalla_Principal1)
+>>>>>>> bb5578c52d0e6d92a0039273ca19244dd5397d9d
         self.Raiz.geometry('390x280')
         self.Raiz.title('Administrar usuarios')
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_admin.GIF')
         self.fondo = Label(self.Raiz, image=self.imagen)
         self.fondo.place(x=0, y=0)
-        self.Raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
+        self.Raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_Principal1))
 
     def registrar(self):
         print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
@@ -65,9 +75,9 @@ class Administrador(Cerrar_Ventanas):
         self.Beditar.config(bd=0)
 
         self.imagen_boton_regresar = PhotoImage(file="boton_regresar.GIF")
-        self.Boton_regresar = Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,
+        self.Boton_regresar = Button(self.Raiz, image=self.imagen_boton_regresar, width=120, height=65,
                                         cursor="hand2", border=0,
-                                        command=lambda: self.volver(self.raiz, self.pantalla_principal1))
+                                        command=lambda: self.volver(self.Raiz, self.pantalla_Principal1))
         self.Boton_regresar.place(x=2, y=340)
 
         self.NombreText = StringVar()
@@ -83,7 +93,7 @@ class Administrador(Cerrar_Ventanas):
         self.Rango = Entry(self.Raiz, textvariable=self.rangoText, width=30)
         self.Rango.place(x=170, y=150)
 
-        self.pantalla_principal1.withdraw()
+        self.pantalla_Principal1.withdraw()
 
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()

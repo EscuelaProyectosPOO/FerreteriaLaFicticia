@@ -12,7 +12,7 @@ class Manejar_archivos_ventas(Manejar_archivos, CRUD):
     def Insertar(self, codigo, nombre, precio, cantidad, marca, proveedor, fecha_de_entrega):
     
         try:
-            self.abrir_archivo("Base_Productos")
+            self.abrir_archivo("Base_Ventas")
             self.registro_nuevo = codigo + "  "+ nombre + "  "+ precio +  "  "+ cantidad + "  "+ marca + "  " + proveedor + "  " + fecha_de_entrega
             self.identificador_producto = codigo
             self.bandera = self.insertar_linea_en_archivo_de_texto(self.registro_nuevo, self.identificador_producto)
@@ -41,7 +41,7 @@ class Manejar_archivos_ventas(Manejar_archivos, CRUD):
         except:
             print("Error en modificar productos")
 
-    def Eliminar(self, codigo_producto):
+    def Eliminar(self, fecha_de_venta):
 
         try:
             self.abrir_archivo("Base_Productos")
