@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from Manejar_archivos import Manejar_archivos
+from interfaz_CRUD import CRUD
 
-
-class Archivos_administrador(Manejar_archivos):
+class Archivos_administrador(Manejar_archivos, CRUD):
     def __init__(self):
         Manejar_archivos()
 
-    def nuevo_usuario(self, Nombre, Contra, Tipo):
+    def Insertar(self, Nombre, Contra, Tipo):
         try:
             self.abrir_archivo('Base_empleados')
             self.usuario_nuevo = Nombre + '  ' + Contra + '  ' + Tipo
@@ -21,7 +21,7 @@ class Archivos_administrador(Manejar_archivos):
         except:
             print 'Error al registrar usuario'
 
-    def eliminar_usuario(self, Nombre):
+    def Eliminar(self, Nombre):
         try:
             self.abrir_archivo('Base_empleados')
             self.linea_a_eliminar = Nombre
@@ -31,7 +31,7 @@ class Archivos_administrador(Manejar_archivos):
         except:
             print 'Error al eliminar usuario'
 
-    def editar_usuario(self, Nombre, Contra, Tipo):
+    def Modificar(self, Nombre, Contra, Tipo):
         try:
             self.abrir_archivo('Base_empleados')
             self.usuario_editado = Nombre + '  ' + Contra + '  ' + Tipo
@@ -44,7 +44,7 @@ class Archivos_administrador(Manejar_archivos):
         except:
             print 'Error al editar usuario'
 
-    def buscar(self, Nombre):
+    def Buscar(self, Nombre):
         try:
             self.abrir_archivo('Base_empleados')
             self.identificador = Nombre
