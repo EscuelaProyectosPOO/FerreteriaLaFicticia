@@ -29,7 +29,6 @@ class Usuarios:
             mensajes.showerror('ERROR', 'Usuario o contraseña incorrectos')
     def ventana(self):
         self.nombretext = StringVar()
-        self.nombre = self.nombretext.get()
         self.contra = StringVar()
 
         self.tn = Entry(self.raiz, textvariable=self.nombretext)

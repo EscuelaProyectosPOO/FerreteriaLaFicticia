@@ -1,1 +1,2 @@
-  chetos          
+0001  chetos  10  22  sabritas  sabritas  20/03/2021
+0002  tornillos  0.5  3  Pthilips  sdfsefewf  20/03/2021
