@@ -3,7 +3,7 @@
 #from pantalla_administrador import Pantalla_administrador
 from pantalla_inventario import Inventario
 from pantalla_productos import Productos
-from pantalla_administrador import  Administrador
+from pantalla_administrador import Administrador
 from Tkinter import *
 
 class Pantalla_de_inicio:

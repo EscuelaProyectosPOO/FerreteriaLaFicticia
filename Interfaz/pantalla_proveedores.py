@@ -9,7 +9,7 @@ class Proveedores(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
         self.pantalla_principal1 = pantalla_principal
         self.Raiz = Toplevel(self.pantalla_principal1)
-        self.Raiz.geometry('390x310')
+        self.Raiz.geometry('390x330')
         self.Raiz.title('Proveedores')
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_proveeores.gif')
@@ -76,7 +76,7 @@ class Proveedores(Cerrar_Ventanas):
         self.Boton_regresar = Button(self.Raiz, image=self.imagen_boton_regresar, width=120, height=65,
                                         cursor="hand2", border=0,
                                         command=lambda: self.volver(self.Raiz, self.pantalla_principal1))
-        self.Boton_regresar.place(x=2, y=340)
+        self.Boton_regresar.place(x=2, y=310)
 
         self.NombreText = StringVar()
         self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30)
@@ -102,3 +102,4 @@ class Proveedores(Cerrar_Ventanas):
 
     def m(event):
         print "m"
+

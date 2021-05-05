@@ -21,12 +21,17 @@ class Usuarios:
 
         self.raiz.mainloop()
     def comprueba(self):
-        comp = Archivos_administrador()
-        self.linea_retornada = comp.buscar(self.nombretext.get())
-        if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
-            llamada = Pantalla_de_inicio()
-        else:
-            mensajes.showerror('ERROR', 'Usuario o contraseña incorrectos')
+        try:
+            print self.nombretext.get()
+            print self.contra.get()
+            comp = Archivos_administrador()
+            self.linea_retornada = comp.Buscar(self.nombretext.get())
+            if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
+                llamada = Pantalla_de_inicio()
+            else:
+                mensajes.showerror('ERROR', 'Usuario o contraseña incorrectos')
+        except:
+            mensajes.showerror('Error', 'Usuario o contraseña incorrectos')
     def ventana(self):
         self.nombretext = StringVar()
         self.contra = StringVar()
@@ -38,9 +43,10 @@ class Usuarios:
         self.tc.place(x=125, y=73)
         self.tc.config(show='*')
 
-        self.be = Button(self.raiz, text='Entrar', font=18, command=lambda:self.comprueba())
+        self.fondo_entrar = PhotoImage(file='boton_entrar.gif')
+        self.be = Button(self.raiz, image=self.fondo_entrar, command=lambda:self.comprueba())
         self.be.place(x=105, y=110)
-        self.be.config(width=10, bg='#1953a7')
+        self.be.config(border=0)
 
 
 
