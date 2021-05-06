@@ -135,5 +135,3 @@ class Productos(Cerrar_Ventanas):
         nombre_ventana_anterior.deiconify()
         nombre_ventana_actual.destroy()
 
-    def m(event):
-        print "m"
