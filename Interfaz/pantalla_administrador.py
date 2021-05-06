@@ -12,7 +12,7 @@ class Administrador(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
         self.pantalla_Principal1 = pantalla_principal
         self.Raiz = Toplevel(self.pantalla_Principal1)
-        self.Raiz.geometry('390x280')
+        self.Raiz.geometry('390x310')
         self.Raiz.title('Administrar usuarios')
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_admin.GIF')
@@ -23,7 +23,7 @@ class Administrador(Cerrar_Ventanas):
     def registrar(self):
         print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
         self.instancia_crear = Archivos_administrador()
-        self.indicador = self.instancia_crear.nuevo_usuario(self.NombreText.get(), self.contraText.get(), self.rangoText.get())
+        self.indicador = self.instancia_crear.Insertar(self.NombreText.get(), self.contraText.get(), self.rangoText.get())
         if (self.indicador):
             mensajes.showinfo('', 'Elemento registrado con éxito')
         else:
@@ -32,7 +32,7 @@ class Administrador(Cerrar_Ventanas):
     def eliminar(self):
         print self.NombreText.get()
         self.instancia_borrar = Archivos_administrador()
-        self.indicador = self.instancia_borrar.eliminar_usuario(self.NombreText.get())
+        self.indicador = self.instancia_borrar.Eliminar(self.NombreText.get())
         if (self.indicador):
             mensajes.showinfo('', 'Elemento eliminado exitosamente')
         else:
@@ -41,7 +41,7 @@ class Administrador(Cerrar_Ventanas):
     def editar(self):
         print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
         self.instancia_editar = Archivos_administrador()
-        self.indicador = self.instancia_editar.editar_usuario(self.NombreText.get(), self.contraText.get(),
+        self.indicador = self.instancia_editar.Modificar(self.NombreText.get(), self.contraText.get(),
                                                             self.rangoText.get())
         if (self.indicador):
             mensajes.showinfo('', 'Elemento modificado con éxito')
@@ -68,7 +68,7 @@ class Administrador(Cerrar_Ventanas):
         self.Boton_regresar = Button(self.Raiz, image=self.imagen_boton_regresar, width=120, height=65,
                                         cursor="hand2", border=0,
                                         command=lambda: self.volver(self.Raiz, self.pantalla_Principal1))
-        self.Boton_regresar.place(x=2, y=340)
+        self.Boton_regresar.place(x=2, y=250)
 
         self.NombreText = StringVar()
         self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30)

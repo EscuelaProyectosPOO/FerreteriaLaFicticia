@@ -12,12 +12,13 @@ class Manejar_archivos_ventas(Manejar_archivos):
 
     def Insertar(self, fecha_de_registro, codigo_producto, nombre_producto, precio_unitario, cantidad, total_por_piezas):
     
-        
-        self.abrir_archivo("Base_Ventas")
-        self.registro_nuevo = fecha_de_registro + "  " + codigo_producto + "  " + nombre_producto + "  " + precio_unitario +  "  " + cantidad + "  " + total_por_piezas
-        self.identificador_venta = " "
-        print self.registro_nuevo
-        self.bandera = self.insertar_linea_en_archivo_de_texto(self.registro_nuevo, self.identificador_venta)
+        try:
+            self.abrir_archivo("Base_Ventas")
+            self.registro_nuevo = fecha_de_registro + "  " + codigo_producto + "  " + nombre_producto + "  " + precio_unitario +  "  " + cantidad + "  " + total_por_piezas
+            self.identificador_venta = " "
+            self.bandera = self.insertar_linea_en_archivo_de_texto(self.registro_nuevo, self.identificador_venta)
+        except:
+            print("Error en insertar venta")
         
     def Modificar(self, informacion_nueva):
         
