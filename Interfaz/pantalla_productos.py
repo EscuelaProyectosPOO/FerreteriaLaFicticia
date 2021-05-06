@@ -5,6 +5,7 @@ import ttk
 import tkMessageBox as ms
 from funcionalidad.Manejar_archivos_productos import Manejar_archivos_productos
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
+
 class Productos(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
         self.pantalla_principal1 = pantalla_principal

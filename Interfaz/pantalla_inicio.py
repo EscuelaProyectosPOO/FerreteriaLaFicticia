@@ -4,6 +4,8 @@
 from pantalla_inventario import Inventario
 from pantalla_productos import Productos
 from pantalla_administrador import  Administrador
+from pantalla_proveedores import Proveedores
+from pantalla_ventas import Ventas
 from Tkinter import *
 
 class Pantalla_de_inicio:
@@ -51,10 +53,12 @@ class Pantalla_de_inicio:
         self.productos_objeto.ventana_principal()
 
     def proveedores_llamada(self):
-        pass
-
+        self.proveedores_objeto = Proveedores(self.raiz_pantalle_inicio)
+        self.proveedores_objeto.ventana_principal()
+        
     def ventas_llamada(self):
-        pass
+        self.ventas_objeto = Ventas(self.raiz_pantalle_inicio)
+        self.ventas_objeto.ventana_principal()
 
     def administrador_llamada(self):
         self.administrador_llamada_objeto =  Administrador(self.raiz_pantalle_inicio)

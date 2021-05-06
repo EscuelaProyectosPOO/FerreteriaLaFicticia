@@ -5,15 +5,6 @@ from Tkinter import *
 import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
-<<<<<<< HEAD
-
-
-
-class Administrador(Cerrar_Ventanas):
-    def __init__(self, Pantalla_principal):
-        self.pantalla_principal1 = Pantalla_principal
-        self.Raiz = Toplevel(self.pantalla_principal1)
-=======
 #from pantalla_inicio import Pantalla_de_inicio
 
 
@@ -21,7 +12,6 @@ class Administrador(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
         self.pantalla_Principal1 = pantalla_principal
         self.Raiz = Toplevel(self.pantalla_Principal1)
->>>>>>> bb5578c52d0e6d92a0039273ca19244dd5397d9d
         self.Raiz.geometry('390x280')
         self.Raiz.title('Administrar usuarios')
         self.Raiz.resizable(0, 0)

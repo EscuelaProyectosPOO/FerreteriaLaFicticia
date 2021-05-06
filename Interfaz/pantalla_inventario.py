@@ -20,9 +20,9 @@ class Inventario(Cerrar_Ventanas):
         
     def ventana_principal(self):
         """ Muestra todos los productos"""
-        label = tk.Label(self.raiz).grid(row=0, column=30)
+        #label = tk.Label(self.raiz).grid(row=0, column=30)
         self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6", "#7"), height=20)
-        self.tabla.grid(row=1, column=30)
+        self.tabla.grid(row=1, column=30, pady=20)
 
         self.tabla.column("#1", width=150, anchor="center")
         self.tabla.column("#2", width=150, anchor="center")
@@ -41,7 +41,7 @@ class Inventario(Cerrar_Ventanas):
         self.tabla.heading("#7", text="Fecha de entrega")
 
         self.scrollbar = tk.Scrollbar(self.raiz, orient="vertical", command=self.tabla.yview)
-        self.scrollbar.grid(row=1, column=31, sticky='ns')
+        self.scrollbar.grid(row=1, column=31, sticky='ns', pady=20)
         self.tabla.config(yscrollcommand=self.scrollbar.set)
 
         self.Actualizar_inventario()
