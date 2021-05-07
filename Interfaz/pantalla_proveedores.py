@@ -9,7 +9,7 @@ class Proveedores(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
         self.pantalla_principal1 = pantalla_principal
         self.Raiz = Toplevel(self.pantalla_principal1)
-        self.Raiz.geometry('390x310')
+        self.Raiz.geometry('390x345')
         self.Raiz.title('Proveedores')
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_proveeores.gif')
@@ -52,31 +52,27 @@ class Proveedores(Cerrar_Ventanas):
         self.limpiar()
 
     def ventana_principal(self):
-        self.fondo_crear = PhotoImage(file='Boton_crear_usuario.gif')
+        self.fondo_crear = PhotoImage(file='Boton_nuevo_proveedor.gif')
         self.Bagregar = Button(self.Raiz, image=self.fondo_crear, command=lambda: self.registrar())
-        self.Bagregar.place(x=20, y=240)
+        self.Bagregar.place(x=20, y=230)
         self.Bagregar.config(bd=0)
 
-        self.fondo_borrar = PhotoImage(file='Boton_borrar_usuario.gif')
+        self.fondo_borrar = PhotoImage(file='boton_eliminar_proveedor.gif')
         self.Bborrar = Button(self.Raiz, image=self.fondo_borrar, command=lambda: self.eliminar())
-        self.Bborrar.place(x=140, y=240)
+        self.Bborrar.place(x=140, y=230)
         self.Bborrar.config(bd=0)
 
-        self.fondo_borrar = PhotoImage(file='Boton_borrar_usuario.gif')
-        self.Bborrar = Button(self.Raiz, image=self.fondo_borrar, command=lambda: self.eliminar())
-        self.Bborrar.place(x=140, y=240)
-        self.Bborrar.config(bd=0)
 
-        self.fondo_editar = PhotoImage(file='Boton_editar_usuario.gif')
+        self.fondo_editar = PhotoImage(file='boton_editar_proveedor.gif')
         self.Beditar = Button(self.Raiz, image=self.fondo_editar, cursor="hand2", command=lambda: self.editar())
-        self.Beditar.place(x=260, y=240)
+        self.Beditar.place(x=260, y=230)
         self.Beditar.config(bd=0)
 
         self.imagen_boton_regresar = PhotoImage(file="boton_regresar.GIF")
         self.Boton_regresar = Button(self.Raiz, image=self.imagen_boton_regresar, width=120, height=65,
                                         cursor="hand2", border=0,
                                         command=lambda: self.volver(self.Raiz, self.pantalla_principal1))
-        self.Boton_regresar.place(x=2, y=340)
+        self.Boton_regresar.place(x=2, y=280)
 
         self.NombreText = StringVar()
         self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30)
