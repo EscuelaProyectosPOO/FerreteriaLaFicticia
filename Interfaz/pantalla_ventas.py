@@ -40,8 +40,9 @@ class Ventas(Cerrar_Ventanas):
         self.mostrar_total_a_pagar = tk.Label(self.raiz, textvariable= self.mostrar_total, font=("Verdana",24), width=10)
         self.mostrar_total_a_pagar.place(x=75, y=250)
 
-        self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5"), height=10)
-        self.tabla.place(x=330, y =150)
+        self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5"), height=12)
+        #self.tabla.place(x=330, y =150)
+        self.tabla.grid(row=1, column=9, pady=150, columnspan=2, padx=300)
 
         self.tabla.column("#1", width=150, anchor="center")
         self.tabla.column("#2", width=150, anchor="center")
@@ -58,7 +59,8 @@ class Ventas(Cerrar_Ventanas):
         
 
         self.scrollbar = tk.Scrollbar(self.raiz, orient="vertical", command=self.tabla.yview)
-        self.scrollbar.place(x=330, y =150)
+        #self.scrollbar.place(x=330, y =150)
+        self.scrollbar.grid(row=1, column=10, sticky='ns', pady=150)
         self.tabla.config(yscrollcommand=self.scrollbar.set)
 
 
