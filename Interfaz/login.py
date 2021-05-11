@@ -21,17 +21,19 @@ class Usuarios:
 
         self.raiz.mainloop()
     def comprueba(self):
-        try:
-            print self.nombretext.get()
-            print self.contra.get()
-            comp = Archivos_administrador()
-            self.linea_retornada = comp.Buscar(self.nombretext.get())
+        print self.nombretext.get()
+        print self.contra.get()
+        comp = Archivos_administrador()
+        self.linea_retornada = comp.Buscar(self.nombretext.get())
+        if self.linea_retornada == 0:
+            mensajes.showerror('ERROR', 'Nombre o contraseña incorrectos')
+        else:
             if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
                 llamada = Pantalla_de_inicio()
             else:
-                mensajes.showerror('ERROR', 'Usuario o contraseña incorrectos')
-        except:
-            mensajes.showerror('Error', 'Usuario o contraseña incorrectos')
+                mensajes.showerror('ERROR', 'Nombre o contraseña incorrectos')
+
+
     def ventana(self):
         self.nombretext = StringVar()
         self.contra = StringVar()

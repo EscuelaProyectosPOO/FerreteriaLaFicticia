@@ -45,14 +45,12 @@ class Archivos_proveedores(Manejar_archivos, CRUD):
         except:
             print 'Error al eliminar usuario'
 
-    def Buscar(self, Nombre, Direccion, Productos, precio):
+    def Buscar(self, Nombre):
         try:
             self.abrir_archivo('Base_proveedores')
-            self.proveedor = Nombre + '  ' +Direccion + '  ' + Productos + '  ' + precio
-            print self.proveedor
             self.identificador = Nombre
             print self.identificador
-            self.band = self.buscar_linea_en_archivo_de_texto(self.proveedor, self.identificador)
+            self.band = self.buscar_linea_en_archivo_de_texto(self.identificador)
             return self.band
 
         except:
