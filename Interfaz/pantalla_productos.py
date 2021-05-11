@@ -23,6 +23,8 @@ class Productos(Cerrar_Ventanas):
         self.Marca_producto =  tk.StringVar()
         self.Proveedor = tk.StringVar() 
         self.Fecha_de_entrega = tk.StringVar()
+        self.pantalla_principal1.withdraw()
+        self.contador_entrys_llenados_correctamente = 0
         self.raiz.bind("<Destroy>",lambda event: self.volver_con_cerrado_ventana(event,self.pantalla_principal1))
         
         
@@ -32,26 +34,47 @@ class Productos(Cerrar_Ventanas):
     def ventana_principal(self):
         """ muestra los campos para insertar informacion de los productos"""
         
-        self.Entry_Codigo_producto = tk.Entry(self.raiz, textvariable=self.Codigo_producto, width=25)
+        self.Entry_Codigo_producto = tk.Entry(self.raiz, textvariable=self.Codigo_producto, width=25, fg = 'grey')
         self.Entry_Codigo_producto.place(x=255, y =23)
+        self.Entry_Codigo_producto.insert(0, "Codigo de producto")
+        self.Entry_Codigo_producto.bind("<FocusIn>", lambda event: self.default(event,self.Entry_Codigo_producto, "Codigo de producto"))
+        self.Entry_Codigo_producto.bind("<FocusOut>", lambda event: self.default(event,self.Entry_Codigo_producto, "Codigo de producto"))
 
-        self.Entry_NombreProducto = tk.Entry(self.raiz, textvariable=self.NombreProducto, width=25)
+        self.Entry_NombreProducto = tk.Entry(self.raiz, textvariable=self.NombreProducto, width=25, fg = 'grey')
         self.Entry_NombreProducto.place(x=255, y =63)
+        self.Entry_NombreProducto.insert(0, "Nombre")
+        self.Entry_NombreProducto.bind("<FocusIn>", lambda event: self.default(event,self.Entry_NombreProducto, "Nombre"))
+        self.Entry_NombreProducto.bind("<FocusOut>", lambda event: self.default(event,self.Entry_NombreProducto, "Nombre"))
         
-        self.Entry_Precio_producto = tk.Entry(self.raiz, textvariable=self.Precio_producto, width=25)
+        self.Entry_Precio_producto = tk.Entry(self.raiz, textvariable=self.Precio_producto, width=25, fg = 'grey')
         self.Entry_Precio_producto.place(x=255, y =98)
+        self.Entry_Precio_producto.insert(0, "Precio")
+        self.Entry_Precio_producto.bind("<FocusIn>", lambda event: self.default(event,self.Entry_Precio_producto, "Precio"))
+        self.Entry_Precio_producto.bind("<FocusOut>", lambda event: self.default(event,self.Entry_Precio_producto, "Precio"))
 
-        self.Entry_Cantidad_producto = tk.Entry(self.raiz, textvariable=self.Cantidad_producto, width=25)
+        self.Entry_Cantidad_producto = tk.Entry(self.raiz, textvariable=self.Cantidad_producto, width=25, fg = 'grey')
         self.Entry_Cantidad_producto.place(x=255, y =134)
+        self.Entry_Cantidad_producto.insert(0, "Cantidad")
+        self.Entry_Cantidad_producto.bind("<FocusIn>", lambda event: self.default(event,self.Entry_Cantidad_producto, "Cantidad"))
+        self.Entry_Cantidad_producto.bind("<FocusOut>", lambda event: self.default(event,self.Entry_Cantidad_producto, "Cantidad"))
 
-        self.Entry_Marca_producto = tk.Entry(self.raiz, textvariable=self.Marca_producto, width=25)
+        self.Entry_Marca_producto = tk.Entry(self.raiz, textvariable=self.Marca_producto, width=25, fg = 'grey')
         self.Entry_Marca_producto.place(x=255, y =167)
+        self.Entry_Marca_producto.insert(0, "Marca")
+        self.Entry_Marca_producto.bind("<FocusIn>", lambda event: self.default(event,self.Entry_Marca_producto, "Marca"))
+        self.Entry_Marca_producto.bind("<FocusOut>", lambda event: self.default(event,self.Entry_Marca_producto, "Marca"))
 
-        self.Entry_Proveedor = tk.Entry(self.raiz, textvariable=self.Proveedor, width=25)
+        self.Entry_Proveedor = tk.Entry(self.raiz, textvariable=self.Proveedor, width=25, fg = 'grey')
         self.Entry_Proveedor.place(x=255, y =201)
+        self.Entry_Proveedor.insert(0, "Proveedor")
+        self.Entry_Proveedor.bind("<FocusIn>", lambda event: self.default(event,self.Entry_Proveedor, "Proveedor"))
+        self.Entry_Proveedor.bind("<FocusOut>", lambda event: self.default(event,self.Entry_Proveedor, "Proveedor"))
 
-        self.Entry_Fecha_de_entrega = tk.Entry(self.raiz, textvariable=self.Fecha_de_entrega, width=25)
+        self.Entry_Fecha_de_entrega = tk.Entry(self.raiz, textvariable=self.Fecha_de_entrega, width=25, fg = 'grey')
         self.Entry_Fecha_de_entrega.place(x=255, y =237)
+        self.Entry_Fecha_de_entrega.insert(0, "Fecha de entrega")
+        self.Entry_Fecha_de_entrega.bind("<FocusIn>", lambda event: self.default(event,self.Entry_Fecha_de_entrega, "Fecha de entrega"))
+        self.Entry_Fecha_de_entrega.bind("<FocusOut>", lambda event: self.default(event,self.Entry_Fecha_de_entrega, "Fecha de entrega"))
 
         self.imagen_boton_CrearProductos = tk.PhotoImage(file="crearProductos.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_CrearProductos, width=66, height=30,cursor="hand2",border=0,  command=lambda:self.crear_registro()) 
@@ -74,27 +97,35 @@ class Productos(Cerrar_Ventanas):
         self.Boton_regresar.place(x=2, y=340)
         
         
-        self.pantalla_principal1.withdraw()
-        
-       
 
     def Borrar_entrys(self):
-        self.Codigo_producto.set("")
-        self.NombreProducto.set("")
-        self.Precio_producto.set("")
-        self.Cantidad_producto.set("")
-        self.Marca_producto.set("")
-        self.Proveedor.set("")
-        self.Fecha_de_entrega.set("")
+        self.Codigo_producto.set("Codigo de producto")
+        self.Entry_Codigo_producto.config(fg="grey") 
+        self.NombreProducto.set("Nombre")
+        self.Entry_NombreProducto.config(fg="grey") 
+        self.Precio_producto.set("Precio")
+        self.Entry_Precio_producto.config(fg="grey") 
+        self.Cantidad_producto.set("Cantidad")
+        self.Entry_Cantidad_producto.config(fg="grey") 
+        self.Marca_producto.set("Marca")
+        self.Entry_Marca_producto.config(fg="grey") 
+        self.Proveedor.set("Proveedor")
+        self.Entry_Proveedor.config(fg="grey") 
+        self.Fecha_de_entrega.set("Fecha de entrega")
+        self.Entry_Fecha_de_entrega.config(fg="grey") 
 
     def crear_registro(self):
-        self.bandera = self.instanciaManejarProductos.Insertar(self.Codigo_producto.get(),
-            self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
-        if(self.bandera):
-            ms.showinfo("", "El producto se ha registrado con exito!")
+        if(self.contador_entrys_llenados_correctamente == 7):
+            self.bandera = self.instanciaManejarProductos.Insertar(self.Codigo_producto.get(),
+                self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
+            if(self.bandera):
+                ms.showinfo("", "El producto se ha registrado con exito!")
+            else:
+                ms.showerror("ERROR!!!", "El producto no ha podido ser registrado" )
+            self.Borrar_entrys()
         else:
-            ms.showerror("ERROR!!!", "El producto no ha podido ser registrado" )
-        self.Borrar_entrys()
+            ms.showinfo("", "Necesitas llenar todos los campos")
+
 
     def Modificar_registro(self):
         self.bandera = self.instanciaManejarProductos.Modificar(self.Codigo_producto.get(),
@@ -135,5 +166,20 @@ class Productos(Cerrar_Ventanas):
         nombre_ventana_anterior.deiconify()
         nombre_ventana_actual.destroy()
 
-    def m(event):
-        print "m"
+    def default(self, event, entry, texto_insertado):
+        """ Coloca las indicaciones temporales en los entrys """
+        self.informacion_entry = entry.get()
+        if(self.informacion_entry == "Nombre" or self.informacion_entry == "Codigo de producto" or self.informacion_entry == "Precio"
+            or self.informacion_entry == "Cantidad" or self.informacion_entry == "Marca" or self.informacion_entry == "Proveedor"
+            or self.informacion_entry == "Fecha de entrega"):
+            entry.delete(0, tk.END)
+            entry.config(fg="black")
+            self.contador_entrys_llenados_correctamente += 1
+
+        elif(self.informacion_entry == ""):
+
+            entry.insert(0,texto_insertado)
+            entry.config(fg="grey") 
+            self.contador_entrys_llenados_correctamente -= 1
+         
+        

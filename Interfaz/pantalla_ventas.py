@@ -48,7 +48,7 @@ class Ventas(Cerrar_Ventanas):
         self.tabla.column("#2", width=150, anchor="center")
         self.tabla.column("#3", width=100, anchor="center")
         self.tabla.column("#4", width=80, anchor="center")
-        self.tabla.column("#5", width=90, anchor="center")
+        self.tabla.column("#5", width=100, anchor="center")
         
 
         self.tabla.heading("#1", text="Codigo de Producto")
@@ -124,11 +124,14 @@ class Ventas(Cerrar_Ventanas):
         """Manda a la base de de datos la venta"""
         self.fecha_de_hoy = str(self.tiempo.day) + "/" + str(self.tiempo.month) + "/" + str(self.tiempo.year)
         self.lista = self.tabla.get_children()
-        for i in self.lista:
-            diccionario = self.tabla.item(i)
-            self.manejar_archivos_venta.Insertar(self.fecha_de_hoy, str(diccionario["values"][0]), diccionario["values"][1], str(diccionario["values"][2]), str(diccionario["values"][3]), str(diccionario["values"][4]))
-            self.buscar_modificar_producto(str(diccionario["values"][0]), str(diccionario["values"][3]))
-            self.tabla.delete(i)
+        try:
+            for i in self.lista:
+                diccionario = self.tabla.item(i)
+                self.manejar_archivos_venta.Insertar(self.fecha_de_hoy, str(diccionario["values"][0]), diccionario["values"][1], str(diccionario["values"][2]), str(diccionario["values"][3]), str(diccionario["values"][4]))
+                self.buscar_modificar_producto(str(diccionario["values"][0]), str(diccionario["values"][3]))
+                self.tabla.delete(i)
+        except IndexError:
+            print("Error, salida de rango")
         self.limpiar_campos()
         self.acumulador = 0
         self.mostrar_total.set("$0.0")

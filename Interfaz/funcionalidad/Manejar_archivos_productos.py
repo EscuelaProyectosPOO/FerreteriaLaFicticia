@@ -17,8 +17,10 @@ class Manejar_archivos_productos(Manejar_archivos, CRUD):
             self.identificador_producto = codigo
             self.bandera = self.insertar_linea_en_archivo_de_texto(self.registro_nuevo, self.identificador_producto)
             return self.bandera
-        except:
-            print("Error en insertar producto")
+        except EOFError:
+            print("Error linea 21 al abrir base_productos")
+        except IOError:
+            print("Error linea al abrir base_productos")
 
     def Buscar(self, codigo_producto):
         
@@ -27,6 +29,10 @@ class Manejar_archivos_productos(Manejar_archivos, CRUD):
             self.identificador_producto = codigo_producto
             self.lista_datos_productos = self.buscar_linea_en_archivo_de_texto(self.identificador_producto)
             return self.lista_datos_productos
+        except EOFError:
+            print("Error linea al abrir base_productos")
+        except IOError:
+            print("Error linea al abrir base_productos")
         except:
             print("Error en buscar productos")
 
@@ -38,6 +44,10 @@ class Manejar_archivos_productos(Manejar_archivos, CRUD):
             self.identificador_producto = codigo
             self.bandera = self.modificar_linea_en_archivo_texto(self.registro_nuevo, self.identificador_producto)
             return self.bandera
+        except EOFError:
+            print("Error linea al abrir base_productos")
+        except IOError:
+            print("Error linea al abrir base_productos")
         except:
             print("Error en modificar productos")
 
@@ -48,7 +58,10 @@ class Manejar_archivos_productos(Manejar_archivos, CRUD):
             self.identificador_producto = codigo_producto
             self.bandera = self.eliminar_linea_en_archivo_texto(self.identificador_producto)
             return self.bandera
-
+        except EOFError:
+            print("Error linea al abrir base_productos")
+        except IOError:
+            print("Error linea al abrir base_productos")
         except:
             print("Error en eliminar productos")
 
