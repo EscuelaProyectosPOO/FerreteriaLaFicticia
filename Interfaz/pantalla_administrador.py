@@ -20,12 +20,17 @@ class Administrador(Cerrar_Ventanas):
         self.fondo.place(x=0, y=0)
         self.Raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_Principal1))
 
+    def limpiar(self):
+        self.NombreText.set('')
+        self.contraText.set('')
+        self.rangoText.set('')
     def registrar(self):
         print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
         self.instancia_crear = Archivos_administrador()
         self.indicador = self.instancia_crear.Insertar(self.NombreText.get(), self.contraText.get(), self.rangoText.get())
         if (self.indicador):
             mensajes.showinfo('', 'Elemento registrado con éxito')
+            self.limpiar()
         else:
             mensajes.showerror('ERROR', 'No se puede registrar el usuario')
 
@@ -35,6 +40,7 @@ class Administrador(Cerrar_Ventanas):
         self.indicador = self.instancia_borrar.Eliminar(self.NombreText.get())
         if (self.indicador):
             mensajes.showinfo('', 'Elemento eliminado exitosamente')
+            self.limpiar()
         else:
             mensajes.showerror('ERROR', 'No se encontró este usuario')
 
@@ -45,23 +51,41 @@ class Administrador(Cerrar_Ventanas):
                                                             self.rangoText.get())
         if (self.indicador):
             mensajes.showinfo('', 'Elemento modificado con éxito')
+            self.limpiar()
         else:
             mensajes.showerror('ERROR', 'No se encuentra el usuario')
+
+    def buscar(self):
+        print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
+        self.instancia_buscar = Archivos_administrador()
+        self.linea_devuelta = self.instancia_buscar.Buscar(self.NombreText.get())
+        print self.linea_devuelta
+        if self.linea_devuelta == 0:
+            mensajes.showerror('ERROR', 'Elemento no encontrado')
+        else:
+            self.NombreText.set(self.linea_devuelta[0])
+            self.contraText.set(self.linea_devuelta[1])
+            self.rangoText.set(self.linea_devuelta[2])
 
     def ventana_principal(self):
         self.fodo_crear = PhotoImage(file='Boton_crear_usuario.gif')
         self.Bagregar = Button(self.Raiz, image=self.fodo_crear, command=lambda: self.registrar())
-        self.Bagregar.place(x=20, y=205)
+        self.Bagregar.place(x=140, y=205)
         self.Bagregar.config(bd=0)
 
         self.fodo_borrar = PhotoImage(file='Boton_borrar_usuario.gif')
         self.Bborrar = Button(self.Raiz, image=self.fodo_borrar, command=lambda: self.eliminar())
-        self.Bborrar.place(x=140, y=205)
+        self.Bborrar.place(x=140, y=245)
         self.Bborrar.config(bd=0)
+
+        self.fodo_buscar = PhotoImage(file='fondo_buscar.gif')
+        self.Bbuscar = Button(self.Raiz, image=self.fodo_buscar, command=lambda: self.buscar())
+        self.Bbuscar.place(x=260, y=205)
+        self.Bbuscar.config(bd=0)
 
         self.fodo_editar = PhotoImage(file='Boton_editar_usuario.gif')
         self.Beditar = Button(self.Raiz, image=self.fodo_editar, command=lambda: self.editar())
-        self.Beditar.place(x=260, y=205)
+        self.Beditar.place(x=260, y=245)
         self.Beditar.config(bd=0)
 
         self.imagen_boton_regresar = PhotoImage(file="boton_regresar.GIF")
@@ -77,7 +101,7 @@ class Administrador(Cerrar_Ventanas):
         self.contraText = StringVar()
         self.Contra = Entry(self.Raiz, textvariable=self.contraText, width=30)
         self.Contra.place(x=170, y=93)
-        self.Contra.config(show='*')
+        #self.Contra.config(show='*')
 
         self.rangoText = StringVar()
         self.Rango = Entry(self.Raiz, textvariable=self.rangoText, width=30)

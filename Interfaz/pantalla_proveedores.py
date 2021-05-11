@@ -24,6 +24,19 @@ class Proveedores(Cerrar_Ventanas):
         self.precioText.set('')
         self.productoText.set('')
 
+    def buscar(self):
+        print self.NombreText.get(), '\n', self.direcText.get(), '\n', self.productoText.get()
+        self.instancia_buscar = Archivos_proveedores()
+        self.linea_devuelta = self.instancia_buscar.Buscar(self.NombreText.get())
+        print self.linea_devuelta
+        if self.linea_devuelta == 0:
+            mensajes.showerror('ERROR', 'Elemento no encontrado')
+        else:
+            self.NombreText.set(self.linea_devuelta[0])
+            self.direcText.set(self.linea_devuelta[1])
+            self.productoText.set(self.linea_devuelta[2])
+            self.precioText.set(self.linea_devuelta[3])
+
     def registrar(self):
         self.instancia_crear = Archivos_proveedores()
         self.indicador = self.instancia_crear.Insertar(self.NombreText.get(), self.direcText.get(), self.productoText.get(), self.precioText.get())
@@ -54,18 +67,22 @@ class Proveedores(Cerrar_Ventanas):
     def ventana_principal(self):
         self.fondo_crear = PhotoImage(file='Boton_nuevo_proveedor.gif')
         self.Bagregar = Button(self.Raiz, image=self.fondo_crear, command=lambda: self.registrar())
-        self.Bagregar.place(x=20, y=230)
+        self.Bagregar.place(x=140, y=230)
         self.Bagregar.config(bd=0)
 
         self.fondo_borrar = PhotoImage(file='boton_eliminar_proveedor.gif')
         self.Bborrar = Button(self.Raiz, image=self.fondo_borrar, command=lambda: self.eliminar())
-        self.Bborrar.place(x=140, y=230)
+        self.Bborrar.place(x=140, y=275)
         self.Bborrar.config(bd=0)
 
+        self.fodo_buscar = PhotoImage(file='boton_buscar.gif')
+        self.Bbuscar = Button(self.Raiz, image=self.fodo_buscar, command=lambda: self.buscar())
+        self.Bbuscar.place(x=260, y=230)
+        self.Bbuscar.config(bd=0)
 
         self.fondo_editar = PhotoImage(file='boton_editar_proveedor.gif')
         self.Beditar = Button(self.Raiz, image=self.fondo_editar, cursor="hand2", command=lambda: self.editar())
-        self.Beditar.place(x=260, y=230)
+        self.Beditar.place(x=260, y=275)
         self.Beditar.config(bd=0)
 
         self.imagen_boton_regresar = PhotoImage(file="boton_regresar.GIF")
