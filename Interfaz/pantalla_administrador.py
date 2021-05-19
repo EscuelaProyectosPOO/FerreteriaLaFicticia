@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from Tkinter import *
-import tkMessageBox as mensajes
+#from Tkinter import *
+#import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
-#from pantalla_inicio import Pantalla_de_inicio
+import ttk
+from funcionalidad.Exepciones import *
 
 
 class Administrador(Cerrar_Ventanas):
@@ -17,7 +18,9 @@ class Administrador(Cerrar_Ventanas):
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_admin.GIF')
         self.fondo = Label(self.Raiz, image=self.imagen)
-        self.fondo.place(x=0, y=0)
+        self.fondo.place(x=-2, y=-1)
+        self.menu = Menu(self.Raiz)
+        self.Raiz.config(menu=self.menu)
         self.Raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_Principal1))
 
     def limpiar(self):
@@ -25,14 +28,35 @@ class Administrador(Cerrar_Ventanas):
         self.contraText.set('')
         self.rangoText.set('')
     def registrar(self):
-        print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
-        self.instancia_crear = Archivos_administrador()
-        self.indicador = self.instancia_crear.Insertar(self.NombreText.get(), self.contraText.get(), self.rangoText.get())
-        if (self.indicador):
-            mensajes.showinfo('', 'Elemento registrado con éxito')
-            self.limpiar()
-        else:
-            mensajes.showerror('ERROR', 'No se puede registrar el usuario')
+        band = True
+        try:
+            if self.NombreText.get() == '' or self.contraText.get() == '' or self.rangoText.get() == '':
+                raise Vacio
+        except Vacio as v:
+            print Vacio, v
+            band = False
+
+        num = True
+        try:
+            var = int(self.rangoText.get())
+        except:
+            num = False
+
+        try:
+            if num == False:
+                raise Numeros
+        except Numeros as n:
+            print Numeros, n
+            band = False
+
+        if band == True:
+            self.instancia_crear = Archivos_administrador()
+            self.indicador = self.instancia_crear.Insertar(self.NombreText.get(), self.contraText.get(), self.rangoText.get())
+            if (self.indicador):
+                mensajes.showinfo('', 'Elemento registrado con éxito')
+                self.limpiar()
+            else:
+                mensajes.showerror('ERROR', 'No se puede registrar el usuario')
 
     def eliminar(self):
         print self.NombreText.get()
@@ -67,7 +91,35 @@ class Administrador(Cerrar_Ventanas):
             self.contraText.set(self.linea_devuelta[1])
             self.rangoText.set(self.linea_devuelta[2])
 
+    def reporte(self):
+        self.reporte_usuarios = Toplevel(self.Raiz)
+        self.tabla = ttk.Treeview(self.reporte_usuarios, show='headings',
+                                  columns=("nombre", "contra", "rango"), height=12)
+        self.tabla.grid(row=0, column=0)
+
+        self.tabla.column("nombre", anchor="center")
+        self.tabla.column("contra", anchor="center")
+        self.tabla.column("rango", anchor="center")
+
+        self.tabla.heading("nombre", text='Nombre')
+        self.tabla.heading("contra", text='Contraseña')
+        self.tabla.heading("rango", text='Rango')
+
+        self.barra = Scrollbar(self.reporte_usuarios, orient="vertical", command=self.tabla.yview())
+        self.barra.grid(row=0, column=2, sticky="ns")
+        self.tabla.config(yscrollcommand=self.barra.set)
+
+        self.muestra_datos()
+
+    def muestra_datos(self):
+        self.llamada = Archivos_administrador()
+        self.muestra = self.llamada.info()
+        for i in self.muestra:
+            self.linea = i.split("  ")
+            self.tabla.insert("", END, text="", values=(self.linea[0], self.linea[1], self.linea[2]))
+
     def ventana_principal(self):
+        self.menu.add_command(label="Lista de usuarios", command=lambda:self.reporte())
         self.fodo_crear = PhotoImage(file='Boton_crear_usuario.gif')
         self.Bagregar = Button(self.Raiz, image=self.fodo_crear, command=lambda: self.registrar())
         self.Bagregar.place(x=140, y=205)
