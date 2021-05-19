@@ -24,6 +24,8 @@ class Ventas(Cerrar_Ventanas):
         self.raiz.bind("<Destroy>",lambda event: self.volver_con_cerrado_ventana(event,self.pantalla_principal1))
         self.manejar_archivos_productos = Manejar_archivos_productos()
         self.manejar_archivos_venta = Manejar_archivos_ventas()
+        self.Barra_menu_principal = tk.Menu(self.raiz)
+        self.raiz.config(menu=self.Barra_menu_principal)
         self.tiempo = datetime.now()
         self.mostrar_total = tk.StringVar()
         self.Codigo_producto = tk.StringVar()
@@ -32,6 +34,8 @@ class Ventas(Cerrar_Ventanas):
         
     def ventana_principal(self):
         """ Muestra todos los productos"""
+        self.Barra_menu_principal.add_command(label="Reporte", command=lambda:self.reporte())
+        self.Barra_menu_principal.add_command(label="Corte de caja", command=lambda:self.l())
         self.Entry_Codigo_producto = tk.Entry(self.raiz, textvariable=self.Codigo_producto, width=25)
         self.Entry_Codigo_producto.place(x=75, y=69)
         self.Entry_Cantidad = tk.Entry(self.raiz, textvariable=self.Cantidad, width=10)
@@ -153,4 +157,44 @@ class Ventas(Cerrar_Ventanas):
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
         nombre_ventana_actual.destroy()
+
+    def reporte(self):
+        """Visualizar los datos de la Base_Ventas"""
+        self.reporte_ventas = tk.Toplevel(self.raiz)
+        self.tabla1 = ttk.Treeview(self.reporte_ventas, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6"), height=12)
+        self.tabla1.grid(row=1, column=1, sticky='nesw' )
+
+        self.tabla1.column("#1", anchor="center")
+        self.tabla1.column("#2", anchor="center")
+        self.tabla1.column("#3", anchor="center")
+        self.tabla1.column("#4", anchor="center")
+        self.tabla1.column("#5", anchor="center")
+        self.tabla1.column("#6", anchor="center")
+        
+
+        self.tabla1.heading("#1", text="Fecha de venta")
+        self.tabla1.heading("#2",  text="Codigo de Producto")
+        self.tabla1.heading("#3", text="Nombre")
+        self.tabla1.heading("#4", text="Precio unitario")
+        self.tabla1.heading("#5", text="Cantidad")
+        self.tabla1.heading("#6", text="Total por piezas")
+        
+
+        self.scrollbar = tk.Scrollbar(self.reporte_ventas, orient="vertical", command=self.tabla1.yview)
+        self.scrollbar.grid(row=1, column=2, sticky='ns')
+        self.tabla1.config(yscrollcommand=self.scrollbar.set)
+        self.datos_reporte()
+
+    def datos_reporte(self):
+        """Trae datos del archivo Base_Ventas"""
+        self.informacion_del_archivo = self.manejar_archivos_venta.traer_informacion()
+        for linea in self.informacion_del_archivo:
+            self.lineas = linea.split("  ")
+            self.tabla1.insert("",tk.END,text="", values=(self.lineas[0], self.lineas[1], self.lineas[2], self.lineas[3], self.lineas[4], self.lineas[5]))
+
+
+        
+        
+
+        
 
