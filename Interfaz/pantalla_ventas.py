@@ -161,6 +161,7 @@ class Ventas(Cerrar_Ventanas):
     def reporte(self):
         """Visualizar los datos de la Base_Ventas"""
         self.reporte_ventas = tk.Toplevel(self.raiz)
+        self.reporte_ventas.title("Reporte de ventas")
         self.tabla1 = ttk.Treeview(self.reporte_ventas, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6"), height=12)
         self.tabla1.grid(row=1, column=1, sticky='nesw' )
 
