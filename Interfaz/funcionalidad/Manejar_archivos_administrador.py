@@ -54,3 +54,13 @@ class Archivos_administrador(Manejar_archivos, CRUD):
             return self.linea
         except:
             print 'Usuario no encontrado'
+
+    def info(self):
+        try:
+            self.abrir_archivo("Base_empleados")
+            self.informacion_del_archivo = self.archivo.readlines()
+            self.archivo.close()
+            return self.informacion_del_archivo
+        except Exception as e:
+            print("Error en traer la informacion", type(e).__name__)
+

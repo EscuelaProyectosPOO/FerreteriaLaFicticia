@@ -56,5 +56,15 @@ class Archivos_proveedores(Manejar_archivos, CRUD):
         except:
             print 'Error al encontrar proveedor'
 
+    def info(self):
+        try:
+            self.abrir_archivo("Base_proveedores")
+            self.informacion_del_archivo = self.archivo.readlines()
+            self.archivo.close()
+            return self.informacion_del_archivo
+        except Exception as e:
+            print("Error en traer la informacion", type(e).__name__)
+
+
 
 

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from Tkinter import *
-import tkMessageBox as mensajes
+#from Tkinter import *
+import ttk
+#import tkMessageBox as mensajes
+from funcionalidad.Exepciones import *
 from funcionalidad.Manejar_archivos_proveedores import Archivos_proveedores
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
 
@@ -9,12 +11,14 @@ class Proveedores(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
         self.pantalla_principal1 = pantalla_principal
         self.Raiz = Toplevel(self.pantalla_principal1)
-        self.Raiz.geometry('390x345')
+        self.Raiz.geometry('390x335')
         self.Raiz.title('Proveedores')
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_proveeores.gif')
         self.fondo = Label(self.Raiz, image=self.imagen)
         self.fondo.place(x=0, y=0)
+        self.menu = Menu(self.Raiz)
+        self.Raiz.config(menu=self.menu)
         self.Raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
 
 
@@ -38,13 +42,35 @@ class Proveedores(Cerrar_Ventanas):
             self.precioText.set(self.linea_devuelta[3])
 
     def registrar(self):
-        self.instancia_crear = Archivos_proveedores()
-        self.indicador = self.instancia_crear.Insertar(self.NombreText.get(), self.direcText.get(), self.productoText.get(), self.precioText.get())
-        if (self.indicador):
-            mensajes.showinfo('', 'Elemento registrado con éxito')
-        else:
-            mensajes.showerror('ERROR', 'No se puede registrar el proveedor')
-        self.limpiar()
+        band = True
+        try:
+            if self.NombreText.get() == '' or self.direcText.get() == '' or self.precioText.get() == '' or self.productoText.get() == '':
+                raise Vacio
+        except Vacio as v:
+            print Vacio, v
+            band = False
+
+        num = True
+        try:
+            var = int(self.precioText.get())
+        except:
+            num= False
+
+        try:
+            if num == False:
+                raise Numeros
+        except Numeros as n:
+            print Numeros, n
+            band = False
+
+        if band == True:
+            self.instancia_insertar = Archivos_proveedores()
+            self.indicador = self.instancia_insertar.Insertar(self.NombreText.get(), self.direcText.get(), self.productoText.get(), self.precioText.get())
+            if (self.indicador):
+                mensajes.showinfo('', 'Registro exitoso')
+                self.limpiar()
+            else:
+                mensajes.showerror('Error', 'Ya existe un proveedor con este nombre')
 
     def eliminar(self):
         self.instancia_borrar = Archivos_proveedores()
@@ -64,32 +90,62 @@ class Proveedores(Cerrar_Ventanas):
             mensajes.showerror('ERROR', 'No se encuentra el proveedor')
         self.limpiar()
 
+    def reporte(self):
+        self.reporte_proveeores = Toplevel(self.Raiz)
+        self.tabla = ttk.Treeview(self.reporte_proveeores, show='headings', columns=("nombre", "direccion", "producto", "precio"), height=12)
+        self.tabla.grid(row=0, column=0)
+
+        self.tabla.column("nombre", anchor="center")
+        self.tabla.column("direccion", anchor="center")
+        self.tabla.column("producto", anchor="center")
+        self.tabla.column("precio", anchor="center")
+
+        self.tabla.heading("nombre", text='Nombre')
+        self.tabla.heading("direccion", text='Dirección')
+        self.tabla.heading("producto", text='Producto')
+        self.tabla.heading("precio", text='Precio unitario')
+
+        self.barra = Scrollbar(self.reporte_proveeores, orient="vertical", command=self.tabla.yview())
+        self.barra.grid(row=0, column=2, sticky="ns")
+        self.tabla.config(yscrollcommand=self.barra.set)
+
+        self.muestra_datos()
+
+    def muestra_datos(self):
+        self.llamada = Archivos_proveedores()
+        self.muestra = self.llamada.info()
+        for i in self.muestra:
+            self.linea = i.split("  ")
+            self.tabla.insert("", END, text="", values=(self.linea[0], self.linea[1], self.linea[2], self.linea[3]))
+
     def ventana_principal(self):
+
+        self.menu.add_command(label="Lista de proveedores", command=lambda:self.reporte())
         self.fondo_crear = PhotoImage(file='Boton_nuevo_proveedor.gif')
         self.Bagregar = Button(self.Raiz, image=self.fondo_crear, command=lambda: self.registrar())
-        self.Bagregar.place(x=140, y=230)
+        self.Bagregar.place(x=10, y=220)
         self.Bagregar.config(bd=0)
 
         self.fondo_borrar = PhotoImage(file='boton_eliminar_proveedor.gif')
         self.Bborrar = Button(self.Raiz, image=self.fondo_borrar, command=lambda: self.eliminar())
-        self.Bborrar.place(x=140, y=275)
+        self.Bborrar.place(x=10, y=275)
         self.Bborrar.config(bd=0)
 
         self.fodo_buscar = PhotoImage(file='boton_buscar.gif')
         self.Bbuscar = Button(self.Raiz, image=self.fodo_buscar, command=lambda: self.buscar())
-        self.Bbuscar.place(x=260, y=230)
+        self.Bbuscar.place(x=140, y=220)
         self.Bbuscar.config(bd=0)
 
         self.fondo_editar = PhotoImage(file='boton_editar_proveedor.gif')
         self.Beditar = Button(self.Raiz, image=self.fondo_editar, cursor="hand2", command=lambda: self.editar())
-        self.Beditar.place(x=260, y=275)
+        self.Beditar.place(x=140, y=275)
         self.Beditar.config(bd=0)
 
         self.imagen_boton_regresar = PhotoImage(file="boton_regresar.GIF")
         self.Boton_regresar = Button(self.Raiz, image=self.imagen_boton_regresar, width=120, height=65,
                                         cursor="hand2", border=0,
                                         command=lambda: self.volver(self.Raiz, self.pantalla_principal1))
-        self.Boton_regresar.place(x=2, y=280)
+        self.Boton_regresar.place(x=260, y=240)
 
         self.NombreText = StringVar()
         self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30)
