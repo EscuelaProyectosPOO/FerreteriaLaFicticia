@@ -59,6 +59,11 @@ class Proveedores(Cerrar_Ventanas):
         try:
             if num == False:
                 raise Numeros
+            try:
+                if var <= 0:
+                    raise Negativos
+            except Negativos as N:
+                band = False
         except Numeros as n:
             print Numeros, n
             band = False

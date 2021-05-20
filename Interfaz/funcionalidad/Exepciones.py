@@ -14,3 +14,9 @@ class Vacio(Exception):
     def __init__(self):
         print 'Vacío'
         mensajes.showerror('ERROR', 'No deben quedar campos vacíos')
+
+
+class Negativos:
+    def __init__(self):
+        print 'Vacío'
+        mensajes.showerror('ERROR', 'No puedes poner valores negativos')

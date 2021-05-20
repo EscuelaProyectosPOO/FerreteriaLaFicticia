@@ -26,12 +26,12 @@ class Usuarios:
         comp = Archivos_administrador()
         self.linea_retornada = comp.Buscar(self.nombretext.get())
         if self.linea_retornada == 0:
-            mensajes.showerror('ERROR', 'Nombre o contraseña incorrectos')
+            mensajes.showerror('ERROR', 'Nombre incorrecto')
         else:
             if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
                 llamada = Pantalla_de_inicio()
             else:
-                mensajes.showerror('ERROR', 'Nombre o contraseña incorrectos')
+                mensajes.showerror('ERROR', 'Contraseña incorrecta')
 
 
     def ventana(self):

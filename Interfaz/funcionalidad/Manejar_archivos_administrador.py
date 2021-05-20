@@ -9,17 +9,13 @@ class Archivos_administrador(Manejar_archivos, CRUD):
         Manejar_archivos()
 
     def Insertar(self, Nombre, Contra, Tipo):
-        try:
-            self.abrir_archivo('Base_empleados')
-            self.usuario_nuevo = Nombre + '  ' + Contra + '  ' + Tipo
-            print self.usuario_nuevo
-            self.identificador = Nombre
-            print self.identificador
-            self.band = self.insertar_linea_en_archivo_de_texto(self.usuario_nuevo, self.identificador)
-            return self.band
-
-        except:
-            print 'Error al registrar usuario'
+        self.abrir_archivo('Base_empleados')
+        self.usuario_nuevo = Nombre + '  ' + Contra + '  ' + Tipo
+        print self.usuario_nuevo
+        self.identificador = Nombre
+        print self.identificador
+        self.band = self.insertar_linea_en_archivo_de_texto(self.usuario_nuevo, self.identificador)
+        return self.band
 
     def Eliminar(self, Nombre):
         try:
@@ -56,11 +52,8 @@ class Archivos_administrador(Manejar_archivos, CRUD):
             print 'Usuario no encontrado'
 
     def info(self):
-        try:
-            self.abrir_archivo("Base_empleados")
-            self.informacion_del_archivo = self.archivo.readlines()
-            self.archivo.close()
-            return self.informacion_del_archivo
-        except Exception as e:
-            print("Error en traer la informacion", type(e).__name__)
+        self.abrir_archivo("Base_empleados")
+        self.informacion_del_archivo = self.archivo.readlines()
+        self.archivo.close()
+        return self.informacion_del_archivo
 
