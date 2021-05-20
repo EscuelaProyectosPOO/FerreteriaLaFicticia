@@ -9,6 +9,8 @@ from datetime import datetime
 from funcionalidad.Manejar_archivos_productos import Manejar_archivos_productos
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
 from funcionalidad.Manejar_archivos_ventas import Manejar_archivos_ventas
+from funcionalidad.Exepciones import inexistencia_producto_tabla
+from funcionalidad.Exepciones import Campos_vacios_en_ventas
 
 class Ventas(Cerrar_Ventanas):
 
@@ -35,7 +37,6 @@ class Ventas(Cerrar_Ventanas):
     def ventana_principal(self):
         """ Muestra todos los productos"""
         self.Barra_menu_principal.add_command(label="Reporte", command=lambda:self.reporte())
-        self.Barra_menu_principal.add_command(label="Corte de caja", command=lambda:self.l())
         self.Entry_Codigo_producto = tk.Entry(self.raiz, textvariable=self.Codigo_producto, width=25)
         self.Entry_Codigo_producto.place(x=75, y=69)
         self.Entry_Cantidad = tk.Entry(self.raiz, textvariable=self.Cantidad, width=10)
@@ -90,22 +91,35 @@ class Ventas(Cerrar_Ventanas):
     def Agregar_item(self):
         """Agrega un producto a la tabla"""
         try:
-            self.datos_producto = self.manejar_archivos_productos.Buscar(self.Codigo_producto.get())
-            if(self.datos_producto == 0):
-                ms.showerror("", "el producto que intentas agregar no existe")
-            else: 
-                self.nombre = self.datos_producto[1] 
-                self.precio_unitario = float(self.datos_producto[2])
-                self.cantidad_por_precio = self.precio_unitario * self.Cantidad.get()
-                self.cantidad_en_existencia = int(self.datos_producto[3])
+            if(self.Codigo_producto.get() == "" or self.Cantidad.get() == "" or self.Codigo_producto.get() != "" and self.Cantidad.get() == "" ):
+                raise Campos_vacios_en_ventas
+            else:
+                self.datos_producto = self.manejar_archivos_productos.Buscar(self.Codigo_producto.get())
 
-                if(self.cantidad_en_existencia >= self.Cantidad.get()):
-                    self.tabla.insert("",tk.END,text="", iid=self.Codigo_producto.get(), values=(self.Codigo_producto.get(), self.nombre, self.precio_unitario, self.Cantidad.get(), self.cantidad_por_precio) )
-                    self.acumulador += self.cantidad_por_precio
-                    self.mostrar_total.set( "$" + str(self.acumulador))
-                else:
-                    ms.showinfo("", "El producto " + self.nombre + " solo cuenta con " + str(self.cantidad_en_existencia) + " unidades")
-        except:
+                if(self.datos_producto == 0):
+                    raise inexistencia_producto_tabla
+                else: 
+                    self.nombre = self.datos_producto[1] 
+                    self.precio_unitario = float(self.datos_producto[2])
+                    self.cantidad_por_precio = self.precio_unitario * self.Cantidad.get()
+                    self.cantidad_en_existencia = int(self.datos_producto[3])
+
+                    if(self.cantidad_en_existencia >= self.Cantidad.get()):
+                        self.tabla.insert("",tk.END,text="", iid=self.Codigo_producto.get(), values=(self.Codigo_producto.get(), self.nombre, self.precio_unitario, self.Cantidad.get(), self.cantidad_por_precio) )
+                        self.acumulador += self.cantidad_por_precio
+                        self.mostrar_total.set( "$" + str(self.acumulador))
+                    else:
+                        ms.showinfo("", "El producto " + self.nombre + " solo cuenta con " + str(self.cantidad_en_existencia) + " unidades")
+        except Campos_vacios_en_ventas as e:
+            print Campos_vacios_en_ventas, e
+
+        except inexistencia_producto_tabla as e:
+            print  inexistencia_producto_tabla, e
+        except ValueError as e:
+            print  type(e).__name__
+            ms.showerror("Error!!!", "No se aceptan esos datos")
+        except Exception as e :
+            print  type(e).__name__
             ms.showerror("Error!!!", "Ya has agregado este producto")
         finally:
             self.limpiar_campos()
@@ -162,6 +176,11 @@ class Ventas(Cerrar_Ventanas):
         """Visualizar los datos de la Base_Ventas"""
         self.reporte_ventas = tk.Toplevel(self.raiz)
         self.reporte_ventas.title("Reporte de ventas")
+        self.fecha_buscar = tk.StringVar()
+
+        self.label = tk.Label(self.reporte_ventas, text="Fecha de ventas").grid(row=0, column=1)
+        self.entry = tk.Entry(self.reporte_ventas, textvariable=self.fecha_buscar).grid(row=0, column=2)
+
         self.tabla1 = ttk.Treeview(self.reporte_ventas, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6"), height=12)
         self.tabla1.grid(row=1, column=1, sticky='nesw' )
 

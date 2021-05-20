@@ -14,3 +14,17 @@ class Vacio(Exception):
     def __init__(self):
         print 'Vacío'
         mensajes.showerror('ERROR', 'No deben quedar campos vacíos')
+
+
+class inexistencia_producto_tabla(Exception):
+    def __init__(self):
+        print "Error en agregar producto inexistente en la tabla a la tabla de ventas"
+        mensajes.showerror("", "el producto que intentas agregar no existe")
+
+
+class Campos_vacios_en_ventas(Exception):
+    def __init__(self):
+        mensajes.showerror("", "Debes llenar todos los campos para podera gregar el producto")
+        print "Error en la tabla por no llenar los campos"
+
+ 
