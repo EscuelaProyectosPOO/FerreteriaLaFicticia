@@ -16,6 +16,7 @@ class Vacio(Exception):
         mensajes.showerror('ERROR', 'No deben quedar campos vacíos')
 
 
+
 class inexistencia_producto_tabla(Exception):
     def __init__(self):
         print "Error en agregar producto inexistente en la tabla a la tabla de ventas"
@@ -28,3 +29,7 @@ class Campos_vacios_en_ventas(Exception):
         print "Error en la tabla por no llenar los campos"
 
  
+class Negativos:
+    def __init__(self):
+        print 'Vacío'
+        mensajes.showerror('ERROR', 'No puedes poner valores negativos')

@@ -27,6 +27,7 @@ class Administrador(Cerrar_Ventanas):
         self.NombreText.set('')
         self.contraText.set('')
         self.rangoText.set('')
+
     def registrar(self):
         band = True
         try:
@@ -39,12 +40,17 @@ class Administrador(Cerrar_Ventanas):
         num = True
         try:
             var = int(self.rangoText.get())
-        except:
+        except ValueError:
             num = False
 
         try:
             if num == False:
                 raise Numeros
+            try:
+                if var <= 0:
+                    raise Negativos
+            except Negativos as N:
+                band = False
         except Numeros as n:
             print Numeros, n
             band = False
@@ -56,7 +62,7 @@ class Administrador(Cerrar_Ventanas):
                 mensajes.showinfo('', 'Elemento registrado con éxito')
                 self.limpiar()
             else:
-                mensajes.showerror('ERROR', 'No se puede registrar el usuario')
+                mensajes.showerror('')
 
     def eliminar(self):
         print self.NombreText.get()
@@ -84,12 +90,13 @@ class Administrador(Cerrar_Ventanas):
         self.instancia_buscar = Archivos_administrador()
         self.linea_devuelta = self.instancia_buscar.Buscar(self.NombreText.get())
         print self.linea_devuelta
-        if self.linea_devuelta == 0:
-            mensajes.showerror('ERROR', 'Elemento no encontrado')
-        else:
+        try:
             self.NombreText.set(self.linea_devuelta[0])
             self.contraText.set(self.linea_devuelta[1])
             self.rangoText.set(self.linea_devuelta[2])
+        except TypeError:
+            print 'Elemento no encontrado'
+            mensajes.showerror('ERROR', 'No se encuentra el usuario')
 
     def reporte(self):
         self.reporte_usuarios = Toplevel(self.Raiz)

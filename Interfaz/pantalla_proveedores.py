@@ -59,6 +59,11 @@ class Proveedores(Cerrar_Ventanas):
         try:
             if num == False:
                 raise Numeros
+            try:
+                if var <= 0:
+                    raise Negativos
+            except Negativos as N:
+                band = False
         except Numeros as n:
             print Numeros, n
             band = False
@@ -92,6 +97,7 @@ class Proveedores(Cerrar_Ventanas):
 
     def reporte(self):
         self.reporte_proveeores = Toplevel(self.Raiz)
+        self.reporte_proveeores.resizable(0, 0)
         self.tabla = ttk.Treeview(self.reporte_proveeores, show='headings', columns=("nombre", "direccion", "producto", "precio"), height=12)
         self.tabla.grid(row=0, column=0)
 
