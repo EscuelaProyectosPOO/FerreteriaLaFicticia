@@ -93,16 +93,15 @@ class Administrador(Cerrar_Ventanas):
 
     def reporte(self):
         self.reporte_usuarios = Toplevel(self.Raiz)
+        self.reporte_usuarios.resizable(0, 0)
         self.tabla = ttk.Treeview(self.reporte_usuarios, show='headings',
-                                  columns=("nombre", "contra", "rango"), height=12)
+                                  columns=("nombre", "rango"), height=12)
         self.tabla.grid(row=0, column=0)
 
         self.tabla.column("nombre", anchor="center")
-        self.tabla.column("contra", anchor="center")
         self.tabla.column("rango", anchor="center")
 
         self.tabla.heading("nombre", text='Nombre')
-        self.tabla.heading("contra", text='Contraseña')
         self.tabla.heading("rango", text='Rango')
 
         self.barra = Scrollbar(self.reporte_usuarios, orient="vertical", command=self.tabla.yview())
@@ -116,7 +115,7 @@ class Administrador(Cerrar_Ventanas):
         self.muestra = self.llamada.info()
         for i in self.muestra:
             self.linea = i.split("  ")
-            self.tabla.insert("", END, text="", values=(self.linea[0], self.linea[1], self.linea[2]))
+            self.tabla.insert("", END, text="", values=(self.linea[0], self.linea[2]))
 
     def ventana_principal(self):
         self.menu.add_command(label="Lista de usuarios", command=lambda:self.reporte())
