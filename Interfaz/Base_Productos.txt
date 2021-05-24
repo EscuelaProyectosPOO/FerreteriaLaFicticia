@@ -1,2 +1,2 @@
-0001  chetos  10  22  sabritas  sabritas  20/03/2021
-0002  tornillos  0.5  3  Pthilips  sdfsefewf  20/03/2021
+1  crema  12.40  46  pons  juanito  4/5/2021
+2  clavos  0.50  200  lion  el chico de la esquina  22/3/2021

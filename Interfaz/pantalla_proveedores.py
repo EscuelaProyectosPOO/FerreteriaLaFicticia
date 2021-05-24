@@ -43,6 +43,7 @@ class Proveedores(Cerrar_Ventanas):
 
     def registrar(self):
         band = True
+        var = 0
         try:
             if self.NombreText.get() == '' or self.direcText.get() == '' or self.precioText.get() == '' or self.productoText.get() == '':
                 raise Vacio
@@ -52,18 +53,20 @@ class Proveedores(Cerrar_Ventanas):
 
         num = True
         try:
-            var = int(self.precioText.get())
-        except:
+            var = float(self.precioText.get())
+        except ValueError:
             num= False
 
         try:
-            if num == False:
+            if num == False and band == True:
                 raise Numeros
             try:
-                if var <= 0:
+                if var <= -1:
                     raise Negativos
             except Negativos as N:
+                print Negativos, N
                 band = False
+
         except Numeros as n:
             print Numeros, n
             band = False
@@ -87,13 +90,43 @@ class Proveedores(Cerrar_Ventanas):
         self.limpiar()
 
     def editar(self):
-        self.instancia_editar = Archivos_proveedores()
-        self.indicador = self.instancia_editar.Modificar(self.NombreText.get(), self.direcText.get(), self.productoText.get(), self.precioText.get())
-        if (self.indicador):
-            mensajes.showinfo('', 'Elemento modificado con éxito')
-        else:
-            mensajes.showerror('ERROR', 'No se encuentra el proveedor')
-        self.limpiar()
+        band = True
+        var = 0
+        try:
+            if self.NombreText.get() == '' or self.direcText.get() == '' or self.precioText.get() == '' or self.productoText.get() == '':
+                raise Vacio
+        except Vacio as v:
+            print Vacio, v
+            band = False
+
+        num = True
+        try:
+            var = float(self.precioText.get())
+        except ValueError:
+            num = False
+
+        try:
+            if num == False and band == True:
+                raise Numeros
+            try:
+                if var <= -1:
+                    raise Negativos
+            except Negativos as N:
+                print Negativos, N
+                band = False
+
+        except Numeros as n:
+            print Numeros, n
+            band = False
+
+        if band == True:
+            self.instancia_editar = Archivos_proveedores()
+            self.indicador = self.instancia_editar.Modificar(self.NombreText.get(), self.direcText.get(), self.productoText.get(), self.precioText.get())
+            if (self.indicador):
+                mensajes.showinfo('', 'Elemento modificado con éxito')
+            else:
+                mensajes.showerror('ERROR', 'No se encuentra el proveedor')
+            self.limpiar()
 
     def reporte(self):
         self.reporte_proveeores = Toplevel(self.Raiz)
