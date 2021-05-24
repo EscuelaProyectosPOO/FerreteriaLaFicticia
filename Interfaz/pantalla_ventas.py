@@ -11,6 +11,8 @@ from funcionalidad.Evento_regresar import Cerrar_Ventanas
 from funcionalidad.Manejar_archivos_ventas import Manejar_archivos_ventas
 from funcionalidad.Exepciones import inexistencia_producto_tabla
 from funcionalidad.Exepciones import Campos_vacios_en_ventas
+from funcionalidad.Exepciones import Negativos
+
 
 class Ventas(Cerrar_Ventanas):
 
@@ -93,6 +95,10 @@ class Ventas(Cerrar_Ventanas):
         try:
             if(self.Codigo_producto.get() == "" or self.Cantidad.get() == "" or self.Codigo_producto.get() != "" and self.Cantidad.get() == "" ):
                 raise Campos_vacios_en_ventas
+            elif(self.Cantidad.get() < 0 ):
+                raise Negativos
+            elif(self.Cantidad.get() == 0):
+                ms.showerror("Error!!!", "No podemos poner operar sobre la cantidad 0")
             else:
                 self.datos_producto = self.manejar_archivos_productos.Buscar(self.Codigo_producto.get())
 
@@ -116,10 +122,8 @@ class Ventas(Cerrar_Ventanas):
         except inexistencia_producto_tabla as e:
             print  inexistencia_producto_tabla, e
         except ValueError as e:
-            print  type(e).__name__
             ms.showerror("Error!!!", "No se aceptan esos datos")
         except Exception as e :
-            print  type(e).__name__
             ms.showerror("Error!!!", "Ya has agregado este producto")
         finally:
             self.limpiar_campos()
@@ -132,8 +136,11 @@ class Ventas(Cerrar_Ventanas):
             self.acumulador -= float(self.lista_valores_item["values"][4])
             self.mostrar_total.set("$" + str(self.acumulador))
             self.tabla.delete(self.Codigo_producto.get())
-            
-        except:
+
+        except IndexError as e:
+            ms.showerror("Error!!!", "No podemos eliminar un elemento que no existe")
+        except Exception as e :
+            print  type(e).__name__
             ms.showerror("Error!!!", "Ya ha sido eliminado ese producto de la tabla")
         finally:
             self.limpiar_campos()

@@ -5,6 +5,8 @@ import ttk
 import tkMessageBox as ms
 from funcionalidad.Manejar_archivos_productos import Manejar_archivos_productos
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
+from funcionalidad.Exepciones import Vacio
+from funcionalidad.Exepciones import CodigoProducto
 
 class Productos(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
@@ -115,52 +117,77 @@ class Productos(Cerrar_Ventanas):
         self.Entry_Fecha_de_entrega.config(fg="grey") 
 
     def crear_registro(self):
-        if(self.contador_entrys_llenados_correctamente == 7):
-            self.bandera = self.instanciaManejarProductos.Insertar(self.Codigo_producto.get(),
-                self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
-            if(self.bandera):
-                ms.showinfo("", "El producto se ha registrado con exito!")
+        try:
+            if(self.contador_entrys_llenados_correctamente == 7):
+                if(float(self.Precio_producto.get()) <=0 or  int(self.Cantidad_producto.get()) <= 0):
+                    ms.showerror("", "El precio o la cantidad de producto no debe ser negativa ni nula")
+                else:
+                    self.bandera = self.instanciaManejarProductos.Insertar(self.Codigo_producto.get(),
+                        self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
+                    if(self.bandera):
+                        ms.showinfo("", "El producto se ha registrado con exito!")
+                    else:
+                        ms.showerror("ERROR!!!", "El producto no ha podido ser registrado" )
+                    self.Borrar_entrys()
             else:
-                ms.showerror("ERROR!!!", "El producto no ha podido ser registrado" )
-            self.Borrar_entrys()
-        else:
-            ms.showinfo("", "Necesitas llenar todos los campos")
+                raise Vacio
+        except Vacio as e:
+            print e
+        
 
 
     def Modificar_registro(self):
-        self.bandera = self.instanciaManejarProductos.Modificar(self.Codigo_producto.get(),
-            self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
-        if(self.bandera):
-            ms.showinfo("", "El producto se ha modificado con exito!")
-        else:
-            ms.showerror("ERROR!!!", "El producto no ha podido ser modificado" )
-        self.Borrar_entrys()
+        try:
+            if(self.contador_entrys_llenados_correctamente == 7):
+                self.bandera = self.instanciaManejarProductos.Modificar(self.Codigo_producto.get(),
+                    self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
+                if(self.bandera):
+                    ms.showinfo("", "El producto se ha modificado con exito!")
+                else:
+                    ms.showerror("ERROR!!!", "El producto no ha podido ser modificado" )
+                self.Borrar_entrys()
+            else:
+                raise Vacio
+        except Vacio as e:
+            print e
+
 
 
     def Buscar_registro(self):
-        self.listaDevuelta = self.instanciaManejarProductos.Buscar(self.Codigo_producto.get())
-        if(self.listaDevuelta != 0):
-            ms.showinfo("", "Los datos se ha encontrado!")
-            self.Codigo_producto.set(self.listaDevuelta[0])
-            self.NombreProducto.set(self.listaDevuelta[1])
-            self.Precio_producto.set(self.listaDevuelta[2])
-            self.Cantidad_producto.set(self.listaDevuelta[3])
-            self.Marca_producto.set(self.listaDevuelta[4])
-            self.Proveedor.set(self.listaDevuelta[5])
-            self.Fecha_de_entrega.set(self.listaDevuelta[6])
-            
-        else:
-            ms.showerror("ERROR!!!", "Este producto no exite, porfavor revise el codigo del producto" )
+        try:
+            if(self.Codigo_producto.get() == "" or self.Codigo_producto.get() == "Codigo de producto"):
+                raise CodigoProducto
+            else:
+                self.listaDevuelta = self.instanciaManejarProductos.Buscar(self.Codigo_producto.get())
+                if(self.listaDevuelta != 0):
+                    ms.showinfo("", "Los datos se ha encontrado!")
+                    self.Codigo_producto.set(self.listaDevuelta[0])
+                    self.NombreProducto.set(self.listaDevuelta[1])
+                    self.Precio_producto.set(self.listaDevuelta[2])
+                    self.Cantidad_producto.set(self.listaDevuelta[3])
+                    self.Marca_producto.set(self.listaDevuelta[4])
+                    self.Proveedor.set(self.listaDevuelta[5])
+                    self.Fecha_de_entrega.set(self.listaDevuelta[6]) 
+                else:
+                    ms.showerror("ERROR!!!", "Este producto no exite, porfavor revise el  código del producto" )
+        except CodigoProducto as e:
+            print type(e).__name__
+        
     
     def Eliminar_registro(self):
-        self.bandera = self.instanciaManejarProductos.Eliminar(self.Codigo_producto.get())
-        if(self.bandera):
-            ms.showinfo("", "El producto se ha borrado con exito!")
-        else:
-            ms.showerror("ERROR!!!", "El producto no ha podido ser borrado" )
-        self.Borrar_entrys()
-
-        
+        try:
+            if(self.Codigo_producto.get() == "" or self.Codigo_producto.get() == "Codigo de producto"):
+                raise CodigoProducto
+            else:
+                self.bandera = self.instanciaManejarProductos.Eliminar(self.Codigo_producto.get())
+                if(self.bandera):
+                    ms.showinfo("", "El producto se ha borrado con exito!")
+                else:
+                    ms.showerror("ERROR!!!", "El producto no ha podido ser borrado" )
+                self.Borrar_entrys()
+        except CodigoProducto as e:
+            print type(e).__name__
+            
     
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
