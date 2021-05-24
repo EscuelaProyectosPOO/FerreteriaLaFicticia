@@ -30,6 +30,7 @@ class Administrador(Cerrar_Ventanas):
 
     def registrar(self):
         band = True
+        var = 0
         try:
             if self.NombreText.get() == '' or self.contraText.get() == '' or self.rangoText.get() == '':
                 raise Vacio
@@ -44,10 +45,10 @@ class Administrador(Cerrar_Ventanas):
             num = False
 
         try:
-            if num == False:
+            if num == False and band == True:
                 raise Numeros
             try:
-                if var <= 0:
+                if var <= -1:
                     raise Negativos
             except Negativos as N:
                 band = False
@@ -62,7 +63,7 @@ class Administrador(Cerrar_Ventanas):
                 mensajes.showinfo('', 'Elemento registrado con éxito')
                 self.limpiar()
             else:
-                mensajes.showerror('')
+                mensajes.showerror('', 'Este usuario ya existe')
 
     def eliminar(self):
         print self.NombreText.get()
@@ -75,15 +76,43 @@ class Administrador(Cerrar_Ventanas):
             mensajes.showerror('ERROR', 'No se encontró este usuario')
 
     def editar(self):
-        print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
-        self.instancia_editar = Archivos_administrador()
-        self.indicador = self.instancia_editar.Modificar(self.NombreText.get(), self.contraText.get(),
-                                                            self.rangoText.get())
-        if (self.indicador):
-            mensajes.showinfo('', 'Elemento modificado con éxito')
-            self.limpiar()
-        else:
-            mensajes.showerror('ERROR', 'No se encuentra el usuario')
+        band = True
+        var = 0
+        try:
+            if self.NombreText.get() == '' or self.contraText.get() == '' or self.rangoText.get() == '':
+                raise Vacio
+        except Vacio as v:
+            print Vacio, v
+            band = False
+
+        num = True
+        try:
+            var = int(self.rangoText.get())
+        except ValueError:
+            num = False
+
+        try:
+            if num == False and band == True:
+                raise Numeros
+            try:
+                if var <= -1:
+                    raise Negativos
+            except Negativos as N:
+                band = False
+        except Numeros as n:
+            print Numeros, n
+            band = False
+
+        if band == True:
+            print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
+            self.instancia_editar = Archivos_administrador()
+            self.indicador = self.instancia_editar.Modificar(self.NombreText.get(), self.contraText.get(),
+                                                                self.rangoText.get())
+            if (self.indicador):
+                mensajes.showinfo('', 'Elemento modificado con éxito')
+                self.limpiar()
+            else:
+                mensajes.showerror('ERROR', 'No se encuentra el usuario')
 
     def buscar(self):
         print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
@@ -150,7 +179,7 @@ class Administrador(Cerrar_Ventanas):
         self.Boton_regresar = Button(self.Raiz, image=self.imagen_boton_regresar, width=120, height=65,
                                         cursor="hand2", border=0,
                                         command=lambda: self.volver(self.Raiz, self.pantalla_Principal1))
-        self.Boton_regresar.place(x=2, y=250)
+        self.Boton_regresar.place(x=2, y=220)
 
         self.NombreText = StringVar()
         self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30)

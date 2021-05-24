@@ -20,6 +20,7 @@ class Usuarios:
         self.ventana()
 
         self.raiz.mainloop()
+
     def comprueba(self):
         print self.nombretext.get()
         print self.contra.get()
@@ -47,7 +48,7 @@ class Usuarios:
 
         self.fondo_entrar = PhotoImage(file='boton_entrar.gif')
         self.be = Button(self.raiz, image=self.fondo_entrar, command=lambda:self.comprueba())
-        self.be.place(x=105, y=110)
+        self.be.place(x=85, y=120)
         self.be.config(border=0)
 
 

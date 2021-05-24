@@ -22,17 +22,16 @@ class Archivos_proveedores(Manejar_archivos, CRUD):
             print 'Error al registrar usuario'
 
     def Modificar(self, Nombre, Direccion, Productos, precio):
-        try:
-            self.abrir_archivo('Base_proveedores')
-            self.proveedor_editado = Nombre + '  ' +Direccion + '  ' + Productos + '  ' + precio
-            print self.proveedor_editado
-            self.identificador = Nombre
-            print self.identificador
-            self.band = self.modificar_linea_en_archivo_texto(self.proveedor_editado, self.identificador)
-            return self.band
+        self.abrir_archivo('Base_proveedores')
+        self.proveedor_editado = Nombre + '  ' +Direccion + '  ' + Productos + '  ' + precio
+        print self.proveedor_editado
+        self.identificador = Nombre
+        print self.identificador
+        self.band = self.modificar_linea_en_archivo_texto(self.proveedor_editado, self.identificador)
+        return self.band
 
-        except:
-            print 'Error al editar usuario'
+        #except:
+        #    print 'Error al editar proveedor'
 
     def Eliminar(self, Nombre):
         try:
