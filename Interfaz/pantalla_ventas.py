@@ -12,6 +12,8 @@ from funcionalidad.Manejar_archivos_ventas import Manejar_archivos_ventas
 from funcionalidad.Exepciones import inexistencia_producto_tabla
 from funcionalidad.Exepciones import Campos_vacios_en_ventas
 from funcionalidad.Exepciones import Negativos
+from funcionalidad.Exepciones import Registrar_venta
+from pantalla_reporte_ventas import Pantalla_reporte_ventas
 
 
 class Ventas(Cerrar_Ventanas):
@@ -28,6 +30,7 @@ class Ventas(Cerrar_Ventanas):
         self.raiz.bind("<Destroy>",lambda event: self.volver_con_cerrado_ventana(event,self.pantalla_principal1))
         self.manejar_archivos_productos = Manejar_archivos_productos()
         self.manejar_archivos_venta = Manejar_archivos_ventas()
+        
         self.Barra_menu_principal = tk.Menu(self.raiz)
         self.raiz.config(menu=self.Barra_menu_principal)
         self.tiempo = datetime.now()
@@ -45,7 +48,7 @@ class Ventas(Cerrar_Ventanas):
         self.Entry_Cantidad.place(x=310, y=69)
 
         self.mostrar_total_a_pagar = tk.Label(self.raiz, textvariable= self.mostrar_total, font=("Verdana",24), width=10)
-        self.mostrar_total_a_pagar.place(x=75, y=250)
+        self.mostrar_total_a_pagar.place(x=60, y=250)
 
         self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5"), height=12)
         #self.tabla.place(x=330, y =150)
@@ -93,29 +96,35 @@ class Ventas(Cerrar_Ventanas):
     def Agregar_item(self):
         """Agrega un producto a la tabla"""
         try:
-            if(self.Codigo_producto.get() == "" or self.Cantidad.get() == "" or self.Codigo_producto.get() != "" and self.Cantidad.get() == "" ):
+            self.codigo_de_producto = (self.Codigo_producto.get()).strip() 
+            self.cantidad_de_producto = (self.Cantidad.get())
+
+            if(self.codigo_de_producto == "" or self.cantidad_de_producto == ""):
                 raise Campos_vacios_en_ventas
-            elif(self.Cantidad.get() < 0 ):
+            elif(self.cantidad_de_producto < 0 ):
                 raise Negativos
-            elif(self.Cantidad.get() == 0):
+            elif(self.cantidad_de_producto == 0):
                 ms.showerror("Error!!!", "No podemos poner operar sobre la cantidad 0")
             else:
-                self.datos_producto = self.manejar_archivos_productos.Buscar(self.Codigo_producto.get())
+                self.datos_producto = self.manejar_archivos_productos.Buscar(self.codigo_de_producto)
 
                 if(self.datos_producto == 0):
                     raise inexistencia_producto_tabla
                 else: 
                     self.nombre = self.datos_producto[1] 
                     self.precio_unitario = float(self.datos_producto[2])
-                    self.cantidad_por_precio = self.precio_unitario * self.Cantidad.get()
+                    self.cantidad_por_precio = self.precio_unitario * self.cantidad_de_producto
                     self.cantidad_en_existencia = int(self.datos_producto[3])
 
-                    if(self.cantidad_en_existencia >= self.Cantidad.get()):
-                        self.tabla.insert("",tk.END,text="", iid=self.Codigo_producto.get(), values=(self.Codigo_producto.get(), self.nombre, self.precio_unitario, self.Cantidad.get(), self.cantidad_por_precio) )
+                    if(self.cantidad_en_existencia >= self.cantidad_de_producto):
+                        self.tabla.insert("",tk.END,text="", iid=self.codigo_de_producto, values=(self.codigo_de_producto, self.nombre, self.precio_unitario, self.cantidad_de_producto, self.cantidad_por_precio) )
                         self.acumulador += self.cantidad_por_precio
                         self.mostrar_total.set( "$" + str(self.acumulador))
                     else:
                         ms.showinfo("", "El producto " + self.nombre + " solo cuenta con " + str(self.cantidad_en_existencia) + " unidades")
+        except Negativos as e:
+            print Negativos, e
+
         except Campos_vacios_en_ventas as e:
             print Campos_vacios_en_ventas, e
 
@@ -123,8 +132,11 @@ class Ventas(Cerrar_Ventanas):
             print  inexistencia_producto_tabla, e
         except ValueError as e:
             ms.showerror("Error!!!", "No se aceptan esos datos")
+            print type(e).__name__
         except Exception as e :
             ms.showerror("Error!!!", "Ya has agregado este producto")
+            print type(e).__name__
+            print e
         finally:
             self.limpiar_campos()
             
@@ -132,10 +144,12 @@ class Ventas(Cerrar_Ventanas):
     def Remover_item(self):
         """Elimina el producto con el ide indicado"""
         try:
-            self.lista_valores_item = self.tabla.item(self.Codigo_producto.get())
+            self.codigo_de_producto = (self.Codigo_producto.get()).strip() 
+        
+            self.lista_valores_item = self.tabla.item(self.codigo_de_producto)
             self.acumulador -= float(self.lista_valores_item["values"][4])
             self.mostrar_total.set("$" + str(self.acumulador))
-            self.tabla.delete(self.Codigo_producto.get())
+            self.tabla.delete(self.codigo_de_producto)
 
         except IndexError as e:
             ms.showerror("Error!!!", "No podemos eliminar un elemento que no existe")
@@ -150,13 +164,21 @@ class Ventas(Cerrar_Ventanas):
         self.fecha_de_hoy = str(self.tiempo.day) + "/" + str(self.tiempo.month) + "/" + str(self.tiempo.year)
         self.lista = self.tabla.get_children()
         try:
-            for i in self.lista:
-                diccionario = self.tabla.item(i)
-                self.manejar_archivos_venta.Insertar(self.fecha_de_hoy, str(diccionario["values"][0]), diccionario["values"][1], str(diccionario["values"][2]), str(diccionario["values"][3]), str(diccionario["values"][4]))
-                self.buscar_modificar_producto(str(diccionario["values"][0]), str(diccionario["values"][3]))
-                self.tabla.delete(i)
+            if(len(self.lista)==0 ):
+                raise Registrar_venta
+            else:
+                for i in self.lista:
+                    diccionario = self.tabla.item(i)
+                    self.manejar_archivos_venta.Insertar(self.fecha_de_hoy, str(diccionario["values"][0]), diccionario["values"][1], str(diccionario["values"][2]), str(diccionario["values"][3]), str(diccionario["values"][4]))
+                    self.buscar_modificar_producto(str(diccionario["values"][0]), str(diccionario["values"][3]))
+                    self.tabla.delete(i)
+                ms.showinfo("", "La venta se ha registrado con exito ")
         except IndexError:
             print("Error, salida de rango")
+
+        except Registrar_venta as e:
+            print  type(e).__name__
+            
         self.limpiar_campos()
         self.acumulador = 0
         self.mostrar_total.set("$0.0")
@@ -172,7 +194,7 @@ class Ventas(Cerrar_Ventanas):
         else: 
             self.nueva_cantidad = str(int(self.datos_producto[3]) - int(unidades_vendidas))
             self.manejar_archivos_productos.Modificar(self.datos_producto[0], self.datos_producto[1], self.datos_producto[2], self.nueva_cantidad, self.datos_producto[4], self.datos_producto[5], self.datos_producto[6])
-            ms.showinfo("", "La venta se ha registrado con exito ")
+            
 
 
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
@@ -181,46 +203,10 @@ class Ventas(Cerrar_Ventanas):
 
     def reporte(self):
         """Visualizar los datos de la Base_Ventas"""
-        self.reporte_ventas = tk.Toplevel(self.raiz)
-        self.reporte_ventas.title("Reporte de ventas")
-        self.fecha_buscar = tk.StringVar()
+        self.pantalla_reporte_ventas = Pantalla_reporte_ventas(self.pantalla_principal1)
+        self.pantalla_reporte_ventas.ventana_principal()
 
-        self.label = tk.Label(self.reporte_ventas, text="Fecha de ventas").grid(row=0, column=1)
-        self.entry = tk.Entry(self.reporte_ventas, textvariable=self.fecha_buscar).grid(row=0, column=2)
-
-        self.tabla1 = ttk.Treeview(self.reporte_ventas, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6"), height=12)
-        self.tabla1.grid(row=1, column=1, sticky='nesw' )
-
-        self.tabla1.column("#1", anchor="center")
-        self.tabla1.column("#2", anchor="center")
-        self.tabla1.column("#3", anchor="center")
-        self.tabla1.column("#4", anchor="center")
-        self.tabla1.column("#5", anchor="center")
-        self.tabla1.column("#6", anchor="center")
-        
-
-        self.tabla1.heading("#1", text="Fecha de venta")
-        self.tabla1.heading("#2",  text="Codigo de Producto")
-        self.tabla1.heading("#3", text="Nombre")
-        self.tabla1.heading("#4", text="Precio unitario")
-        self.tabla1.heading("#5", text="Cantidad")
-        self.tabla1.heading("#6", text="Total por piezas")
-        
-
-        self.scrollbar = tk.Scrollbar(self.reporte_ventas, orient="vertical", command=self.tabla1.yview)
-        self.scrollbar.grid(row=1, column=2, sticky='ns')
-        self.tabla1.config(yscrollcommand=self.scrollbar.set)
-        self.datos_reporte()
-
-    def datos_reporte(self):
-        """Trae datos del archivo Base_Ventas"""
-        self.informacion_del_archivo = self.manejar_archivos_venta.traer_informacion()
-        for linea in self.informacion_del_archivo:
-            self.lineas = linea.split("  ")
-            self.tabla1.insert("",tk.END,text="", values=(self.lineas[0], self.lineas[1], self.lineas[2], self.lineas[3], self.lineas[4], self.lineas[5]))
-
-
-        
+   
         
 
         
