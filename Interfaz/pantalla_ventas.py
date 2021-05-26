@@ -36,7 +36,7 @@ class Ventas(Cerrar_Ventanas):
         self.tiempo = datetime.now()
         self.mostrar_total = tk.StringVar()
         self.Codigo_producto = tk.StringVar()
-        self.Cantidad = tk.IntVar()
+        self.Cantidad = tk.StringVar()
         self.acumulador = 0
         
     def ventana_principal(self):
@@ -97,15 +97,16 @@ class Ventas(Cerrar_Ventanas):
         """Agrega un producto a la tabla"""
         try:
             self.codigo_de_producto = (self.Codigo_producto.get()).strip() 
-            self.cantidad_de_producto = (self.Cantidad.get())
+            self.cantidad_de_producto = (self.Cantidad.get()).strip()
 
             if(self.codigo_de_producto == "" or self.cantidad_de_producto == ""):
                 raise Campos_vacios_en_ventas
-            elif(self.cantidad_de_producto < 0 ):
+            elif(int(self.cantidad_de_producto) < 0 ):
                 raise Negativos
-            elif(self.cantidad_de_producto == 0):
+            elif(int(self.cantidad_de_producto) == 0):
                 ms.showerror("Error!!!", "No podemos poner operar sobre la cantidad 0")
             else:
+                self.cantidad_de_producto = int(self.cantidad_de_producto)
                 self.datos_producto = self.manejar_archivos_productos.Buscar(self.codigo_de_producto)
 
                 if(self.datos_producto == 0):
