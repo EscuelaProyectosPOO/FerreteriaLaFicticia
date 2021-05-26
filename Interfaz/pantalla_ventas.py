@@ -21,11 +21,11 @@ class Ventas(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
         self.pantalla_principal1 = pantalla_principal
         self.raiz = tk.Toplevel(self.pantalla_principal1)
-        self.raiz.geometry('931x505')
+        self.raiz.geometry('980x505')
         self.raiz.title("Ventas")
         self.raiz.resizable(False, False) 
         self.imagen = tk.PhotoImage(file="fondo_ventas.GIF")
-        self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0)
+        self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         #evento accionado cuando la ventana es destruida
         self.raiz.bind("<Destroy>",lambda event: self.volver_con_cerrado_ventana(event,self.pantalla_principal1))
         self.manejar_archivos_productos = Manejar_archivos_productos()
@@ -43,12 +43,12 @@ class Ventas(Cerrar_Ventanas):
         """ Muestra todos los productos"""
         self.Barra_menu_principal.add_command(label="Reporte", command=lambda:self.reporte())
         self.Entry_Codigo_producto = tk.Entry(self.raiz, textvariable=self.Codigo_producto, width=25)
-        self.Entry_Codigo_producto.place(x=75, y=69)
+        self.Entry_Codigo_producto.place(x=35, y=69)
         self.Entry_Cantidad = tk.Entry(self.raiz, textvariable=self.Cantidad, width=10)
-        self.Entry_Cantidad.place(x=310, y=69)
+        self.Entry_Cantidad.place(x=270, y=69)
 
         self.mostrar_total_a_pagar = tk.Label(self.raiz, textvariable= self.mostrar_total, font=("Verdana",24), width=10)
-        self.mostrar_total_a_pagar.place(x=60, y=250)
+        self.mostrar_total_a_pagar.place(x=30, y=250)
 
         self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5"), height=12)
         #self.tabla.place(x=330, y =150)

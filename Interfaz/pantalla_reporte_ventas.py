@@ -16,10 +16,10 @@ class Pantalla_reporte_ventas():
         self.pantalla_principal1 = pantalla_principal
         self.reporte_ventas = tk.Toplevel(self.pantalla_principal1)
         self.reporte_ventas.title("Reporte de ventas")
-        self.reporte_ventas.geometry('1052x500')
+        self.reporte_ventas.geometry('1049x499')
         self.reporte_ventas.resizable(False, False) 
         self.imagen1 = tk.PhotoImage(file="fondo_reporte_ventas.GIF")
-        self.fondo1 = tk.Label(self.reporte_ventas, image=self.imagen1).place(x=0, y=0)
+        self.fondo1 = tk.Label(self.reporte_ventas, image=self.imagen1).place(x=0, y=0, relwidth=1, relheight=1)
         self.manejar_archivos_venta = Manejar_archivos_ventas()
         self.fecha_buscar = tk.StringVar()
 
@@ -29,7 +29,7 @@ class Pantalla_reporte_ventas():
         self.boton_reporte.place(x=395, y=20)
 
         self.entry = tk.Entry(self.reporte_ventas, textvariable=self.fecha_buscar, width=30, fg = 'grey')
-        self.entry.place(x=200, y=40)
+        self.entry.place(x=200, y=35)
         self.entry.insert(0, "D/M/AAAA")
         self.entry.bind("<FocusIn>", lambda event: self.default(event,self.entry, "D/M/AAAA"))
         self.entry.bind("<FocusOut>", lambda event: self.default(event,self.entry, "D/M/AAAA"))
