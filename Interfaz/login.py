@@ -19,13 +19,13 @@ class Usuarios(Cerrar_Ventanas):
         self.Lfondo = Label(self.raiz, image=self.fondo)
         self.Lfondo.place(x=0, y=0)
         self.raiz.resizable(False, False)
-
-        self.raiz.bind("<Destroy>", lambda event: self.Evento_admin())
+        self.respuesta = False
+        self.raiz.bind("<Destroy>", lambda event: self.Evento_admin(event))
 
     def comprueba(self):
         print self.nombretext.get()
         print self.contra.get()
-        self.respuesta = False
+        
         try:
             if self.nombretext.get() == '' or self.contra.get() == '':
                 raise Vacio
@@ -63,8 +63,10 @@ class Usuarios(Cerrar_Ventanas):
         self.be.place(x=85, y=120)
         self.be.config(border=0)
 
-        self.pantallaInicio.witdraw()
 
-    def Evento_admin(self):
-        self.pantallaInicio.deconfy()
+    def Evento_admin(event,self):
         return self.respuesta
+
+    def volver(self):
+        pass
+
