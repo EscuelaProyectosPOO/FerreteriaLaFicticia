@@ -16,8 +16,12 @@ class Proveedores(Cerrar_Ventanas):
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_proveeores.gif')
         self.fondo = Label(self.Raiz, image=self.imagen)
+<<<<<<< HEAD
         self.fondo.place(x=0, y=0)
         self.NombreText = StringVar()
+=======
+        self.fondo.place(x=0, y=0, relwidth=1, relheight=1)
+>>>>>>> 53768c8bdb189eed5eed2640826f102799181a1b
         self.menu = Menu(self.Raiz)
         self.Raiz.config(menu=self.menu)
 

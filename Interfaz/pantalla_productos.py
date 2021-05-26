@@ -16,7 +16,7 @@ class Productos(Cerrar_Ventanas):
         self.raiz.title("Registro Productos")
         self.raiz.resizable(False, False) 
         self.imagen = tk.PhotoImage(file="fondoProductos.GIF")
-        self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0)
+        self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         self.instanciaManejarProductos = Manejar_archivos_productos()
         self.NombreProducto = tk.StringVar()
         self.Codigo_producto = tk.StringVar()

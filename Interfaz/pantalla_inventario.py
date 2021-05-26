@@ -11,11 +11,11 @@ class Inventario(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
         self.pantalla_principal1 = pantalla_principal
         self.raiz = tk.Toplevel(self.pantalla_principal1)
-        self.raiz.geometry('1169x563')
+        self.raiz.geometry('1170x564')
         self.raiz.title("Inventario")
         self.raiz.resizable(False, False) 
         self.imagen = tk.PhotoImage(file="fondo_sin_nada.GIF")
-        self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0)
+        self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         self.raiz.bind("<Destroy>",lambda event: self.volver_con_cerrado_ventana(event,self.pantalla_principal1))
         
     def ventana_principal(self):

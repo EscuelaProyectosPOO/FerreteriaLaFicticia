@@ -18,7 +18,7 @@ class Administrador(Cerrar_Ventanas):
         self.Raiz.resizable(0, 0)
         self.imagen = PhotoImage(file='fondo_admin.GIF')
         self.fondo = Label(self.Raiz, image=self.imagen)
-        self.fondo.place(x=-2, y=-1)
+        self.fondo.place(x=0, y=0)
         self.menu = Menu(self.Raiz)
         self.Raiz.config(menu=self.menu)
         self.Raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_Principal1))

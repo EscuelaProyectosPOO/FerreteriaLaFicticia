@@ -38,3 +38,7 @@ class Negativos(Exception):
 class CodigoProducto(Exception):
     def __init__(self):
         mensajes.showerror("", "Para realizar la operacion debe que colocar el código del producto")
+
+class Registrar_venta(Exception):
+    def __init__(self):
+        mensajes.showerror("", "Para realizar la operacion debes tener productos agregados en la tabla")
