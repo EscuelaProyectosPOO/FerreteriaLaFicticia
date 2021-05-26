@@ -17,8 +17,10 @@ class Proveedores(Cerrar_Ventanas):
         self.imagen = PhotoImage(file='fondo_proveeores.gif')
         self.fondo = Label(self.Raiz, image=self.imagen)
         self.fondo.place(x=0, y=0)
+        self.NombreText = StringVar()
         self.menu = Menu(self.Raiz)
         self.Raiz.config(menu=self.menu)
+
         self.Raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
 
 
@@ -186,8 +188,8 @@ class Proveedores(Cerrar_Ventanas):
                                         command=lambda: self.volver(self.Raiz, self.pantalla_principal1))
         self.Boton_regresar.place(x=2, y=240)
 
-        self.NombreText = StringVar()
-        self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30)
+
+        self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30, fg = 'grey')
         self.Nombre.place(x=170, y=25)
 
         self.direcText = StringVar()

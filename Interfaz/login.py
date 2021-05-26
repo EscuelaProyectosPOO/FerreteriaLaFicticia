@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 # #!/usr/bin/env python
 
-from pantalla_inicio import Pantalla_de_inicio
+#from pantalla_inicio import Pantalla_de_inicio
 from Tkinter import *
 import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
+from funcionalidad.Exepciones import Vacio
+from funcionalidad.Evento_regresar import Cerrar_Ventanas
 
 
-class Usuarios:
-    def __init__(self):
-        self.raiz = Tk()
+class Usuarios(Cerrar_Ventanas):
+    def __init__(self, pantalla_principal):
+        self.pantallaInicio = pantalla_principal
+        self.raiz = Toplevel(self.pantallaInicio)
         self.raiz.title('Inicio de sesión')
         self.raiz.geometry('260x180')
         self.fondo = PhotoImage(file="login.gif")
@@ -17,25 +20,34 @@ class Usuarios:
         self.Lfondo.place(x=0, y=0)
         self.raiz.resizable(False, False)
 
-        self.ventana()
-
-        self.raiz.mainloop()
+        self.raiz.bind("<Destroy>", lambda event: self.Evento_admin())
 
     def comprueba(self):
         print self.nombretext.get()
         print self.contra.get()
-        comp = Archivos_administrador()
-        self.linea_retornada = comp.Buscar(self.nombretext.get())
-        if self.linea_retornada == 0:
-            mensajes.showerror('ERROR', 'Nombre incorrecto')
-        else:
-            if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
-                llamada = Pantalla_de_inicio()
+        self.respuesta = False
+        try:
+            if self.nombretext.get() == '' or self.contra.get() == '':
+                raise Vacio
             else:
-                mensajes.showerror('ERROR', 'Contraseña incorrecta')
+                comp = Archivos_administrador()
+                self.linea_retornada = comp.Buscar(self.nombretext.get())
+                if self.linea_retornada == 0:
 
+                    mensajes.showerror('ERROR', 'Nombre incorrecto')
+                else:
+                    if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
+                        if self.linea_retornada[2] == 1:
+                            print 'admin'
+                            self.respuesta = True
+                        else:
+                            print 'empleado'
+                    else:
+                        mensajes.showerror('ERROR', 'Contraseña incorrecta')
+        except Vacio as v:
+            print Vacio, v
 
-    def ventana(self):
+    def ventana_principal(self):
         self.nombretext = StringVar()
         self.contra = StringVar()
 
@@ -51,7 +63,8 @@ class Usuarios:
         self.be.place(x=85, y=120)
         self.be.config(border=0)
 
+        self.pantallaInicio.witdraw()
 
-
-
-Inicio = Usuarios()
+    def Evento_admin(self):
+        self.pantallaInicio.deconfy()
+        return self.respuesta
