@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 # #!/usr/bin/env python
 
-#from pantalla_inicio import Pantalla_de_inicio
+from pantalla_inicio import Pantalla_de_inicio
 from Tkinter import *
 import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
 from funcionalidad.Exepciones import Vacio
-from funcionalidad.Evento_regresar import Cerrar_Ventanas
 
 
-class Usuarios(Cerrar_Ventanas):
-    def __init__(self, pantalla_principal):
-        self.pantallaInicio = pantalla_principal
-        self.raiz = Toplevel(self.pantallaInicio)
+
+class Usuarios():
+    def __init__(self):
+        self.raiz = Tk()
         self.raiz.title('Inicio de sesión')
         self.raiz.geometry('260x180')
         self.fondo = PhotoImage(file="login.gif")
@@ -20,7 +19,8 @@ class Usuarios(Cerrar_Ventanas):
         self.Lfondo.place(x=0, y=0)
         self.raiz.resizable(False, False)
         self.respuesta = False
-        self.raiz.bind("<Destroy>", lambda event: self.Evento_admin(event))
+
+        self.raiz.mainloop()
 
     def comprueba(self):
         print self.nombretext.get()
@@ -37,11 +37,13 @@ class Usuarios(Cerrar_Ventanas):
                     mensajes.showerror('ERROR', 'Nombre incorrecto')
                 else:
                     if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
-                        if self.linea_retornada[2] == 1:
+                        if self.linea_retornada[2] == '1':
                             print 'admin'
                             self.respuesta = True
+                            llamada = Pantalla_de_inicio(self.respuesta)
                         else:
                             print 'empleado'
+                            llamada = Pantalla_de_inicio(self.respuesta)
                     else:
                         mensajes.showerror('ERROR', 'Contraseña incorrecta')
         except Vacio as v:
@@ -67,6 +69,4 @@ class Usuarios(Cerrar_Ventanas):
     def Evento_admin(event,self):
         return self.respuesta
 
-    def volver(self):
-        pass
-
+prueba = Usuarios()
