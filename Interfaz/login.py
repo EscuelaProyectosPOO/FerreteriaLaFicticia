@@ -40,10 +40,10 @@ class Usuarios():
                         if self.linea_retornada[2] == '1':
                             print 'admin'
                             self.respuesta = True
-                            llamada = Pantalla_de_inicio(self.respuesta)
+                            llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
                         else:
                             print 'empleado'
-                            llamada = Pantalla_de_inicio(self.respuesta)
+                            llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
                     else:
                         mensajes.showerror('ERROR', 'Contraseña incorrecta')
         except Vacio as v:
