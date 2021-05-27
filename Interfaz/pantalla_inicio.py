@@ -6,26 +6,25 @@ from pantalla_productos import Productos
 from pantalla_administrador import  Administrador
 from pantalla_proveedores import Proveedores
 from pantalla_ventas import Ventas
-from login import Usuarios
 from Tkinter import *
 
 class Pantalla_de_inicio:
 
-    def __init__(self):
-        self.raiz_pantalle_inicio = Tk()
+    def __init__(self, pantalla_principal, rango):
+        self.pantalla_de_inicio = pantalla_principal
+        self.raiz_pantalle_inicio = Toplevel(self.pantalla_de_inicio)
         self.raiz_pantalle_inicio.geometry('1212x581')
         self.raiz_pantalle_inicio.title("Inicio")
         self.raiz_pantalle_inicio.resizable(False, False) 
         self.imagen = PhotoImage(file="fondo.GIF")
         self.fondo = Label(self.raiz_pantalle_inicio, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
-        self.es_usuario_admin = False
-        self.usuarios = Usuarios(self.raiz_pantalle_inicio)
+        self.es_usuario_admin = rango
+        self.pantalla_de_inicio.withdraw()
         self.ventana_principal()
+        
 
     def ventana_principal(self):
         """ Muestra los botones de las distintas pestañas que tenemos,asi como el nombre de la ferreteria"""
-        self.es_usuario_admin=(self.usuarios.ventana_principal())
-        #print self.es_usuario_admin
         self.imagen_proveedores = PhotoImage(file="Proveedores.GIF")
         self.Boton_proveedores = Button(self.raiz_pantalle_inicio, image=self.imagen_proveedores, width=234, height=91, cursor="hand2", border=0, command=lambda:self.proveedores_llamada())
         self.Boton_proveedores.place(x=2, y=50)
@@ -46,8 +45,6 @@ class Pantalla_de_inicio:
         self.Boton_admin = Button(self.raiz_pantalle_inicio, image=self.imagen_admin, width=235, height=85,cursor="hand2",border=0,  command=lambda:self.administrador_llamada() )
         self.Boton_admin.place(x=2, y=450)
 
-        
-        self.raiz_pantalle_inicio.mainloop()
 
     def inventario_llamada(self):
         self.inventario_objeto = Inventario(self.raiz_pantalle_inicio)
@@ -70,8 +67,6 @@ class Pantalla_de_inicio:
         self.administrador_llamada_objeto.ventana_principal()
 
 
-
-uno = Pantalla_de_inicio()
 
 
 

@@ -19,7 +19,7 @@ class Usuarios():
         self.Lfondo.place(x=0, y=0)
         self.raiz.resizable(False, False)
         self.respuesta = False
-
+        self.ventana_principal()
         self.raiz.mainloop()
 
     def comprueba(self):
@@ -48,6 +48,8 @@ class Usuarios():
                         mensajes.showerror('ERROR', 'Contraseña incorrecta')
         except Vacio as v:
             print Vacio, v
+        except Exception as e:
+            print type(e).__name__
 
     def ventana_principal(self):
         self.nombretext = StringVar()
