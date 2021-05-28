@@ -41,6 +41,7 @@ class Usuarios():
                             self.respuesta = True
                             llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
                         else:
+                            self.respuesta = False
                             llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
                     else:
                         mensajes.showerror('ERROR', 'Contraseña incorrecta')
