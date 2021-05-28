@@ -49,7 +49,7 @@ class Usuarios():
         except Vacio as v:
             print Vacio, v
         except Exception as e:
-            print type(e).__name__
+            print type(e).__name__, e
 
     def ventana_principal(self):
         self.nombretext = StringVar()

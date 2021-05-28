@@ -1,26 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#from pantalla_administrador import Pantalla_administrador
 from pantalla_inventario import Inventario
 from pantalla_productos import Productos
 from pantalla_administrador import  Administrador
 from pantalla_proveedores import Proveedores
 from pantalla_ventas import Ventas
+from funcionalidad.Evento_regresar import Cerrar_Ventanas
 from Tkinter import *
 
-class Pantalla_de_inicio:
+class Pantalla_de_inicio(Cerrar_Ventanas):
 
     def __init__(self, pantalla_principal, rango):
-        self.pantalla_de_inicio = pantalla_principal
-        self.raiz_pantalle_inicio = Toplevel(self.pantalla_de_inicio)
+        self.pantalla_principal1 = pantalla_principal
+        self.es_usuario_admin = rango
+        self.raiz_pantalle_inicio = Toplevel(self.pantalla_principal1)
         self.raiz_pantalle_inicio.geometry('1212x581')
         self.raiz_pantalle_inicio.title("Inicio")
         self.raiz_pantalle_inicio.resizable(False, False) 
         self.imagen = PhotoImage(file="fondo.GIF")
         self.fondo = Label(self.raiz_pantalle_inicio, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
-        self.es_usuario_admin = rango
-        self.pantalla_de_inicio.withdraw()
         self.ventana_principal()
+        self.raiz_pantalle_inicio.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
         
 
     def ventana_principal(self):
@@ -41,10 +41,12 @@ class Pantalla_de_inicio:
         self.Boton_ventas = Button(self.raiz_pantalle_inicio, image=self.imagen_ventas, width=233, height=80,cursor="hand2",border=0,  command=lambda:self.ventas_llamada() )
         self.Boton_ventas.place(x=2, y=350)
 
-        self.imagen_admin = PhotoImage(file="Administrador.GIF")    
-        self.Boton_admin = Button(self.raiz_pantalle_inicio, image=self.imagen_admin, width=235, height=85,cursor="hand2",border=0,  command=lambda:self.administrador_llamada() )
-        self.Boton_admin.place(x=2, y=450)
+        if(self.es_usuario_admin == True):
+            self.imagen_admin = PhotoImage(file="Administrador.GIF")    
+            self.Boton_admin = Button(self.raiz_pantalle_inicio, image=self.imagen_admin, width=235, height=85,cursor="hand2",border=0,  command=lambda:self.administrador_llamada() )
+            self.Boton_admin.place(x=2, y=450)
 
+        self.pantalla_principal1.withdraw()
 
     def inventario_llamada(self):
         self.inventario_objeto = Inventario(self.raiz_pantalle_inicio)
@@ -65,6 +67,10 @@ class Pantalla_de_inicio:
     def administrador_llamada(self):
         self.administrador_llamada_objeto =  Administrador(self.raiz_pantalle_inicio)
         self.administrador_llamada_objeto.ventana_principal()
+
+    def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
+        nombre_ventana_anterior.deiconify()
+        nombre_ventana_actual.destroy()
 
 
 
