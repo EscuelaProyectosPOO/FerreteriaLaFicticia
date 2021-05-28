@@ -28,9 +28,7 @@ class Usuarios():
             if self.nombretext.get() == '' or self.contra.get() == '':
                 raise Vacio
             else:
-                if os.path.isfile('Base_empleados'):
-                    print'El archivo existe :).'
-                else:
+                if os.path.isfile('Base_empleados') == False:
                     crear = Archivos_administrador()
                     crear.Insertar('Admin', 'qwerty', '1')
                 comp = Archivos_administrador()
