@@ -23,7 +23,8 @@ class Ventas(Cerrar_Ventanas):
         self.raiz = tk.Toplevel(self.pantalla_principal1)
         self.raiz.geometry('980x505')
         self.raiz.title("Ventas")
-        self.raiz.resizable(False, False) 
+        self.raiz.resizable(False, False)
+        self.raiz.iconbitmap('logo.ico')
         self.imagen = tk.PhotoImage(file="fondo_ventas.GIF")
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         #evento accionado cuando la ventana es destruida

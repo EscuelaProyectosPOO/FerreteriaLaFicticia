@@ -16,6 +16,7 @@ class Administrador(Cerrar_Ventanas):
         self.Raiz.geometry('390x310')
         self.Raiz.title('Administrar usuarios')
         self.Raiz.resizable(0, 0)
+        self.Raiz.iconbitmap('logo.ico')
         self.imagen = PhotoImage(file='fondo_admin.GIF')
         self.fondo = Label(self.Raiz, image=self.imagen)
         self.fondo.place(x=0, y=0)
@@ -66,7 +67,6 @@ class Administrador(Cerrar_Ventanas):
                 mensajes.showerror('', 'Este usuario ya existe')
 
     def eliminar(self):
-        print self.NombreText.get()
         self.instancia_borrar = Archivos_administrador()
         self.indicador = self.instancia_borrar.Eliminar(self.NombreText.get())
         if (self.indicador):
@@ -104,7 +104,6 @@ class Administrador(Cerrar_Ventanas):
             band = False
 
         if band == True:
-            print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
             self.instancia_editar = Archivos_administrador()
             self.indicador = self.instancia_editar.Modificar(self.NombreText.get(), self.contraText.get(),
                                                                 self.rangoText.get())
@@ -115,10 +114,8 @@ class Administrador(Cerrar_Ventanas):
                 mensajes.showerror('ERROR', 'No se encuentra el usuario')
 
     def buscar(self):
-        print self.NombreText.get(), '\n', self.contraText.get(), '\n', self.rangoText.get()
         self.instancia_buscar = Archivos_administrador()
         self.linea_devuelta = self.instancia_buscar.Buscar(self.NombreText.get())
-        print self.linea_devuelta
         try:
             self.NombreText.set(self.linea_devuelta[0])
             self.contraText.set(self.linea_devuelta[1])
@@ -130,6 +127,7 @@ class Administrador(Cerrar_Ventanas):
     def reporte(self):
         self.reporte_usuarios = Toplevel(self.Raiz)
         self.reporte_usuarios.resizable(0, 0)
+        self.reporte_usuarios.iconbitmap('logo.ico')
         self.tabla = ttk.Treeview(self.reporte_usuarios, show='headings',
                                   columns=("nombre", "rango"), height=12)
         self.tabla.grid(row=0, column=0)

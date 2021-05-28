@@ -12,9 +12,7 @@ class Archivos_proveedores(Manejar_archivos, CRUD):
         try:
             self.abrir_archivo('Base_proveedores')
             self.proveedor_nuevo = Nombre + '  ' +Direccion + '  ' + Productos + '  ' + precio
-            print self.proveedor_nuevo
             self.identificador = Nombre
-            print self.identificador
             self.band = self.insertar_linea_en_archivo_de_texto(self.proveedor_nuevo, self.identificador)
             return self.band
 
@@ -25,9 +23,7 @@ class Archivos_proveedores(Manejar_archivos, CRUD):
         try:
             self.abrir_archivo('Base_proveedores')
             self.proveedor_editado = Nombre + '  ' +Direccion + '  ' + Productos + '  ' + precio
-            print self.proveedor_editado
             self.identificador = Nombre
-            print self.identificador
             self.band = self.modificar_linea_en_archivo_texto(self.proveedor_editado, self.identificador)
             return self.band
 
@@ -38,7 +34,6 @@ class Archivos_proveedores(Manejar_archivos, CRUD):
         try:
             self.abrir_archivo('Base_proveedores')
             self.identificador = Nombre
-            print self.identificador
             self.band = self.eliminar_linea_en_archivo_texto(self.identificador)
             return self.band
 
@@ -49,7 +44,6 @@ class Archivos_proveedores(Manejar_archivos, CRUD):
         try:
             self.abrir_archivo('Base_proveedores')
             self.identificador = Nombre
-            print self.identificador
             self.band = self.buscar_linea_en_archivo_de_texto(self.identificador)
             return self.band
 
