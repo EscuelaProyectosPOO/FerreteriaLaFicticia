@@ -6,7 +6,7 @@ from Tkinter import *
 import tkMessageBox as mensajes
 from funcionalidad.Manejar_archivos_administrador import Archivos_administrador
 from funcionalidad.Exepciones import Vacio
-
+import os
 
 
 class Usuarios():
@@ -28,6 +28,11 @@ class Usuarios():
             if self.nombretext.get() == '' or self.contra.get() == '':
                 raise Vacio
             else:
+                if os.path.isfile('Base_empleados'):
+                    print'El archivo existe :).'
+                else:
+                    crear = Archivos_administrador()
+                    crear.Insertar('Admin', 'qwerty', '1')
                 comp = Archivos_administrador()
                 self.linea_retornada = comp.Buscar(self.nombretext.get())
                 if self.linea_retornada == 0:
