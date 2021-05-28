@@ -19,6 +19,7 @@ class Usuarios():
         self.Lfondo = Label(self.raiz, image=self.fondo)
         self.Lfondo.place(x=0, y=0)
         self.raiz.resizable(False, False)
+        self.nombretext = StringVar()
         self.respuesta = False
         self.ventana_principal()
         self.raiz.mainloop()
@@ -51,15 +52,21 @@ class Usuarios():
             print type(e).__name__, e
 
     def ventana_principal(self):
-        self.nombretext = StringVar()
+
         self.contra = StringVar()
-
-        self.tn = Entry(self.raiz, textvariable=self.nombretext)
+        self.tn = Entry(self.raiz, textvariable=self.nombretext,  fg = 'grey')
         self.tn.place(x=125, y=27)
+        self.tn.insert(0, 'Usuario')
+        self.tn.bind("<FocusIn>", lambda event: self.default(event,self.tn, "Usuario"))
+        self.tn.bind("<FocusOut>", lambda event: self.default(event,self.tn, "Usuario"))
 
-        self.tc = Entry(self.raiz, textvariable=self.contra)
+        self.tc = Entry(self.raiz, textvariable=self.contra, fg = 'grey')
         self.tc.place(x=125, y=73)
         self.tc.config(show='*')
+        self.tc.insert(0, 'Clave')
+        self.tc.bind("<FocusIn>", lambda event: self.default(event, self.tc, "Clave"))
+        self.tc.bind("<FocusOut>", lambda event: self.default(event, self.tc, "Clave"))
+
 
         self.fondo_entrar = PhotoImage(file='boton_entrar.gif')
         self.be = Button(self.raiz, image=self.fondo_entrar, command=lambda:self.comprueba())
@@ -70,5 +77,14 @@ class Usuarios():
     def Evento_admin(event,self):
         return self.respuesta
 
-if __name__ == '__main__':
-    prueba = Usuarios()
+    def default(self, event, entry, texto_insertado):
+        self.informacion_entry = entry.get()
+        if(self.informacion_entry == "Usuario" or self.informacion_entry == 'Clave'):
+            entry.delete(0, END)
+            entry.config(fg="black")
+
+        elif(self.informacion_entry == ""):
+            entry.insert(0,texto_insertado)
+            entry.config(fg="grey")
+
+prueba = Usuarios()
