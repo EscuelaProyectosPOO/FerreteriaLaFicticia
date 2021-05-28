@@ -126,6 +126,7 @@ class Administrador(Cerrar_Ventanas):
 
     def reporte(self):
         self.reporte_usuarios = Toplevel(self.Raiz)
+        self.reporte_usuarios.title('Reporte de usuarios')
         self.reporte_usuarios.resizable(0, 0)
         self.reporte_usuarios.iconbitmap('logo.ico')
         self.tabla = ttk.Treeview(self.reporte_usuarios, show='headings',

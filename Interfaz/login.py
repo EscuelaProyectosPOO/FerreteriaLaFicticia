@@ -13,11 +13,11 @@ class Usuarios():
     def __init__(self):
         self.raiz = Tk()
         self.raiz.title('Inicio de sesión')
-        self.raiz.geometry('260x180')
+        self.raiz.geometry('330x280')
         self.raiz.iconbitmap('logo.ico')
         self.fondo = PhotoImage(file="login.gif")
         self.Lfondo = Label(self.raiz, image=self.fondo)
-        self.Lfondo.place(x=0, y=0)
+        self.Lfondo.place(x=-1, y=-1)
         self.raiz.resizable(False, False)
         self.nombretext = StringVar()
         self.respuesta = False
@@ -26,7 +26,7 @@ class Usuarios():
 
     def comprueba(self):
         try:
-            if self.nombretext.get() == '' or self.contra.get() == '':
+            if self.nombretext.get() == 'Usuario' or self.contra.get() == 'Clave':
                 raise Vacio
             else:
                 if os.path.isfile('Base_empleados') == False:
@@ -55,14 +55,15 @@ class Usuarios():
 
         self.contra = StringVar()
         self.tn = Entry(self.raiz, textvariable=self.nombretext,  fg = 'grey')
-        self.tn.place(x=125, y=27)
+        self.tn.config(font=35)
+        self.tn.place(x=45, y=80, width=250, height=30)
         self.tn.insert(0, 'Usuario')
         self.tn.bind("<FocusIn>", lambda event: self.default(event,self.tn, "Usuario"))
         self.tn.bind("<FocusOut>", lambda event: self.default(event,self.tn, "Usuario"))
 
         self.tc = Entry(self.raiz, textvariable=self.contra, fg = 'grey')
-        self.tc.place(x=125, y=73)
-        self.tc.config(show='*')
+        self.tc.config(font=35)
+        self.tc.place(x=45, y=135,  width=250, height=30)
         self.tc.insert(0, 'Clave')
         self.tc.bind("<FocusIn>", lambda event: self.default(event, self.tc, "Clave"))
         self.tc.bind("<FocusOut>", lambda event: self.default(event, self.tc, "Clave"))
@@ -70,7 +71,7 @@ class Usuarios():
 
         self.fondo_entrar = PhotoImage(file='boton_entrar.gif')
         self.be = Button(self.raiz, image=self.fondo_entrar, command=lambda:self.comprueba())
-        self.be.place(x=85, y=120)
+        self.be.place(x=100, y=195)
         self.be.config(border=0)
 
 
@@ -79,9 +80,12 @@ class Usuarios():
 
     def default(self, event, entry, texto_insertado):
         self.informacion_entry = entry.get()
-        if(self.informacion_entry == "Usuario" or self.informacion_entry == 'Clave'):
+        if(self.informacion_entry == "Usuario"):
             entry.delete(0, END)
             entry.config(fg="black")
+        elif (self.informacion_entry == 'Clave'):
+            entry.delete(0, END)
+            entry.config(fg="black", show='*')
 
         elif(self.informacion_entry == ""):
             entry.insert(0,texto_insertado)

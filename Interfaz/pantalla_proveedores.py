@@ -131,6 +131,7 @@ class Proveedores(Cerrar_Ventanas):
 
     def reporte(self):
         self.reporte_proveeores = Toplevel(self.Raiz)
+        self.reporte_proveeores.title('Reporte de proveedores')
         self.reporte_proveeores.resizable(0, 0)
         self.reporte_proveeores.iconbitmap('logo.ico')
         self.tabla = ttk.Treeview(self.reporte_proveeores, show='headings', columns=("nombre", "direccion", "producto", "precio"), height=12)
