@@ -14,6 +14,7 @@ class Usuarios():
         self.raiz = Tk()
         self.raiz.title('Inicio de sesión')
         self.raiz.geometry('260x180')
+        self.raiz.iconbitmap('logo.ico')
         self.fondo = PhotoImage(file="login.gif")
         self.Lfondo = Label(self.raiz, image=self.fondo)
         self.Lfondo.place(x=0, y=0)
@@ -23,9 +24,6 @@ class Usuarios():
         self.raiz.mainloop()
 
     def comprueba(self):
-        print self.nombretext.get()
-        print self.contra.get()
-        
         try:
             if self.nombretext.get() == '' or self.contra.get() == '':
                 raise Vacio
@@ -33,16 +31,13 @@ class Usuarios():
                 comp = Archivos_administrador()
                 self.linea_retornada = comp.Buscar(self.nombretext.get())
                 if self.linea_retornada == 0:
-
-                    mensajes.showerror('ERROR', 'Nombre incorrecto')
+                    mensajes.showerror('ERROR', 'Este usuario no existe')
                 else:
                     if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
                         if self.linea_retornada[2] == '1':
-                            print 'admin'
                             self.respuesta = True
                             llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
                         else:
-                            print 'empleado'
                             llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
                     else:
                         mensajes.showerror('ERROR', 'Contraseña incorrecta')

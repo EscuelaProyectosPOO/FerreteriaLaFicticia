@@ -14,6 +14,7 @@ class Proveedores(Cerrar_Ventanas):
         self.Raiz.geometry('390x335')
         self.Raiz.title('Proveedores')
         self.Raiz.resizable(0, 0)
+        self.Raiz.iconbitmap('logo.ico')
         self.imagen = PhotoImage(file='fondo_proveeores.gif')
         self.fondo = Label(self.Raiz, image=self.imagen)
         self.fondo.place(x=0, y=0)
@@ -31,10 +32,8 @@ class Proveedores(Cerrar_Ventanas):
         self.productoText.set('')
 
     def buscar(self):
-        print self.NombreText.get(), '\n', self.direcText.get(), '\n', self.productoText.get()
         self.instancia_buscar = Archivos_proveedores()
         self.linea_devuelta = self.instancia_buscar.Buscar(self.NombreText.get())
-        print self.linea_devuelta
         if self.linea_devuelta == 0:
             mensajes.showerror('ERROR', 'Elemento no encontrado')
         else:
@@ -133,6 +132,7 @@ class Proveedores(Cerrar_Ventanas):
     def reporte(self):
         self.reporte_proveeores = Toplevel(self.Raiz)
         self.reporte_proveeores.resizable(0, 0)
+        self.reporte_proveeores.iconbitmap('logo.ico')
         self.tabla = ttk.Treeview(self.reporte_proveeores, show='headings', columns=("nombre", "direccion", "producto", "precio"), height=12)
         self.tabla.grid(row=0, column=0)
 

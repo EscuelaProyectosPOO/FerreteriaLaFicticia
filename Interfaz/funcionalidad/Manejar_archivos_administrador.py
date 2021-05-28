@@ -11,9 +11,7 @@ class Archivos_administrador(Manejar_archivos, CRUD):
     def Insertar(self, Nombre, Contra, Tipo):
         self.abrir_archivo('Base_empleados')
         self.usuario_nuevo = Nombre + '  ' + Contra + '  ' + Tipo
-        print self.usuario_nuevo
         self.identificador = Nombre
-        print self.identificador
         self.band = self.insertar_linea_en_archivo_de_texto(self.usuario_nuevo, self.identificador)
         return self.band
 
@@ -21,7 +19,6 @@ class Archivos_administrador(Manejar_archivos, CRUD):
         try:
             self.abrir_archivo('Base_empleados')
             self.linea_a_eliminar = Nombre
-            print self.linea_a_eliminar
             self.band = self.eliminar_linea_en_archivo_texto(self.linea_a_eliminar)
             return self.band
         except:
@@ -31,9 +28,7 @@ class Archivos_administrador(Manejar_archivos, CRUD):
         try:
             self.abrir_archivo('Base_empleados')
             self.usuario_editado = Nombre + '  ' + Contra + '  ' + Tipo
-            print self.usuario_editado
             self.identificador = Nombre
-            print self.identificador
             self.band = self.modificar_linea_en_archivo_texto(self.usuario_editado, self.identificador)
             return self.band
 
@@ -44,9 +39,7 @@ class Archivos_administrador(Manejar_archivos, CRUD):
         try:
             self.abrir_archivo('Base_empleados')
             self.identificador = Nombre
-            print self.identificador
             self.linea = self.buscar_linea_en_archivo_de_texto(self.identificador)
-            print self.linea
             return self.linea
         except:
             print 'Usuario no encontrado'
