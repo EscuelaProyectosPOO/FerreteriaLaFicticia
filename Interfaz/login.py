@@ -87,4 +87,5 @@ class Usuarios():
             entry.insert(0,texto_insertado)
             entry.config(fg="grey")
 
-prueba = Usuarios()
+if __name__ == "__main__":
+    uno = Usuarios()
