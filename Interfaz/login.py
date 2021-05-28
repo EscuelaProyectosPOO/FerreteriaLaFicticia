@@ -70,4 +70,5 @@ class Usuarios():
     def Evento_admin(event,self):
         return self.respuesta
 
-prueba = Usuarios()
+if __name__ == '__main__':
+    prueba = Usuarios()
