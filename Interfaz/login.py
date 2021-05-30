@@ -9,7 +9,7 @@ from funcionalidad.Exepciones import Vacio
 import os
 
 
-class Usuarios():
+class Usuarios:
     def __init__(self):
         self.raiz = Tk()
         self.raiz.title('Inicio de sesión')
@@ -20,6 +20,7 @@ class Usuarios():
         self.Lfondo.place(x=-1, y=-1)
         self.raiz.resizable(False, False)
         self.nombretext = StringVar()
+        self.contra = StringVar()
         self.respuesta = False
         self.ventana_principal()
         self.raiz.mainloop()
@@ -36,11 +37,18 @@ class Usuarios():
                 self.linea_retornada = comp.Buscar(self.nombretext.get())
                 if self.linea_retornada == 0:
                     mensajes.showerror('ERROR', 'Este usuario no existe')
+
                 else:
                     if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
                         if self.linea_retornada[2] == '1':
                             self.respuesta = True
                             llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
+                            self.nombretext.set('')
+                            self.contra.set('')
+                            self.ventana_principal()
+
+
+
                         else:
                             self.respuesta = False
                             llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
@@ -52,8 +60,6 @@ class Usuarios():
             print type(e).__name__, e
 
     def ventana_principal(self):
-
-        self.contra = StringVar()
         self.tn = Entry(self.raiz, textvariable=self.nombretext,  fg = 'grey')
         self.tn.config(font=35)
         self.tn.place(x=45, y=80, width=250, height=30)
@@ -87,9 +93,9 @@ class Usuarios():
             entry.delete(0, END)
             entry.config(fg="black", show='*')
 
-        elif(self.informacion_entry == ""):
-            entry.insert(0,texto_insertado)
-            entry.config(fg="grey")
+        #elif(self.informacion_entry == ""):
+        #    entry.insert(0,texto_insertado)
+        #    entry.config(fg="grey")
 
 if __name__ == "__main__":
     uno = Usuarios()
