@@ -7,6 +7,7 @@ from pantalla_proveedores import Proveedores
 from pantalla_ventas import Ventas
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
 from Tkinter import *
+import os
 
 class Pantalla_de_inicio(Cerrar_Ventanas):
 
@@ -20,8 +21,9 @@ class Pantalla_de_inicio(Cerrar_Ventanas):
         self.raiz_pantalle_inicio.iconbitmap('logo.ico')
         self.imagen = PhotoImage(file="fondo.GIF")
         self.fondo = Label(self.raiz_pantalle_inicio, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
-        self.ventana_principal()
         self.raiz_pantalle_inicio.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
+        self.pantalla_principal1.withdraw()
+        self.ventana_principal()
         
 
     def ventana_principal(self):
@@ -42,12 +44,9 @@ class Pantalla_de_inicio(Cerrar_Ventanas):
         self.Boton_ventas = Button(self.raiz_pantalle_inicio, image=self.imagen_ventas, width=233, height=80,cursor="hand2",border=0,  command=lambda:self.ventas_llamada() )
         self.Boton_ventas.place(x=2, y=350)
 
-        if(self.es_usuario_admin == True):
-            self.imagen_admin = PhotoImage(file="Administrador.GIF")    
-            self.Boton_admin = Button(self.raiz_pantalle_inicio, image=self.imagen_admin, width=235, height=85,cursor="hand2",border=0,  command=lambda:self.administrador_llamada() )
-            self.Boton_admin.place(x=2, y=450)
+        self.colocar_boton_administrador()
 
-        self.pantalla_principal1.withdraw()
+        
 
     def inventario_llamada(self):
         self.inventario_objeto = Inventario(self.raiz_pantalle_inicio)
@@ -66,8 +65,32 @@ class Pantalla_de_inicio(Cerrar_Ventanas):
         self.ventas_objeto.ventana_principal()
 
     def administrador_llamada(self):
+        """"Muestra la ventana con el miso nombre"""
         self.administrador_llamada_objeto =  Administrador(self.raiz_pantalle_inicio)
         self.administrador_llamada_objeto.ventana_principal()
+
+    def abrir_manual_de_usuario(self):
+        """Muestra el manual de usuario en el navegador"""
+        self.direccion_manual = os.getcwd() +"/" + "Manual_de_usuario.pdf"
+        os.system(self.direccion_manual)
+
+    def colocar_boton_administrador(self):
+        self.imagen_manual = PhotoImage(file="Manual.GIF")    
+        self.Boton_manual = Button(self.raiz_pantalle_inicio, image=self.imagen_manual, width=147, height=52,cursor="hand2",border=0,  command=lambda:self.abrir_manual_de_usuario() )
+
+        if(self.es_usuario_admin == True):
+            self.imagen_admin = PhotoImage(file="Administrador.GIF")    
+            self.Boton_admin = Button(self.raiz_pantalle_inicio, image=self.imagen_admin, width=235, height=85,cursor="hand2",border=0,  command=lambda:self.administrador_llamada() )
+            self.Boton_admin.place(x=2, y=425)
+
+            self.Boton_manual.place(x=28, y=525)
+            self.Boton_proveedores.place(x=2, y=25)
+            self.Boton_productos.place(x=2, y=125)
+            self.Boton_inventario.place(x=2, y=225)
+            self.Boton_ventas.place(x=2, y=325)
+        else:
+            self.Boton_manual.place(x=28, y=450)
+
 
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
