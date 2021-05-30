@@ -49,7 +49,7 @@ class Ventas(Cerrar_Ventanas):
         self.Entry_Cantidad.place(x=270, y=69)
 
         self.mostrar_total_a_pagar = tk.Label(self.raiz, textvariable= self.mostrar_total, font=("Verdana",24), width=10)
-        self.mostrar_total_a_pagar.place(x=30, y=250)
+        self.mostrar_total_a_pagar.place(x=30, y=220)
 
         self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5"), height=12)
         #self.tabla.place(x=330, y =150)
