@@ -8,6 +8,7 @@ import tkMessageBox as ms
 from datetime import datetime
 from funcionalidad.Manejar_archivos_ventas import Manejar_archivos_ventas
 from funcionalidad.Exepciones import Vacio
+import re
 
 
 class Pantalla_reporte_ventas():
@@ -71,6 +72,7 @@ class Pantalla_reporte_ventas():
     def datos_reporte(self):
         """Trae datos del archivo Base_Ventas"""
         self.informacion_del_archivo = self.manejar_archivos_venta.traer_informacion()
+        self.informacion_del_archivo.reverse()
         for linea in self.informacion_del_archivo:
             self.lineas = linea.split("  ")
             self.tabla1.insert("",tk.END,text="", values=(self.lineas[0], self.lineas[1], self.lineas[2], self.lineas[3], self.lineas[4], self.lineas[5]))
@@ -88,13 +90,21 @@ class Pantalla_reporte_ventas():
             entry.config(fg="grey") 
 
     def buscar_ventas_fecha(self):
+        """ Busca las fehcas indicadas en el archivo de ventas  """
         try:
             self.info = (self.fecha_buscar.get()).strip()
-            if(self.info == ""):
+            if(self.info == "" or self.info == "D/M/AAAA"):
                 raise Vacio
             else:
+                if(re.search("-", self.info) and len(self.info) == 17):
+                    self.fecha1 = self.info[0:8]
+                    self.fecha2 = self.info[9:]
+                    self.Info_fecha1 = self.manejar_archivos_venta.buscar_linea_en_archivo_de_texto(self.fecha1)
+                    self.Info_fecha2 = self.manejar_archivos_venta.buscar_linea_en_archivo_de_texto(self.fecha2)
+                    self.informacion_del_archivo = self.Info_fecha1 + self.Info_fecha2
+                else:
+                    self.informacion_del_archivo = self.manejar_archivos_venta.buscar_linea_en_archivo_de_texto(self.info)
 
-                self.informacion_del_archivo = self.manejar_archivos_venta.buscar_linea_en_archivo_de_texto(self.info)
                 if(len(self.informacion_del_archivo) == 0):
                     ms.showinfo("", "No tenemos ventas registradas en la fecha "+ self.info)
                 else:
@@ -106,7 +116,7 @@ class Pantalla_reporte_ventas():
                         self.tabla1.insert("",tk.END,text="", values=(self.lineas[0], self.lineas[1], self.lineas[2], self.lineas[3], self.lineas[4], self.lineas[5]))
 
         except Vacio as e:
-            print type(e).__name__
+            ms.showerror("Vacio", e)
         except Exception as e:
             ms.showerror("", e)
 

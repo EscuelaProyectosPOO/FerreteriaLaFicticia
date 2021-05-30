@@ -21,7 +21,7 @@ class Ventas(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
         self.pantalla_principal1 = pantalla_principal
         self.raiz = tk.Toplevel(self.pantalla_principal1)
-        self.raiz.geometry('980x505')
+        self.raiz.geometry('988x515')
         self.raiz.title("Ventas")
         self.raiz.resizable(False, False)
         self.raiz.iconbitmap('logo.ico')
