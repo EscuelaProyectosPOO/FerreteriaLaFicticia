@@ -35,25 +35,34 @@ class Usuarios:
                     crear.Insertar('Admin', 'qwerty', '1')
                 comp = Archivos_administrador()
                 self.linea_retornada = comp.Buscar(self.nombretext.get())
-                if self.linea_retornada == 0:
-                    mensajes.showerror('ERROR', 'Este usuario no existe')
+            if self.linea_retornada == 0:
+                mensajes.showerror('ERROR', 'Este usuario no existe')
+
+            else:
+                if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
+                    if self.linea_retornada[2] == '1':
+                        self.respuesta = True
+                        llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
+                        self.nombretext.set('')
+                        self.tn.config(fg='grey')
+                        self.contra.set('')
+                        self.tn.insert(0, 'Usuario')
+                        self.tn.bind("<FocusIn>", lambda event: self.default(event, self.tn, "Usuario"))
+                        self.tn.bind("<FocusOut>", lambda event: self.default(event, self.tn, "Usuario"))
+
+
+                    else:
+                        self.respuesta = False
+                        llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
+                        self.nombretext.set('')
+                        self.tn.config(fg='grey')
+                        self.contra.set('')
+                        self.tn.insert(0, 'Usuario')
+                        self.tn.bind("<FocusIn>", lambda event: self.default(event, self.tn, "Usuario"))
+                        self.tn.bind("<FocusOut>", lambda event: self.default(event, self.tn, "Usuario"))
 
                 else:
-                    if self.linea_retornada[0] == self.nombretext.get() and self.linea_retornada[1] == self.contra.get():
-                        if self.linea_retornada[2] == '1':
-                            self.respuesta = True
-                            llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
-                            self.nombretext.set('')
-                            self.contra.set('')
-                            self.ventana_principal()
-
-
-
-                        else:
-                            self.respuesta = False
-                            llamada = Pantalla_de_inicio(self.raiz, self.respuesta)
-                    else:
-                        mensajes.showerror('ERROR', 'Contraseña incorrecta')
+                    mensajes.showerror('ERROR', 'Contraseña incorrecta')
         except Vacio as v:
             print Vacio, v
         except Exception as e:
@@ -93,9 +102,9 @@ class Usuarios:
             entry.delete(0, END)
             entry.config(fg="black", show='*')
 
-        #elif(self.informacion_entry == ""):
-        #    entry.insert(0,texto_insertado)
-        #    entry.config(fg="grey")
+        elif(self.informacion_entry == ""):
+            entry.insert(0,texto_insertado)
+            entry.config(fg="grey")
 
 if __name__ == "__main__":
     uno = Usuarios()
