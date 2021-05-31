@@ -36,6 +36,7 @@ class Ventas(Cerrar_Ventanas):
         self.raiz.config(menu=self.Barra_menu_principal)
         self.tiempo = datetime.now()
         self.mostrar_total = tk.StringVar()
+        self.mostrar_cambio = tk.StringVar()
         self.Codigo_producto = tk.StringVar()
         self.Cantidad = tk.StringVar()
         self.acumulador = 0
@@ -43,16 +44,23 @@ class Ventas(Cerrar_Ventanas):
     def ventana_principal(self):
         """ Muestra todos los productos"""
         self.Barra_menu_principal.add_command(label="Reporte", command=lambda:self.reporte())
-        self.Entry_Codigo_producto = tk.Entry(self.raiz, textvariable=self.Codigo_producto, width=25)
-        self.Entry_Codigo_producto.place(x=35, y=69)
-        self.Entry_Cantidad = tk.Entry(self.raiz, textvariable=self.Cantidad, width=10)
-        self.Entry_Cantidad.place(x=270, y=69)
 
-        self.mostrar_total_a_pagar = tk.Label(self.raiz, textvariable= self.mostrar_total, font=("Verdana",24), width=10)
-        self.mostrar_total_a_pagar.place(x=30, y=220)
+        self.Entry_Codigo_producto = tk.Entry(self.raiz, textvariable=self.Codigo_producto, width=25)
+        self.Entry_Codigo_producto.place(x=35, y=61)
+
+        self.Entry_Cantidad = tk.Entry(self.raiz, textvariable=self.Cantidad, width=10)
+        self.Entry_Cantidad.place(x=270, y=61)
+
+        self.Entry_Cantidad_recibida_cliente = tk.Entry(self.raiz, textvariable=self.mostrar_cambio, width=25)
+        self.Entry_Cantidad_recibida_cliente.place(x=400, y=61)
+
+        self.mostrar_total_a_pagar = tk.Label(self.raiz, textvariable= self.mostrar_total, font=("Verdana",24), width=10, bg="white")
+        self.mostrar_total_a_pagar.place(x=30, y=180)
+
+        self.mostrar_cambio_del_cliente = tk.Label(self.raiz, font=("Verdana",24), width=10, bg="white")
+        self.mostrar_cambio_del_cliente.place(x=30, y=280)
 
         self.tabla = ttk.Treeview(self.raiz, show='headings', columns=("#1", "#2", "#3", "#4", "#5"), height=12)
-        #self.tabla.place(x=330, y =150)
         self.tabla.grid(row=1, column=9, pady=150, columnspan=2, padx=300)
 
         self.tabla.column("#1", width=150, anchor="center")
@@ -70,18 +78,21 @@ class Ventas(Cerrar_Ventanas):
         
 
         self.scrollbar = tk.Scrollbar(self.raiz, orient="vertical", command=self.tabla.yview)
-        #self.scrollbar.place(x=330, y =150)
         self.scrollbar.grid(row=1, column=10, sticky='ns', pady=150)
         self.tabla.config(yscrollcommand=self.scrollbar.set)
 
 
         self.imagen_boton_agregar_venta = tk.PhotoImage(file="agregar_venta_tabla.GIF")
-        self.Boton_agregar_venta = tk.Button(self.raiz, image=self.imagen_boton_agregar_venta, width=76, height=29,cursor="hand2",border=0,  command=lambda:self.Agregar_item() )
-        self.Boton_agregar_venta.place(x=400, y=61)
+        self.Boton_agregar_venta = tk.Button(self.raiz, image=self.imagen_boton_agregar_venta, width=71, height=28,cursor="hand2",border=0,  command=lambda:self.Agregar_item() )
+        self.Boton_agregar_venta.place(x=590, y=55)
 
         self.imagen_boton_remover_venta = tk.PhotoImage(file="remover_venta_tabla.GIF")
-        self.Boton_remover_venta = tk.Button(self.raiz, image=self.imagen_boton_remover_venta, width=89, height=28,cursor="hand2",border=0,  command=lambda:self.Remover_item() )
-        self.Boton_remover_venta.place(x=488, y=61)
+        self.Boton_remover_venta = tk.Button(self.raiz, image=self.imagen_boton_remover_venta, width=89, height=27,cursor="hand2",border=0,  command=lambda:self.Remover_item() )
+        self.Boton_remover_venta.place(x=680, y=55)
+
+        self.imagen_boton_calcular_cambio_venta = tk.PhotoImage(file="calcular_cambio_ventas.GIF")
+        self.Boton_calcular_cambio_venta = tk.Button(self.raiz, image=self.imagen_boton_calcular_cambio_venta, width=129, height=27,cursor="hand2",border=0,  command=lambda:self.calcular_cambio_cliente() )
+        self.Boton_calcular_cambio_venta.place(x=790, y=55)
 
         self.imagen_boton_regresar = tk.PhotoImage(file="boton_regresar.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2",border=0,  command=lambda:self.volver(self.raiz, self.pantalla_principal1) )
@@ -137,8 +148,6 @@ class Ventas(Cerrar_Ventanas):
             print type(e).__name__
         except Exception as e :
             ms.showerror("Error!!!", "Ya has agregado este producto")
-            print type(e).__name__
-            print e
         finally:
             self.limpiar_campos()
             
@@ -188,6 +197,8 @@ class Ventas(Cerrar_Ventanas):
     def limpiar_campos(self):
         self.Codigo_producto.set("")
         self.Cantidad.set("")
+        self.mostrar_cambio.set("")
+        self.mostrar_cambio_del_cliente.config(text="$0.0")
 
     def buscar_modificar_producto(self, codigo_producto, unidades_vendidas):
         self.datos_producto = self.manejar_archivos_productos.Buscar(codigo_producto)
@@ -197,6 +208,32 @@ class Ventas(Cerrar_Ventanas):
             self.nueva_cantidad = str(int(self.datos_producto[3]) - int(unidades_vendidas))
             self.manejar_archivos_productos.Modificar(self.datos_producto[0], self.datos_producto[1], self.datos_producto[2], self.nueva_cantidad, self.datos_producto[4], self.datos_producto[5], self.datos_producto[6])
             
+    def calcular_cambio_cliente(self):
+        try:
+            self.vuelto = (self.mostrar_cambio.get()).strip()
+            if(self.vuelto == ""):
+                raise Campos_vacios_en_ventas
+            elif(float(self.vuelto) <=0):
+                raise Negativos
+            elif(self.acumulador == 0):
+                ms.showerror("", "Necesita tener una cantidad total a pagar primero")
+            elif(float(self.vuelto)< self.acumulador):
+                ms.showerror("", "El cliente debe dar una cantidad mayor o igual al total a pagar")
+            else:
+                self.vuelto =  str(float(self.vuelto) - self.acumulador)
+                self.mostrar_cambio_del_cliente.config(text="$"+self.vuelto)
+
+        except Negativos as e:
+            print Negativos, e
+
+        except Campos_vacios_en_ventas as e:
+            print Campos_vacios_en_ventas, e
+        except ValueError as e:
+            ms.showerror("Error!!!", "No se aceptan esos datos")
+            print type(e).__name__
+        except Exception as e :
+            ms.showerror("Error!!!", "Ya has agregado este producto")
+
 
 
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):

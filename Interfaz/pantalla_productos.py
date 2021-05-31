@@ -27,7 +27,6 @@ class Productos(Cerrar_Ventanas):
         self.Proveedor = tk.StringVar() 
         self.Fecha_de_entrega = tk.StringVar()
         self.pantalla_principal1.withdraw()
-        self.contador_entrys_llenados_correctamente = 0
         self.raiz.bind("<Destroy>",lambda event: self.volver_con_cerrado_ventana(event,self.pantalla_principal1))
         
         
@@ -116,30 +115,64 @@ class Productos(Cerrar_Ventanas):
         self.Entry_Proveedor.config(fg="grey") 
         self.Fecha_de_entrega.set("Fecha de entrega")
         self.Entry_Fecha_de_entrega.config(fg="grey") 
+    
+    def Colocar_color_entrys(self):
+
+        self.Entry_Codigo_producto.config(fg="black") 
+        self.Entry_NombreProducto.config(fg="black") 
+        self.Entry_Precio_producto.config(fg="black") 
+        self.Entry_Cantidad_producto.config(fg="black") 
+        self.Entry_Marca_producto.config(fg="black") 
+        self.Entry_Proveedor.config(fg="black") 
+        self.Entry_Fecha_de_entrega.config(fg="black")
+        
 
     def crear_registro(self):
         try:
-            if(self.contador_entrys_llenados_correctamente == 7):
+            if((self.Codigo_producto.get()).strip() == "" or (self.NombreProducto.get()).strip() == ""
+             or (self.Precio_producto.get()).strip() == "" or (self.Cantidad_producto.get()).strip() == "" 
+             or (self.Marca_producto.get()).strip() == "" or (self.Proveedor.get()).strip() == "" or (self.Fecha_de_entrega.get()).strip() == "" 
+             or (self.NombreProducto.get()).strip() == "Nombre" or (self.Codigo_producto.get()).strip() == "Codigo de producto" or (self.Precio_producto.get()).strip() == "Precio"
+             or (self.Cantidad_producto.get()).strip() == "Cantidad" or (self.Marca_producto.get()).strip() == "Marca" or (self.Proveedor.get()).strip() == "Proveedor"
+             or (self.Fecha_de_entrega.get()).strip() == "Fecha de entrega"):
+                raise Vacio
+
+            else:
+
                 if(float(self.Precio_producto.get()) <=0 or  int(self.Cantidad_producto.get()) <= 0):
+
                     ms.showerror("", "El precio o la cantidad de producto no debe ser negativa ni nula")
                 else:
-                    self.bandera = self.instanciaManejarProductos.Insertar(self.Codigo_producto.get(),
-                        self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
-                    if(self.bandera):
-                        ms.showinfo("", "El producto se ha registrado con exito!")
+                    self.respuesta_busqueda = self.instanciaManejarProductos.Buscar(self.Codigo_producto.get())
+                    if(self.respuesta_busqueda != 0):
+                        ms.showinfo("", "Este Producto ya ha sido registrado en el sistema")
                     else:
-                        ms.showerror("ERROR!!!", "El producto no ha podido ser registrado" )
-                    self.Borrar_entrys()
-            else:
-                raise Vacio
+                        self.bandera = self.instanciaManejarProductos.Insertar(self.Codigo_producto.get(),
+                            self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
+                        if(self.bandera):
+                            ms.showinfo("", "El producto se ha registrado con exito!")
+                        else:
+                            ms.showerror("ERROR!!!", "El producto no ha podido ser registrado" )
+                        self.Borrar_entrys()
+           
         except Vacio as e:
             print e
-        
+        except Exception as e:
+            ms.showerror("", e)
 
 
     def Modificar_registro(self):
         try:
-            if(self.contador_entrys_llenados_correctamente == 7):
+            if((self.Codigo_producto.get()).strip() == "" or (self.NombreProducto.get()).strip() == ""
+             or (self.Precio_producto.get()).strip() == "" or (self.Cantidad_producto.get()).strip() == "" 
+             or (self.Marca_producto.get()).strip() == "" or (self.Proveedor.get()).strip() == "" or (self.Fecha_de_entrega.get()).strip() == "" 
+             or (self.NombreProducto.get()).strip() == "Nombre" or (self.Codigo_producto.get()).strip() == "Codigo de producto" or (self.Precio_producto.get()).strip() == "Precio"
+             or (self.Cantidad_producto.get()).strip() == "Cantidad" or (self.Marca_producto.get()).strip() == "Marca" or (self.Proveedor.get()).strip() == "Proveedor"
+             or (self.Fecha_de_entrega.get()).strip() == "Fecha de entrega"):
+             
+                raise Vacio
+
+            else:
                 self.bandera = self.instanciaManejarProductos.Modificar(self.Codigo_producto.get(),
                     self.NombreProducto.get(), self.Precio_producto.get(), self.Cantidad_producto.get(), self.Marca_producto.get(), self.Proveedor.get(), self.Fecha_de_entrega.get())
                 if(self.bandera):
@@ -147,10 +180,10 @@ class Productos(Cerrar_Ventanas):
                 else:
                     ms.showerror("ERROR!!!", "El producto no ha podido ser modificado" )
                 self.Borrar_entrys()
-            else:
-                raise Vacio
         except Vacio as e:
             print e
+        except Exception as e:
+            ms.showerror("", e)
 
 
 
@@ -169,6 +202,7 @@ class Productos(Cerrar_Ventanas):
                     self.Marca_producto.set(self.listaDevuelta[4])
                     self.Proveedor.set(self.listaDevuelta[5])
                     self.Fecha_de_entrega.set(self.listaDevuelta[6]) 
+                    self.Colocar_color_entrys()
                 else:
                     ms.showerror("ERROR!!!", "Este producto no exite, porfavor revise el  código del producto" )
         except CodigoProducto as e:
@@ -202,12 +236,11 @@ class Productos(Cerrar_Ventanas):
             or self.informacion_entry == "Fecha de entrega"):
             entry.delete(0, tk.END)
             entry.config(fg="black")
-            self.contador_entrys_llenados_correctamente += 1
 
         elif(self.informacion_entry == ""):
 
             entry.insert(0,texto_insertado)
             entry.config(fg="grey") 
-            self.contador_entrys_llenados_correctamente -= 1
+            
          
         

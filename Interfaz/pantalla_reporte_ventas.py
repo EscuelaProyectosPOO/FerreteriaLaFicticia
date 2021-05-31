@@ -9,6 +9,7 @@ from datetime import datetime
 from funcionalidad.Manejar_archivos_ventas import Manejar_archivos_ventas
 from funcionalidad.Exepciones import Vacio
 import re
+import datetime
 
 
 class Pantalla_reporte_ventas():
@@ -90,21 +91,56 @@ class Pantalla_reporte_ventas():
             entry.config(fg="grey") 
 
     def buscar_ventas_fecha(self):
-        """ Busca las fehcas indicadas en el archivo de ventas  """
+        """ Busca las fechas indicadas en el entry de ventas  """
         try:
             self.info = (self.fecha_buscar.get()).strip()
             if(self.info == "" or self.info == "D/M/AAAA"):
                 raise Vacio
             else:
-                if(re.search("-", self.info) and len(self.info) == 17):
-                    self.fecha1 = self.info[0:8]
-                    self.fecha2 = self.info[9:]
+                if(re.search("-", self.info)):
+                    self.fecha1 = self.info[0:(re.search("-", self.info)).start()]
+                    self.fecha2 = self.info[(re.search("-", self.info)).end():]
+            
                     self.Info_fecha1 = self.manejar_archivos_venta.buscar_linea_en_archivo_de_texto(self.fecha1)
                     self.Info_fecha2 = self.manejar_archivos_venta.buscar_linea_en_archivo_de_texto(self.fecha2)
-                    self.informacion_del_archivo = self.Info_fecha1 + self.Info_fecha2
+
+                    self.date_fecha1 = datetime.datetime(int(self.fecha1[(len(self.fecha1)-4):]),  int(self.fecha1[(re.search("/", self.fecha1)).end():len(self.fecha1)-5]),  int(self.fecha1[0:(re.search("/", self.fecha1)).start()])    )
+                    self.date_fecha2 = datetime.datetime(int(self.fecha2[(len(self.fecha2)-4):]),  int(self.fecha2[(re.search("/", self.fecha2)).end():len(self.fecha2)-5]),  int(self.fecha2[0:(re.search("/", self.fecha2)).start()])    )
+                    
+                    
+                    self.variable_temporal = self.manejar_archivos_venta.traer_informacion()
+                    
+            
+                
+                    if(self.date_fecha1 < self.date_fecha2):
+
+                        self.index_fecha1 = self.variable_temporal.index(self.Info_fecha1[0])
+                        self.Info_fecha2.reverse()
+                        self.index_fecha2 = self.variable_temporal.index(self.Info_fecha2[0])
+
+                    elif(self.date_fecha1 > self.date_fecha2):
+
+                        self.index_fecha2 = self.variable_temporal.index(self.Info_fecha2[0])
+                        self.Info_fecha1.reverse()
+                        self.index_fecha1 = self.variable_temporal.index(self.Info_fecha1[0])
+
+
+                    if(self.index_fecha1 > self.index_fecha2):
+                        self.inicio =self.index_fecha2
+                        self.fin = self.index_fecha1 +1
+                    else:
+                        self.inicio = self.index_fecha1
+                        self.fin = self.index_fecha2 +1
+
+                    self.informacion_del_archivo =[]
+                    for i in range(self.inicio, self.fin):
+                        self.informacion_del_archivo.append(self.variable_temporal[i])
+                    
+                    self.informacion_del_archivo.reverse()
+    
                 else:
                     self.informacion_del_archivo = self.manejar_archivos_venta.buscar_linea_en_archivo_de_texto(self.info)
-
+                
                 if(len(self.informacion_del_archivo) == 0):
                     ms.showinfo("", "No tenemos ventas registradas en la fecha "+ self.info)
                 else:
@@ -116,8 +152,9 @@ class Pantalla_reporte_ventas():
                         self.tabla1.insert("",tk.END,text="", values=(self.lineas[0], self.lineas[1], self.lineas[2], self.lineas[3], self.lineas[4], self.lineas[5]))
 
         except Vacio as e:
-            ms.showerror("Vacio", e)
+            pass
         except Exception as e:
             ms.showerror("", e)
+            print e
 
     
