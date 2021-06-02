@@ -28,6 +28,15 @@ class Administrador(Cerrar_Ventanas):
         self.NombreText.set('')
         self.contraText.set('')
         self.rangoText.set('')
+        self.Nombre.insert(0, 'Nombre de usuario')
+        self.Nombre.bind("<FocusIn>", lambda event: self.default(event, self.Nombre, "Nombre de usuario"))
+        self.Nombre.bind("<FocusOut>", lambda event: self.default(event, self.Nombre, "Nombre de usuario"))
+        self.Contra.insert(0, 'Clave de acceso')
+        self.Contra.bind("<FocusIn>", lambda event: self.default(event, self.Contra, "Clave de acceso"))
+        self.Contra.bind("<FocusOut>", lambda event: self.default(event, self.Contra, "Clave de acceso"))
+        self.Rango.insert(0, 'Rango (1, 2)')
+        self.Raiz.bind("<FocusIn>", lambda event: self.default(event, self.Rango, "Rango (1, 2)"))
+        self.Rango.bind("<FocusOut>", lambda event: self.default(event, self.Rango, "Rango (1, 2)"))
 
     def registrar(self):
         band = True
@@ -118,8 +127,11 @@ class Administrador(Cerrar_Ventanas):
         self.linea_devuelta = self.instancia_buscar.Buscar(self.NombreText.get())
         try:
             self.NombreText.set(self.linea_devuelta[0])
+            self.Nombre.config(fg='black')
             self.contraText.set(self.linea_devuelta[1])
+            self.Contra.config(fg='black')
             self.rangoText.set(self.linea_devuelta[2])
+            self.Rango.config(fg='black')
         except TypeError:
             print 'Elemento no encontrado'
             mensajes.showerror('ERROR', 'No se encuentra el usuario')
@@ -181,20 +193,37 @@ class Administrador(Cerrar_Ventanas):
         self.Boton_regresar.place(x=2, y=220)
 
         self.NombreText = StringVar()
-        self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30)
+        self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30, fg='grey')
         self.Nombre.place(x=170, y=35)
+        self.Nombre.insert(0, 'Nombre de usuario')
+        self.Nombre.bind("<FocusIn>", lambda event: self.default(event, self.Nombre, "Nombre de usuario"))
+        self.Nombre.bind("<FocusOut>", lambda event: self.default(event, self.Nombre, "Nombre de usuario"))
 
         self.contraText = StringVar()
-        self.Contra = Entry(self.Raiz, textvariable=self.contraText, width=30)
+        self.Contra = Entry(self.Raiz, textvariable=self.contraText, width=30, fg='grey')
         self.Contra.place(x=170, y=93)
-        #self.Contra.config(show='*')
+        self.Contra.insert(0, 'Clave de acceso')
+        self.Contra.bind("<FocusIn>", lambda event: self.default(event, self.Contra, "Clave de acceso"))
+        self.Contra.bind("<FocusOut>", lambda event: self.default(event, self.Contra, "Clave de acceso"))
 
         self.rangoText = StringVar()
-        self.Rango = Entry(self.Raiz, textvariable=self.rangoText, width=30)
+        self.Rango = Entry(self.Raiz, textvariable=self.rangoText, width=30, fg='grey')
         self.Rango.place(x=170, y=150)
+        self.Rango.insert(0, 'Rango (1, 2)')
+        self.Rango.bind("<FocusIn>", lambda event: self.default(event, self.Rango, "Rango (1, 2)"))
+        self.Rango.bind("<FocusOut>", lambda event: self.default(event, self.Rango, "Rango  (1, 2)"))
 
         self.pantalla_Principal1.withdraw()
 
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
         nombre_ventana_actual.destroy()
+
+    def default(self, event, entry, texto_insertado):
+        self.informacion_entry = entry.get()
+        if(self.informacion_entry == "Nombre de usuario" or self.informacion_entry == "Clave de acceso" or self.informacion_entry == "Rango (1, 2)"):
+            entry.delete(0, END)
+            entry.config(fg="black")
+        elif (self.informacion_entry == ""):
+            entry.insert(0, texto_insertado)
+            entry.config(fg="grey")
