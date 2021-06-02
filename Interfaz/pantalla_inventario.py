@@ -33,7 +33,7 @@ class Inventario(Cerrar_Ventanas):
         self.tabla.column("#6", width=150, anchor="center")
         self.tabla.column("#7", width=100, anchor="center")
 
-        self.tabla.heading("#1", text="Codigo de Producto")
+        self.tabla.heading("#1", text="Código de Producto")
         self.tabla.heading("#2", text="Nombre")
         self.tabla.heading("#3", text="Precio")
         self.tabla.heading("#4", text="Cantidad")

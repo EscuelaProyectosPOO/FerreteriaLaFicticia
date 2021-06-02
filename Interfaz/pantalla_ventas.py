@@ -184,6 +184,7 @@ class Ventas(Cerrar_Ventanas):
                     self.buscar_modificar_producto(str(diccionario["values"][0]), str(diccionario["values"][3]))
                     self.tabla.delete(i)
                 ms.showinfo("", "La venta se ha registrado con exito ")
+                self.limpiar_campos()
         except IndexError:
             print("Error, salida de rango")
 
