@@ -30,6 +30,21 @@ class Proveedores(Cerrar_Ventanas):
         self.direcText.set('')
         self.precioText.set('')
         self.productoText.set('')
+        self.Nombre.insert(0, 'Nombre')
+        self.Nombre.bind("<FocusIn>", lambda event: self.default(event, self.Nombre, "Nombre"))
+        self.Nombre.bind("<FocusOut>", lambda event: self.default(event, self.Nombre, "Nombre"))
+
+        self.Direccion.insert(0, 'Direccion')
+        self.Direccion.bind("<FocusIn>", lambda event: self.default(event, self.Direccion, "Direccion"))
+        self.Direccion.bind("<FocusOut>", lambda event: self.default(event, self.Direccion, "Direccion"))
+
+        self.Producto.insert(0, 'Precio')
+        self.Producto.bind("<FocusIn>", lambda event: self.default(event, self.Producto, "Producto"))
+        self.Producto.bind("<FocusOut>", lambda event: self.default(event, self.Producto, "Producto"))
+
+        self.Precio.insert(0, 'Precio')
+        self.Precio.bind("<FocusIn>", lambda event: self.default(event, self.Precio, "Precio"))
+        self.Precio.bind("<FocusOut>", lambda event: self.default(event, self.Precio, "Precio"))
 
     def buscar(self):
         self.instancia_buscar = Archivos_proveedores()
@@ -38,9 +53,13 @@ class Proveedores(Cerrar_Ventanas):
             mensajes.showerror('ERROR', 'Elemento no encontrado')
         else:
             self.NombreText.set(self.linea_devuelta[0])
+            self.Nombre.config(fg='black')
             self.direcText.set(self.linea_devuelta[1])
+            self.Direccion.config(fg='black')
             self.productoText.set(self.linea_devuelta[2])
+            self.Producto.config(fg='black')
             self.precioText.set(self.linea_devuelta[3])
+            self.Precio.config(fg='black')
 
     def registrar(self):
         band = True
@@ -190,24 +209,45 @@ class Proveedores(Cerrar_Ventanas):
         self.Boton_regresar.place(x=2, y=240)
 
 
-        self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30)
+        self.Nombre = Entry(self.Raiz, textvariable=self.NombreText, width=30, fg='grey')
         self.Nombre.place(x=170, y=25)
+        self.Nombre.insert(0, 'Nombre')
+        self.Nombre.bind("<FocusIn>", lambda event: self.default(event, self.Nombre, "Nombre"))
+        self.Nombre.bind("<FocusOut>", lambda event: self.default(event, self.Nombre, "Nombre"))
 
         self.direcText = StringVar()
-        self.Direccion = Entry(self.Raiz, textvariable=self.direcText, width=30)
+        self.Direccion = Entry(self.Raiz, textvariable=self.direcText, width=30, fg='grey')
         self.Direccion.place(x=170, y=70)
+        self.Direccion.insert(0, 'Direccion')
+        self.Direccion.bind("<FocusIn>", lambda event: self.default(event, self.Direccion, "Direccion"))
+        self.Direccion.bind("<FocusOut>", lambda event: self.default(event, self.Direccion, "Dreccion"))
 
         self.productoText = StringVar()
-        self.Producto = Entry(self.Raiz, textvariable=self.productoText, width=30)
+        self.Producto = Entry(self.Raiz, textvariable=self.productoText, width=30, fg='grey')
         self.Producto.place(x=170, y=120)
+        self.Producto.insert(0, 'Producto')
+        self.Producto.bind("<FocusIn>", lambda event: self.default(event, self.Producto, "Producto"))
+        self.Producto.bind("<FocusOut>", lambda event: self.default(event, self.Producto, "Producto"))
 
         self.precioText = StringVar()
-        self.Precio = Entry(self.Raiz, textvariable=self.precioText, width=30)
+        self.Precio = Entry(self.Raiz, textvariable=self.precioText, width=30, fg='grey')
         self.Precio.place(x=170, y=170)
+        self.Precio.insert(0, 'Precio')
+        self.Precio.bind("<FocusIn>", lambda event: self.default(event, self.Precio, "Precio"))
+        self.Precio.bind("<FocusOut>", lambda event: self.default(event, self.Precio, "Precio"))
 
         self.pantalla_principal1.withdraw()
 
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
         nombre_ventana_actual.destroy()
+
+    def default(self, event, entry, texto_insertado):
+        self.informacion_entry = entry.get()
+        if(self.informacion_entry == "Nombre" or self.informacion_entry == "Direccion" or self.informacion_entry == "Precio" or self.informacion_entry == "Producto"):
+            entry.delete(0, END)
+            entry.config(fg="black")
+        elif (self.informacion_entry == ""):
+            entry.insert(0, texto_insertado)
+            entry.config(fg="grey")
 

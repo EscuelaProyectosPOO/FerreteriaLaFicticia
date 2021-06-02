@@ -69,7 +69,7 @@ class Usuarios:
             print type(e).__name__, e
 
     def ventana_principal(self):
-        self.tn = Entry(self.raiz, textvariable=self.nombretext,  fg = 'grey')
+        self.tn = Entry(self.raiz, textvariable=self.nombretext, fg = 'grey')
         self.tn.config(font=35)
         self.tn.place(x=45, y=80, width=250, height=30)
         self.tn.insert(0, 'Usuario')
