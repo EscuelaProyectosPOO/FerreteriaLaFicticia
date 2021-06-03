@@ -142,7 +142,7 @@ class Pantalla_reporte_ventas():
                     self.informacion_del_archivo = self.manejar_archivos_venta.buscar_linea_en_archivo_de_texto(self.info)
                 
                 if(len(self.informacion_del_archivo) == 0):
-                    ms.showinfo("", "No tenemos ventas registradas en la fecha "+ self.info)
+                    ms.showinfo("Ups!!", "No tenemos ventas registradas en la fecha "+ self.info)
                 else:
                     self.lista = self.tabla1.get_children()
                     for i in self.lista:
@@ -153,6 +153,8 @@ class Pantalla_reporte_ventas():
 
         except Vacio as e:
             pass
+        except ValueError as e:
+            ms.showerror("Error!!!", "No se aceptan esos caracteres especiales")
         except Exception as e:
             ms.showerror("", e)
             print e

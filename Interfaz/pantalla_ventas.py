@@ -134,7 +134,7 @@ class Ventas(Cerrar_Ventanas):
                         self.acumulador += self.cantidad_por_precio
                         self.mostrar_total.set( "$" + str(self.acumulador))
                     else:
-                        ms.showinfo("", "El producto " + self.nombre + " solo cuenta con " + str(self.cantidad_en_existencia) + " unidades")
+                        ms.showinfo("Información", "El producto " + self.nombre + " solo cuenta con " + str(self.cantidad_en_existencia) + " unidades")
         except Negativos as e:
             print Negativos, e
 
@@ -183,10 +183,10 @@ class Ventas(Cerrar_Ventanas):
                     self.manejar_archivos_venta.Insertar(self.fecha_de_hoy, str(diccionario["values"][0]), diccionario["values"][1], str(diccionario["values"][2]), str(diccionario["values"][3]), str(diccionario["values"][4]))
                     self.buscar_modificar_producto(str(diccionario["values"][0]), str(diccionario["values"][3]))
                     self.tabla.delete(i)
-                ms.showinfo("", "La venta se ha registrado con exito ")
+                ms.showinfo("Felicidades!!", "La venta se ha registrado con exito ")
                 self.limpiar_campos()
         except IndexError:
-            print("Error, salida de rango")
+            ms.showerror("Error!!", "salida de rango")
 
         except Registrar_venta as e:
             print  type(e).__name__

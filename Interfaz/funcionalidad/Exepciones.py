@@ -19,26 +19,26 @@ class Vacio(Exception):
 
 class inexistencia_producto_tabla(Exception):
     def __init__(self):
-        print "Error en agregar producto inexistente en la tabla a la tabla de ventas"
-        mensajes.showerror("", "el producto que intentas agregar no existe")
+        #print "Error en agregar producto inexistente en la tabla a la tabla de ventas"
+        mensajes.showerror("Error!!!", "el producto que intentas agregar no existe")
 
 
 class Campos_vacios_en_ventas(Exception):
     def __init__(self):
         mensajes.showerror("", "Debes llenar todos los campos para podera gregar el producto")
-        print "Error en la tabla por no llenar los campos"
+        #print "Error en la tabla por no llenar los campos"
 
  
 class Negativos(Exception):
     def __init__(self):
-        print 'Vacío'
+        #print 'Vacío'
         mensajes.showerror('ERROR', 'No puedes poner valores negativos')
 
 
 class CodigoProducto(Exception):
     def __init__(self):
-        mensajes.showerror("", "Para realizar la operacion debe que colocar el código del producto")
+        mensajes.showerror("Error!!!", "Para realizar la operacion debe que colocar el código del producto")
 
 class Registrar_venta(Exception):
     def __init__(self):
-        mensajes.showerror("", "Para realizar la operacion debes tener productos agregados en la tabla")
+        mensajes.showerror("Error!!!", "Para realizar la operacion debes tener productos agregados en la tabla")
