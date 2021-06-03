@@ -71,7 +71,7 @@ class Pantalla_de_inicio(Cerrar_Ventanas):
 
     def abrir_manual_de_usuario(self):
         """Muestra el manual de usuario en el navegador"""
-        self.direccion_manual = os.getcwd() +"/" + "Manual_de_usuario.pdf"
+        self.direccion_manual = os.getcwd() +"/../" + "Manual_de_usuario.pdf"
         os.system(self.direccion_manual)
 
     def colocar_boton_administrador(self):
