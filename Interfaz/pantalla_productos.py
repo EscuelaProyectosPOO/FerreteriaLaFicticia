@@ -15,8 +15,8 @@ class Productos(Cerrar_Ventanas):
         self.raiz.geometry('533x425')
         self.raiz.title("Registro Productos")
         self.raiz.resizable(False, False)
-        self.raiz.iconbitmap('logo.ico')
-        self.imagen = tk.PhotoImage(file="fondoProductos.GIF")
+        self.raiz.iconbitmap('../imagenes/logo.ico')
+        self.imagen = tk.PhotoImage(file="../imagenes/fondoProductos.GIF")
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         self.instanciaManejarProductos = Manejar_archivos_productos()
         self.NombreProducto = tk.StringVar()
@@ -78,23 +78,23 @@ class Productos(Cerrar_Ventanas):
         self.Entry_Fecha_de_entrega.bind("<FocusIn>", lambda event: self.default(event,self.Entry_Fecha_de_entrega, "Fecha de entrega"))
         self.Entry_Fecha_de_entrega.bind("<FocusOut>", lambda event: self.default(event,self.Entry_Fecha_de_entrega, "Fecha de entrega"))
 
-        self.imagen_boton_CrearProductos = tk.PhotoImage(file="crearProductos.GIF")
+        self.imagen_boton_CrearProductos = tk.PhotoImage(file="../imagenes/crearProductos.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_CrearProductos, width=66, height=30,cursor="hand2",border=0,  command=lambda:self.crear_registro()) 
         self.Boton_regresar.place(x=20, y=270)
 
-        self.imagen_boton_ModificarProductos = tk.PhotoImage(file="ModificarProducto.GIF")
+        self.imagen_boton_ModificarProductos = tk.PhotoImage(file="../imagenes/ModificarProducto.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_ModificarProductos, width=84, height=35,cursor="hand2",border=0,  command=lambda:self.Modificar_registro())
         self.Boton_regresar.place(x=100, y=267)
 
-        self.imagen_boton_BuscarProductos = tk.PhotoImage(file="BuscarProducto.GIF")
+        self.imagen_boton_BuscarProductos = tk.PhotoImage(file="../imagenes/BuscarProducto.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_BuscarProductos, width=68, height=31,cursor="hand2",border=0,  command=lambda:self.Buscar_registro() )
         self.Boton_regresar.place(x=200, y=269)
 
-        self.imagen_boton_EliminarProductos = tk.PhotoImage(file="EliminarProducto.GIF")
+        self.imagen_boton_EliminarProductos = tk.PhotoImage(file="../imagenes/EliminarProducto.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_EliminarProductos, width=80, height=33,cursor="hand2",border=0,  command=lambda:self.Eliminar_registro() )
         self.Boton_regresar.place(x=280, y=269)
 
-        self.imagen_boton_regresar = tk.PhotoImage(file="boton_regresar.GIF")
+        self.imagen_boton_regresar = tk.PhotoImage(file="../imagenes/boton_regresar.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2",border=0,  command=lambda:self.volver(self.raiz, self.pantalla_principal1) )
         self.Boton_regresar.place(x=2, y=340)
         

@@ -17,11 +17,11 @@ class Manejar_archivos():
         """Abre el archivo """
         self.__nombre_archivo_de_texto =   nombre_del_archivo 
         try:
-            self.archivo = open(os.getcwd() +"/Bases_datos/" + self.__nombre_archivo_de_texto + ".txt", "r+")
+            self.archivo = open(os.getcwd() +"/../Bases_datos/" + self.__nombre_archivo_de_texto + ".txt", "r+")
         except:
-            self.archivo = open(os.getcwd() +"/Bases_datos/" + self.__nombre_archivo_de_texto + ".txt", "w")
+            self.archivo = open(os.getcwd() +"/../Bases_datos/" + self.__nombre_archivo_de_texto + ".txt", "w")
             self.archivo.close()
-            self.archivo = open(os.getcwd() +"/Bases_datos/" + self.__nombre_archivo_de_texto + ".txt", "r+")
+            self.archivo = open(os.getcwd() +"/../Bases_datos/" + self.__nombre_archivo_de_texto + ".txt", "r+")
         
        
 
@@ -42,14 +42,14 @@ class Manejar_archivos():
 
     def __eliminar_archivo_de_texto(self):
         """elimina el archivo de texto """
-        self.__direccion_archivo = os.getcwd()  +"/Bases_datos/" + self.__nombre_archivo_de_texto + ".txt"
+        self.__direccion_archivo = os.getcwd()  +"/../Bases_datos/" + self.__nombre_archivo_de_texto + ".txt"
         os.remove(self.__direccion_archivo)
     
     def insertar_linea_en_archivo_de_texto(self, linea_a_insertar, identificador):
         """incerta la linea mandada en el archivo"""
         self.__leer_devolver_linea_a_antigua(identificador)
         if(self.__existe == False):
-            if(os.stat(os.getcwd() +"/Bases_datos/" + self.__nombre_archivo_de_texto + ".txt").st_size == 0):#para saber si esta vacio el documento
+            if(os.stat(os.getcwd() +"../Bases_datos/" + self.__nombre_archivo_de_texto + ".txt").st_size == 0):#para saber si esta vacio el documento
                 self.__linea_a_insertar = unicode(linea_a_insertar)
             else:
                 self.__linea_a_insertar = unicode("\n"+ linea_a_insertar)#por alguna razon me pide unicode

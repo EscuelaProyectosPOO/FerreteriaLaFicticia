@@ -24,8 +24,8 @@ class Ventas(Cerrar_Ventanas):
         self.raiz.geometry('988x515')
         self.raiz.title("Ventas")
         self.raiz.resizable(False, False)
-        self.raiz.iconbitmap('logo.ico')
-        self.imagen = tk.PhotoImage(file="fondo_ventas.GIF")
+        self.raiz.iconbitmap('../imagenes/logo.ico')
+        self.imagen = tk.PhotoImage(file="../imagenes/fondo_ventas.GIF")
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         #evento accionado cuando la ventana es destruida
         self.raiz.bind("<Destroy>",lambda event: self.volver_con_cerrado_ventana(event,self.pantalla_principal1))
@@ -82,23 +82,23 @@ class Ventas(Cerrar_Ventanas):
         self.tabla.config(yscrollcommand=self.scrollbar.set)
 
 
-        self.imagen_boton_agregar_venta = tk.PhotoImage(file="agregar_venta_tabla.GIF")
+        self.imagen_boton_agregar_venta = tk.PhotoImage(file="../imagenes/agregar_venta_tabla.GIF")
         self.Boton_agregar_venta = tk.Button(self.raiz, image=self.imagen_boton_agregar_venta, width=71, height=28,cursor="hand2",border=0,  command=lambda:self.Agregar_item() )
         self.Boton_agregar_venta.place(x=590, y=55)
 
-        self.imagen_boton_remover_venta = tk.PhotoImage(file="remover_venta_tabla.GIF")
+        self.imagen_boton_remover_venta = tk.PhotoImage(file="../imagenes/remover_venta_tabla.GIF")
         self.Boton_remover_venta = tk.Button(self.raiz, image=self.imagen_boton_remover_venta, width=89, height=27,cursor="hand2",border=0,  command=lambda:self.Remover_item() )
         self.Boton_remover_venta.place(x=680, y=55)
 
-        self.imagen_boton_calcular_cambio_venta = tk.PhotoImage(file="calcular_cambio_ventas.GIF")
+        self.imagen_boton_calcular_cambio_venta = tk.PhotoImage(file="../imagenes/calcular_cambio_ventas.GIF")
         self.Boton_calcular_cambio_venta = tk.Button(self.raiz, image=self.imagen_boton_calcular_cambio_venta, width=129, height=27,cursor="hand2",border=0,  command=lambda:self.calcular_cambio_cliente() )
         self.Boton_calcular_cambio_venta.place(x=790, y=55)
 
-        self.imagen_boton_regresar = tk.PhotoImage(file="boton_regresar.GIF")
+        self.imagen_boton_regresar = tk.PhotoImage(file="../imagenes/boton_regresar.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2",border=0,  command=lambda:self.volver(self.raiz, self.pantalla_principal1) )
         self.Boton_regresar.place(x=2, y=430)
 
-        self.imagen_boton_venta = tk.PhotoImage(file="registrar_venta.GIF")
+        self.imagen_boton_venta = tk.PhotoImage(file="../imagenes/registrar_venta.GIF")
         self.Boton_venta = tk.Button(self.raiz, image=self.imagen_boton_venta, width=250, height=40,cursor="hand2",border=0,  command=lambda:self.Registrar_venta() )
         self.Boton_venta.place(x=670, y=430)
 
@@ -248,6 +248,3 @@ class Ventas(Cerrar_Ventanas):
 
    
         
-
-        
-

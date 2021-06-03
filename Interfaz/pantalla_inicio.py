@@ -18,8 +18,8 @@ class Pantalla_de_inicio(Cerrar_Ventanas):
         self.raiz_pantalle_inicio.geometry('1212x581')
         self.raiz_pantalle_inicio.title("Inicio")
         self.raiz_pantalle_inicio.resizable(False, False)
-        self.raiz_pantalle_inicio.iconbitmap('logo.ico')
-        self.imagen = PhotoImage(file="fondo.GIF")
+        self.raiz_pantalle_inicio.iconbitmap('../imagenes/logo.ico')
+        self.imagen = PhotoImage(file="../imagenes/fondo.GIF")
         self.fondo = Label(self.raiz_pantalle_inicio, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         self.raiz_pantalle_inicio.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
         self.pantalla_principal1.withdraw()
@@ -28,19 +28,19 @@ class Pantalla_de_inicio(Cerrar_Ventanas):
 
     def ventana_principal(self):
         """ Muestra los botones de las distintas pestañas que tenemos,asi como el nombre de la ferreteria"""
-        self.imagen_proveedores = PhotoImage(file="Proveedores.GIF")
+        self.imagen_proveedores = PhotoImage(file="../imagenes/Proveedores.GIF")
         self.Boton_proveedores = Button(self.raiz_pantalle_inicio, image=self.imagen_proveedores, width=234, height=91, cursor="hand2", border=0, command=lambda:self.proveedores_llamada())
         self.Boton_proveedores.place(x=2, y=50)
 
-        self.imagen_productos = PhotoImage(file="Productos.GIF")
+        self.imagen_productos = PhotoImage(file="../imagenes/Productos.GIF")
         self.Boton_productos = Button(self.raiz_pantalle_inicio, image=self.imagen_productos, width=228, height=87,cursor="hand2",border=0,  command=lambda:self.productos_llamada())
         self.Boton_productos.place(x=2, y=150)
 
-        self.imagen_inventario = PhotoImage(file="Inventario.GIF")
+        self.imagen_inventario = PhotoImage(file="../imagenes/Inventario.GIF")
         self.Boton_inventario = Button(self.raiz_pantalle_inicio, image=self.imagen_inventario, width=230, height=82,cursor="hand2",border=0,  command=lambda:self.inventario_llamada())
         self.Boton_inventario.place(x=2, y=250)
 
-        self.imagen_ventas = PhotoImage(file="Ventas.GIF")
+        self.imagen_ventas = PhotoImage(file="../imagenes/Ventas.GIF")
         self.Boton_ventas = Button(self.raiz_pantalle_inicio, image=self.imagen_ventas, width=233, height=80,cursor="hand2",border=0,  command=lambda:self.ventas_llamada() )
         self.Boton_ventas.place(x=2, y=350)
 
@@ -75,11 +75,11 @@ class Pantalla_de_inicio(Cerrar_Ventanas):
         os.system(self.direccion_manual)
 
     def colocar_boton_administrador(self):
-        self.imagen_manual = PhotoImage(file="Manual.GIF")    
+        self.imagen_manual = PhotoImage(file="../imagenes/Manual.GIF")
         self.Boton_manual = Button(self.raiz_pantalle_inicio, image=self.imagen_manual, width=147, height=52,cursor="hand2",border=0,  command=lambda:self.abrir_manual_de_usuario() )
 
         if(self.es_usuario_admin == True):
-            self.imagen_admin = PhotoImage(file="Administrador.GIF")    
+            self.imagen_admin = PhotoImage(file="../imagenes/Administrador.GIF")
             self.Boton_admin = Button(self.raiz_pantalle_inicio, image=self.imagen_admin, width=235, height=85,cursor="hand2",border=0,  command=lambda:self.administrador_llamada() )
             self.Boton_admin.place(x=2, y=425)
 
@@ -95,6 +95,8 @@ class Pantalla_de_inicio(Cerrar_Ventanas):
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
         nombre_ventana_actual.destroy()
+
+
 
 
 

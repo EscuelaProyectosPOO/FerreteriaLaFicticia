@@ -14,8 +14,8 @@ class Proveedores(Cerrar_Ventanas):
         self.Raiz.geometry('390x335')
         self.Raiz.title('Proveedores')
         self.Raiz.resizable(0, 0)
-        self.Raiz.iconbitmap('logo.ico')
-        self.imagen = PhotoImage(file='fondo_proveeores.gif')
+        self.Raiz.iconbitmap('../imagenes/logo.ico')
+        self.imagen = PhotoImage(file='../imagenes/fondo_proveeores.gif')
         self.fondo = Label(self.Raiz, image=self.imagen)
         self.fondo.place(x=0, y=0)
         self.NombreText = StringVar()
@@ -152,7 +152,7 @@ class Proveedores(Cerrar_Ventanas):
         self.reporte_proveeores = Toplevel(self.Raiz)
         self.reporte_proveeores.title('Reporte de proveedores')
         self.reporte_proveeores.resizable(0, 0)
-        self.reporte_proveeores.iconbitmap('logo.ico')
+        self.reporte_proveeores.iconbitmap('../imagenes/logo.ico')
         self.tabla = ttk.Treeview(self.reporte_proveeores, show='headings', columns=("nombre", "direccion", "producto", "precio"), height=12)
         self.tabla.grid(row=0, column=0)
 
@@ -182,27 +182,27 @@ class Proveedores(Cerrar_Ventanas):
     def ventana_principal(self):
 
         self.menu.add_command(label="Lista de proveedores", command=lambda:self.reporte())
-        self.fondo_crear = PhotoImage(file='Boton_nuevo_proveedor.gif')
+        self.fondo_crear = PhotoImage(file='../imagenes/Boton_nuevo_proveedor.gif')
         self.Bagregar = Button(self.Raiz, image=self.fondo_crear, command=lambda: self.registrar())
         self.Bagregar.place(x=140, y=220)
         self.Bagregar.config(bd=0)
 
-        self.fondo_borrar = PhotoImage(file='boton_eliminar_proveedor.gif')
+        self.fondo_borrar = PhotoImage(file='../imagenes/boton_eliminar_proveedor.gif')
         self.Bborrar = Button(self.Raiz, image=self.fondo_borrar, command=lambda: self.eliminar())
         self.Bborrar.place(x=140, y=275)
         self.Bborrar.config(bd=0)
 
-        self.fodo_buscar = PhotoImage(file='boton_buscar.gif')
+        self.fodo_buscar = PhotoImage(file='../imagenes/boton_buscar.gif')
         self.Bbuscar = Button(self.Raiz, image=self.fodo_buscar, command=lambda: self.buscar())
         self.Bbuscar.place(x=260, y=220)
         self.Bbuscar.config(bd=0)
 
-        self.fondo_editar = PhotoImage(file='boton_editar_proveedor.gif')
+        self.fondo_editar = PhotoImage(file='../imagenes/boton_editar_proveedor.gif')
         self.Beditar = Button(self.Raiz, image=self.fondo_editar, cursor="hand2", command=lambda: self.editar())
         self.Beditar.place(x=260, y=275)
         self.Beditar.config(bd=0)
 
-        self.imagen_boton_regresar = PhotoImage(file="boton_regresar.GIF")
+        self.imagen_boton_regresar = PhotoImage(file="../imagenes/boton_regresar.GIF")
         self.Boton_regresar = Button(self.Raiz, image=self.imagen_boton_regresar, width=120, height=65,
                                         cursor="hand2", border=0,
                                         command=lambda: self.volver(self.Raiz, self.pantalla_principal1))
@@ -250,4 +250,5 @@ class Proveedores(Cerrar_Ventanas):
         elif (self.informacion_entry == ""):
             entry.insert(0, texto_insertado)
             entry.config(fg="grey")
+
 

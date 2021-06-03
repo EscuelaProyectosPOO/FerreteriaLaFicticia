@@ -20,14 +20,14 @@ class Pantalla_reporte_ventas():
         self.reporte_ventas.title("Reporte de ventas")
         self.reporte_ventas.geometry('1049x499')
         self.reporte_ventas.resizable(False, False)
-        self.reporte_ventas.iconbitmap('logo.ico')
-        self.imagen1 = tk.PhotoImage(file="fondo_reporte_ventas.GIF")
+        self.reporte_ventas.iconbitmap('../imagenes/logo.ico')
+        self.imagen1 = tk.PhotoImage(file="../imagenes/fondo_reporte_ventas.GIF")
         self.fondo1 = tk.Label(self.reporte_ventas, image=self.imagen1).place(x=0, y=0, relwidth=1, relheight=1)
         self.manejar_archivos_venta = Manejar_archivos_ventas()
         self.fecha_buscar = tk.StringVar()
 
     def ventana_principal(self):
-        self.imagen_boton_reporte = tk.PhotoImage(file="buscar_reporte_ventas.GIF")
+        self.imagen_boton_reporte = tk.PhotoImage(file="../imagenes/buscar_reporte_ventas.GIF")
         self.boton_reporte = tk.Button(self.reporte_ventas, image=self.imagen_boton_reporte,  width=234, height=44, cursor="hand2",border=0, command=lambda:self.buscar_ventas_fecha())
         self.boton_reporte.place(x=395, y=20)
 
@@ -160,3 +160,6 @@ class Pantalla_reporte_ventas():
             print e
 
     
+
+
+
