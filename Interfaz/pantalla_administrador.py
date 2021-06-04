@@ -211,7 +211,7 @@ class Administrador(Cerrar_Ventanas):
         self.Rango.place(x=170, y=150)
         self.Rango.insert(0, 'Rango (1, 2)')
         self.Rango.bind("<FocusIn>", lambda event: self.default(event, self.Rango, "Rango (1, 2)"))
-        self.Rango.bind("<FocusOut>", lambda event: self.default(event, self.Rango, "Rango  (1, 2)"))
+        self.Rango.bind("<FocusOut>", lambda event: self.default(event, self.Rango, "Rango (1, 2)"))
 
         self.pantalla_Principal1.withdraw()
 
