@@ -13,7 +13,7 @@ class Usuarios:
         self.raiz = Tk()
         self.raiz.title('Inicio de sesión')
         self.raiz.geometry('330x280')
-        self.raiz.iconbitmap('../imagenes/logo.ico')
+        self.raiz.iconbitmap("logo.ico")
         self.fondo = PhotoImage(file="../imagenes/login.gif")
         self.Lfondo = Label(self.raiz, image=self.fondo)
         self.Lfondo.place(x=-1, y=-1)
@@ -89,7 +89,7 @@ class Usuarios:
         self.be.config(border=0)
 
 
-    def Evento_admin(event,self):
+    def Evento_admin(self, event):
         return self.respuesta
 
     def default(self, event, entry, texto_insertado):
