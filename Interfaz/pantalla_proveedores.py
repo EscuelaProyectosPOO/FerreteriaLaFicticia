@@ -220,7 +220,7 @@ class Proveedores(Cerrar_Ventanas):
         self.Direccion.place(x=170, y=70)
         self.Direccion.insert(0, 'Direccion')
         self.Direccion.bind("<FocusIn>", lambda event: self.default(event, self.Direccion, "Direccion"))
-        self.Direccion.bind("<FocusOut>", lambda event: self.default(event, self.Direccion, "Dreccion"))
+        self.Direccion.bind("<FocusOut>", lambda event: self.default(event, self.Direccion, "Direccion"))
 
         self.productoText = StringVar()
         self.Producto = Entry(self.Raiz, textvariable=self.productoText, width=30, fg='grey')
