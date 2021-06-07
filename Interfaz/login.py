@@ -13,7 +13,7 @@ class Usuarios:
         self.raiz = Tk()
         self.raiz.title('Inicio de sesión')
         self.raiz.geometry('330x280')
-        self.raiz.iconbitmap("logo.ico")
+        self.raiz.iconbitmap("../imagenes/logo.ico")
         self.fondo = PhotoImage(file="../imagenes/login.gif")
         self.Lfondo = Label(self.raiz, image=self.fondo)
         self.Lfondo.place(x=-1, y=-1)

@@ -1,0 +1,3 @@
+Ferreteria la Ficticia
+Producto  Precio  Cantidad  Total 
+paletas     1.5     5       7.5
