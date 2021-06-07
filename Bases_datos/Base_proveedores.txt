@@ -1,1 +1,3 @@
-Estefania  sierra  papas  2.52
+Estefania  sierra  papas  2.50
+E  L  L  1
+Nombre  Direccion  Precio  1

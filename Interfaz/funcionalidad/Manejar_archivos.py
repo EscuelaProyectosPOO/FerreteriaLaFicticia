@@ -49,17 +49,19 @@ class Manejar_archivos():
         """incerta la linea mandada en el archivo"""
         self.__leer_devolver_linea_a_antigua(identificador)
         if(self.__existe == False):
-            if(os.stat(os.getcwd() +"../Bases_datos/" + self.__nombre_archivo_de_texto + ".txt").st_size == 0):#para saber si esta vacio el documento
+            if(os.stat(os.getcwd() +"/../Bases_datos/" + self.__nombre_archivo_de_texto + ".txt").st_size == 0):#para saber si esta vacio el documento
                 self.__linea_a_insertar = unicode(linea_a_insertar)
             else:
                 self.__linea_a_insertar = unicode("\n"+ linea_a_insertar)#por alguna razon me pide unicode
             self.__escribir_en_archivo(self.__linea_a_insertar)
-
             self.__cerrar_archivo()
             return True
         else:
+            self.__cerrar_archivo()
             return False
-        self.__cerrar_archivo()
+
+
+
             
             
         

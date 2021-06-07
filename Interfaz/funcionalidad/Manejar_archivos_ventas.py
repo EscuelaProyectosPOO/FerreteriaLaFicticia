@@ -10,15 +10,16 @@ class Manejar_archivos_ventas(Manejar_archivos):
         Manejar_archivos()
 
 
-    def Insertar(self, fecha_de_registro, codigo_producto, nombre_producto, precio_unitario, cantidad, total_por_piezas):
+    def Insertar(self, fecha_de_registro, hora, codigo_producto, nombre_producto, precio_unitario, cantidad, total_por_piezas):
         """ Insertar venta """
         try:
             self.abrir_archivo("Base_Ventas")
-            self.registro_nuevo = fecha_de_registro + "  " + codigo_producto + "  " + nombre_producto + "  " + precio_unitario +  "  " + cantidad + "  " + total_por_piezas
+            self.registro_nuevo = fecha_de_registro + "  " + hora + "  " + codigo_producto + "  " + nombre_producto + "  " + precio_unitario +  "  " + cantidad + "  " + total_por_piezas
             self.identificador_venta = " "
             self.bandera = self.insertar_linea_en_archivo_de_texto(self.registro_nuevo, self.identificador_venta)
-        except:
-            print("Error en insertar venta")
+        except Exception as e:
+
+            print("Error en insertar venta", e)
     
 
     def traer_informacion(self):
@@ -49,12 +50,25 @@ class Manejar_archivos_ventas(Manejar_archivos):
 
         return self.__inicio
 
+    def buscar_venta_fecha_hora(self, fecha, hora):
+        self.informacion_del_archivo = self.traer_informacion()
+        self.__inicio = []
+        try:
+            for linea in self.informacion_del_archivo:
+                self.lineas = linea.split("  ")
+                if (fecha == self.lineas[0] and hora == self.lineas[1]):
+                    self.__inicio.append(linea)
+                    break
+        except Exception as e:
+            print("buscar_linea_en_archivo_de_texto Manejar_archivos_venta", type(e).__name__)
+
+        return self.__inicio
 
 
-        
+if __name__ == "__main__":
+    uno = Manejar_archivos_ventas()
+    uno.buscar_venta_fecha_hora()
 
-    
-   
 
         
 

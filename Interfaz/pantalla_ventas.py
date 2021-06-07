@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 import Tkinter as tk
 import ttk
-import os
-import sys
 import tkMessageBox as ms
 from datetime import datetime
 from funcionalidad.Manejar_archivos_productos import Manejar_archivos_productos
@@ -173,6 +171,7 @@ class Ventas(Cerrar_Ventanas):
     def Registrar_venta(self):
         """Manda a la base de de datos la venta"""
         self.fecha_de_hoy = str(self.tiempo.day) + "/" + str(self.tiempo.month) + "/" + str(self.tiempo.year)
+        self.hora = str(self.tiempo.hour) + ":" + str(self.tiempo.minute)
         self.lista = self.tabla.get_children()
         try:
             if(len(self.lista)==0 ):
@@ -180,7 +179,7 @@ class Ventas(Cerrar_Ventanas):
             else:
                 for i in self.lista:
                     diccionario = self.tabla.item(i)
-                    self.manejar_archivos_venta.Insertar(self.fecha_de_hoy, str(diccionario["values"][0]), diccionario["values"][1], str(diccionario["values"][2]), str(diccionario["values"][3]), str(diccionario["values"][4]))
+                    self.manejar_archivos_venta.Insertar(self.fecha_de_hoy, self.hora, str(diccionario["values"][0]), diccionario["values"][1], str(diccionario["values"][2]), str(diccionario["values"][3]), str(diccionario["values"][4]))
                     self.buscar_modificar_producto(str(diccionario["values"][0]), str(diccionario["values"][3]))
                     self.tabla.delete(i)
                 ms.showinfo("Felicidades!!", "La venta se ha registrado con exito ")
@@ -243,8 +242,11 @@ class Ventas(Cerrar_Ventanas):
 
     def reporte(self):
         """Visualizar los datos de la Base_Ventas"""
-        self.pantalla_reporte_ventas = Pantalla_reporte_ventas(self.pantalla_principal1)
+        self.pantalla_reporte_ventas = Pantalla_reporte_ventas(self.raiz)
         self.pantalla_reporte_ventas.ventana_principal()
 
-   
-        
+if __name__ == "__main__":
+    raiz = tk.Tk()
+    uno = Ventas(raiz)
+    uno.ventana_principal()
+    raiz.mainloop()
