@@ -3,7 +3,9 @@
 import Tkinter as tk
 from datetime import datetime
 import tkMessageBox as ms
+from funcionalidad.Manejo_archivos_corte_caja import Manejar_archivos_corte_caja
 import ttk
+
 
 
 class Abrir_corte():
@@ -14,8 +16,8 @@ class Abrir_corte():
         self.raiz.geometry('472x292')
         self.raiz.title("Abrir corte caja")
         self.raiz.resizable(False, False)
-        self.raiz.iconbitmap('../imagenes/logo.ico')
-        self.imagen = tk.PhotoImage(file="../imagenes/abrir_corte.GIF")
+        self.raiz.iconbitmap('imagenes/logo.ico')
+        self.imagen = tk.PhotoImage(file="imagenes/abrir_corte.GIF")
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         self.Barra_menu_principal = tk.Menu(self.raiz)
         self.tiempo = datetime.now()
@@ -62,11 +64,11 @@ class Abrir_corte():
         self.combo_box.current(0)
         self.combo_box.bind("<<ComboboxSelected>>", lambda event: self.obtener_combo(event, self.combo_box.current()))
 
-        self.imagen_boton_abrir_corte = tk.PhotoImage(file="../imagenes/Abrir_corte_boton.GIF")
+        self.imagen_boton_abrir_corte = tk.PhotoImage(file="imagenes/Abrir_corte_boton.GIF")
         self.Boton_abrir_corte = tk.Button(self.raiz, image=self.imagen_boton_abrir_corte, width=128, height=28, cursor="hand2", border=0, command=lambda: self.abrir_corte())
         self.Boton_abrir_corte.place(x=330, y=260)
 
-        self.imagen_boton_cerrar_corte = tk.PhotoImage(file="../imagenes/cerrar_corte.GIF")
+        self.imagen_boton_cerrar_corte = tk.PhotoImage(file="imagenes/cerrar_corte.GIF")
         self.Boton_cerrar_corte = tk.Button(self.raiz, image=self.imagen_boton_cerrar_corte, width=128, height=28,cursor="hand2", border=0, command=lambda: self.cerrar_corte())
 
     def obtener_combo(self, event, index):
@@ -84,7 +86,9 @@ class Abrir_corte():
 
 
     def abrir_corte(self):
-        pass
+        self.uno = Manejar_archivos_corte_caja()
+        #self.uno.Insertar("1", "Estefania Llamas", "8/6/2021", "9:24", "400")
+        self.uno.d()
     def cerrar_corte(self):
         pass
 

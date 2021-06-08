@@ -13,8 +13,8 @@ class Corte_caja(Cerrar_Ventanas):
         self.raiz.geometry('580x510')
         self.raiz.title("Corte de caja")
         self.raiz.resizable(False, False)
-        self.raiz.iconbitmap('../imagenes/logo.ico')
-        self.imagen = tk.PhotoImage(file="../imagenes/Registrar_corte_caja_fondo.GIF")
+        self.raiz.iconbitmap('imagenes/logo.ico')
+        self.imagen = tk.PhotoImage(file="imagenes/Registrar_corte_caja_fondo.GIF")
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         self.Barra_menu_principal = tk.Menu(self.raiz)
         self.raiz.config(menu=self.Barra_menu_principal)
@@ -24,11 +24,11 @@ class Corte_caja(Cerrar_Ventanas):
         self.Barra_menu_principal.add_command(label="Abrir o cerrar corte", command=lambda:self.abrir_cerrar_corte())
 
 
-        self.imagen_boton_regresar = tk.PhotoImage(file="../imagenes/boton_regresar.GIF")
+        self.imagen_boton_regresar = tk.PhotoImage(file="imagenes/boton_regresar.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2", border=0, command=lambda: self.volver(self.raiz, self.pantalla_principal1))
         self.Boton_regresar.place(x=0, y=430)
 
-        self.imagen_boton_registrar_corte = tk.PhotoImage(file="../imagenes/registra_corte_caja.GIF")
+        self.imagen_boton_registrar_corte = tk.PhotoImage(file="imagenes/registra_corte_caja.GIF")
         self.Boton_registrar_corte = tk.Button(self.raiz, image=self.imagen_boton_registrar_corte, width=230, height=44,
                                         cursor="hand2", border=0,
                                         command=lambda: self.volver(self.raiz, self.pantalla_principal1))

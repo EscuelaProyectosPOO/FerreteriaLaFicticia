@@ -13,8 +13,8 @@ class Usuarios:
         self.raiz = Tk()
         self.raiz.title('Inicio de sesión')
         self.raiz.geometry('330x280')
-        self.raiz.iconbitmap("../imagenes/logo.ico")
-        self.fondo = PhotoImage(file="../imagenes/login.gif")
+        self.raiz.iconbitmap("imagenes/logo.ico")
+        self.fondo = PhotoImage(file="imagenes/login.gif")
         self.Lfondo = Label(self.raiz, image=self.fondo)
         self.Lfondo.place(x=-1, y=-1)
         self.raiz.resizable(False, False)
@@ -83,7 +83,7 @@ class Usuarios:
         self.tc.bind("<FocusOut>", lambda event: self.default(event, self.tc, "Clave"))
 
 
-        self.fondo_entrar = PhotoImage(file='../imagenes/boton_entrar.gif')
+        self.fondo_entrar = PhotoImage(file='imagenes/boton_entrar.gif')
         self.be = Button(self.raiz, image=self.fondo_entrar, command=lambda:self.comprueba())
         self.be.place(x=100, y=195)
         self.be.config(border=0)

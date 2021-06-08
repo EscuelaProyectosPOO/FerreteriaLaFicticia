@@ -14,8 +14,8 @@ class Inventario(Cerrar_Ventanas):
         self.raiz.geometry('1170x564')
         self.raiz.title("Inventario")
         self.raiz.resizable(False, False)
-        self.raiz.iconbitmap('../imagenes/logo.ico')
-        self.imagen = tk.PhotoImage(file="../imagenes/fondo_sin_nada.GIF")
+        self.raiz.iconbitmap('imagenes/logo.ico')
+        self.imagen = tk.PhotoImage(file="imagenes/fondo_sin_nada.GIF")
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         self.raiz.bind("<Destroy>",lambda event: self.volver_con_cerrado_ventana(event,self.pantalla_principal1))
         
@@ -47,7 +47,7 @@ class Inventario(Cerrar_Ventanas):
 
         self.Actualizar_inventario()
 
-        self.imagen_boton_regresar = tk.PhotoImage(file="../imagenes/boton_regresar.GIF")
+        self.imagen_boton_regresar = tk.PhotoImage(file="imagenes/boton_regresar.GIF")
         self.Boton_regresar = tk.Button(self.raiz, image=self.imagen_boton_regresar, width=120, height=65,cursor="hand2",border=0,  command=lambda:self.volver(self.raiz, self.pantalla_principal1) )
         self.Boton_regresar.grid(row=2, column=10, sticky='we')
         
