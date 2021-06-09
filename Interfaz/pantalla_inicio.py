@@ -5,7 +5,7 @@ from pantalla_productos import Productos
 from pantalla_administrador import  Administrador
 from pantalla_proveedores import Proveedores
 from pantalla_ventas import Ventas
-from Pantalla_corte_de_caja import  Corte_caja
+from Abrir_corte_caja import Abrir_corte
 from funcionalidad.Evento_regresar import Cerrar_Ventanas
 from Tkinter import *
 import os
@@ -75,12 +75,12 @@ class Pantalla_de_inicio(Cerrar_Ventanas):
         self.administrador_llamada_objeto.ventana_principal()
 
     def corte_de_caja_llamada(self):
-        self.corte_llamada_objeto = Corte_caja(self.raiz_pantalle_inicio)
+        self.corte_llamada_objeto = Abrir_corte(self.raiz_pantalle_inicio)
         self.corte_llamada_objeto.ventana_principal()
 
     def abrir_manual_de_usuario(self):
         """Muestra el manual de usuario en el navegador"""
-        self.direccion_manual = os.getcwd()  + "Manual_de_usuario.pdf"
+        self.direccion_manual = os.getcwd()  + "/Manual_de_usuario.pdf"
         os.system(self.direccion_manual)
 
     def colocar_boton_administrador(self):

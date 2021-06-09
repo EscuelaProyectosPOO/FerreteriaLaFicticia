@@ -4,12 +4,14 @@ import Tkinter as tk
 from datetime import datetime
 import tkMessageBox as ms
 from funcionalidad.Manejo_archivos_corte_caja import Manejar_archivos_corte_caja
+from funcionalidad.Exepciones import Negativos
 from funcionalidad.Exepciones import Campos_vacios_en_ventas
+from funcionalidad.Evento_regresar import Cerrar_Ventanas
 import ttk
 
 
 
-class Abrir_corte():
+class Abrir_corte(Cerrar_Ventanas):
 
     def __init__(self, pantalla_principal):
         self.pantalla_principal1 = pantalla_principal
@@ -28,6 +30,8 @@ class Abrir_corte():
         self.datos_fecha = tk.StringVar()
         self.datos_hora = tk.StringVar()
         self.datos_fondo_recibido = tk.StringVar()
+        self.raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
+        self.pantalla_principal1.withdraw()
 
 
     def ventana_principal(self):
@@ -104,9 +108,14 @@ class Abrir_corte():
             self.numero_caja == "Numero de caja" or self.nombre_usuario == "Nombre de usuario" or self.fecha == "DD/M/AAAA" or self.hora == "Hora" ):
                 ms.showerror("Error!!!", "Debes llenar todos los campos para abrir el corte ")
             else:
-                self.manejar_archivos_corte_caja.Insertar(self.numero_caja, self.nombre_usuario, self.fecha, self.hora, self.efectivo_dado)
-                ms.showinfo("info", "El corte de apertura se ha registrado con exito")
+                if(float(self.efectivo_dado) < 0):
+                    raise Negativos
+                else:
+                    self.manejar_archivos_corte_caja.Insertar(self.numero_caja, self.nombre_usuario, self.fecha, self.hora, self.efectivo_dado)
+               
                 self.borrar_campos()
+        except Negativos as e:
+            print(e)
         except ValueError as e:
             ms.showerror("", "No se aceptan los caracteres especiales")
         except Exception as e:
@@ -125,15 +134,19 @@ class Abrir_corte():
             self.numero_caja == "Numero de caja" or self.nombre_usuario == "Nombre de usuario" or self.fecha == "DD/M/AAAA" or self.hora == "Hora" ):
                 ms.showerror("Error!!!", "Debes llenar todos los campos para Cerrar el corte ")
             else:
-                self.respuesta = self.manejar_archivos_corte_caja.Insertar_cierre_caja(self.numero_caja, self.nombre_usuario, self.fecha, self.hora, self.efectivo_dado)
+                if(float(self.efectivo_dado) < 0):
+                    raise Negativos
+                else:
+                    self.respuesta = self.manejar_archivos_corte_caja.Insertar_cierre_caja(self.numero_caja, self.nombre_usuario, self.fecha, self.hora, self.efectivo_dado)
 
-                if(self.respuesta):
-            
-                    ms.showinfo("info", "El corte de cierre se ha registrado con exito")
-                else: 
-                    ms.showerror("Problema con corte de caja", "Necesita abrir primero el corte para cerrarlo")
+                    if(self.respuesta):
+                
+                        ms.showinfo("info", "El corte de cierre se ha registrado con exito")
+                    else: 
+                        ms.showerror("Problema con corte de caja", "Necesita abrir primero el corte para cerrarlo")
                 self.borrar_campos()
-                    
+        except Negativos as e:
+            print e
         except ValueError as e:
             ms.showerror("", "No se aceptan los caracteres especiales")
         except Exception as e:
@@ -155,6 +168,8 @@ class Abrir_corte():
         self.datos_hora.set("Hora")
         self.datos_fondo_recibido.set("")
 
+
+
     def default(self, event, entry, texto_insertado):
         """ Coloca las indicaciones temporales en los entrys """
         self.informacion_entry = entry.get()
@@ -166,6 +181,10 @@ class Abrir_corte():
 
             entry.insert(0, texto_insertado)
             entry.config(fg="grey")
+
+    def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
+        nombre_ventana_anterior.deiconify()
+        nombre_ventana_actual.destroy()
 
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ import os
 import datetime
 import re
 import time
+import tkMessageBox as ms
 from Manejar_archivos import Manejar_archivos
 from interfaz_CRUD import CRUD
 
@@ -19,10 +20,15 @@ class Manejar_archivos_corte_caja(Manejar_archivos):
     def Insertar(self, numero_caja, nombre_quien_registra, fecha, hora, fondo_recibido):
         """ Insertar apertura de caja"""
         try:
-            self.abrir_archivo("Base_Corte_caja")
-            self.registro_nuevo = "Apertura" + "  " + numero_caja + "  " + nombre_quien_registra + "  " + fecha + "  " + hora + "  " + fondo_recibido
-            self.identificador_producto = " "
-            self.bandera = self.insertar_linea_en_archivo_de_texto(self.registro_nuevo, self.identificador_producto)
+            self.respuesta = self.verificar_si_ya_ha_sido_registrado_la_apertura(numero_caja, fecha)
+            if(self.respuesta):
+                ms.showinfo("Ups!!", "Ya se ha habierto el corte en esta caja")
+            else:    
+                self.abrir_archivo("Base_Corte_caja")
+                self.registro_nuevo = "Apertura" + "  " + numero_caja + "  " + nombre_quien_registra + "  " + fecha + "  " + hora + "  " + fondo_recibido
+                self.identificador_producto = " "
+                self.bandera = self.insertar_linea_en_archivo_de_texto(self.registro_nuevo, self.identificador_producto)
+                ms.showinfo("info", "El corte de apertura se ha registrado con exito")
         except Exception as e:
             print("Error en insertar corte", e)
 
@@ -65,6 +71,28 @@ class Manejar_archivos_corte_caja(Manejar_archivos):
                 
                 return True
 
+        except Exception as e:
+            print("Error en agregar cierre de corte", e)
+
+    def verificar_si_ya_ha_sido_registrado_la_apertura(self, numero_caja, fecha):
+        try:
+            
+            self.informacion_del_archivo = self.traer_informacion()
+            self.informacion_del_archivo_lista = (self.informacion_del_archivo).splitlines()
+
+            self.existe = False
+
+            for linea in self.informacion_del_archivo_lista:
+
+                self.lista = linea.split("  ")
+
+                if(len(self.lista) == 6):
+                    
+                    if(self.lista[0] == "Apertura" and self.lista[1] == numero_caja and  self.lista[3] == fecha ):
+                        self.existe = True
+                        break
+            return self.existe
+            
         except Exception as e:
             print("Error en agregar cierre de corte", e)
 
