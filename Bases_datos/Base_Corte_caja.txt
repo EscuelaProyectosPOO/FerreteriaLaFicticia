@@ -1,3 +1,6 @@
 Apertura  1  Estefania  8/6/2021  18:40  300  Cierre  1  Juana  8/6/2021  18:42  300
 Apertura  1  Estefa  8/6/2021  20:56  200  Cierre  1  jhdjkhkjd  8/6/2021  20:59  200
 Apertura  2  Estefa  9/6/2021  8:34  2000  Cierre  2  Estefa  9/6/2021  9:30  400
+Apertura  4  e  9/6/2021  9:02  300  Cierre  4  e  9/6/2021  9:04  300
+Apertura  1  e  9/6/2021  9:07  200  Cierre  1  ghwusgjka  9/6/2021  9:28  400
+Apertura  10  e  9/6/2021  9:10  200

@@ -1,2 +1,4 @@
-1  Crema  12.20  78  Pons  Estefania  12/2/2021
+1  Crema  12.20  70  Pons  Estefania  12/2/2021
 3  Taladro  2000  0  Lion  Ana isabel  6/5/2021
+12  foco  12  1980  lion  aaa  12/3/2012
+90  Clavos  0.50  1000  lion  Valentina  12/4/2021

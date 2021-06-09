@@ -22,7 +22,6 @@ class Abrir_corte(Cerrar_Ventanas):
         self.raiz.iconbitmap('imagenes/logo.ico')
         self.imagen = tk.PhotoImage(file="imagenes/abrir_corte.GIF")
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
-        self.Barra_menu_principal = tk.Menu(self.raiz)
         self.tiempo = datetime.now()
         self.manejar_archivos_corte_caja = Manejar_archivos_corte_caja()
         self.datos_numero_caja = tk.StringVar()
@@ -32,12 +31,13 @@ class Abrir_corte(Cerrar_Ventanas):
         self.datos_fondo_recibido = tk.StringVar()
         self.Barra_menu_principal = tk.Menu(self.raiz)
         self.raiz.config(menu=self.Barra_menu_principal)
+        
         self.raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
         self.pantalla_principal1.withdraw()
 
 
     def ventana_principal(self):
-        self.Barra_menu_principal.add_command(label="Reporte", command=lambda:self.reporte())
+        self.Barra_menu_principal.add_command(label="Reporte", command=lambda:self.reporte1(self.raiz))
 
         self.imagen_fondo_a_entregar = tk.PhotoImage(file="imagenes/fondo_a_entregar.GIF")
         self.label_fondo_a_entregar = tk.Label(self.raiz, image=self.imagen_fondo_a_entregar, width=180, height=20)
@@ -187,8 +187,8 @@ class Abrir_corte(Cerrar_Ventanas):
             entry.insert(0, texto_insertado)
             entry.config(fg="grey")
 
-    def reporte(self):
-        self.reporte = tk.Toplevel(self.raiz)
+    def reporte1(self, pantalla):
+        self.reporte = tk.Toplevel(pantalla)
         self.reporte.title('Reporte de cortes')
         self.reporte.resizable(0, 0)
         self.reporte.iconbitmap('imagenes/logo.ico')
@@ -232,6 +232,7 @@ class Abrir_corte(Cerrar_Ventanas):
                 if(len(self.nueva_linea) == 12):
                     self.tabla.insert("",tk.END,text="", values=(self.nueva_linea[1], self.nueva_linea[2], (self.nueva_linea[3] +" " + self.nueva_linea[4]), self.nueva_linea[5], 
                     (self.nueva_linea[9] + " "+ self.nueva_linea[10]), self.nueva_linea[8], self.nueva_linea[11] ))
+
         except Exception as e:
             print ("Error en actualizar reporte corte de caja", e)
 
