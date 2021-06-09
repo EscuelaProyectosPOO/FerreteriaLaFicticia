@@ -93,7 +93,7 @@ class Manejar_archivos():
         self.__cerrar_archivo()
         if(self.__existe):
             self.informacion_del_archivo = self.informacion_del_archivo.replace(self.__linea_antigua, self.__linea_modificada_a_insertar )
-            self.__actualizar_archivo_texto(self.informacion_del_archivo)
+            self.actualizar_archivo_texto(self.informacion_del_archivo)
             return True
         else:
             return False
@@ -106,7 +106,7 @@ class Manejar_archivos():
         if(self.__existe):
             self.__posicion_cadena_a_eliminar = re.search(self.__linea_antigua, self.informacion_del_archivo)
             self.informacion_del_archivo = self.informacion_del_archivo[:self.__posicion_cadena_a_eliminar.start()] + self.informacion_del_archivo[(self.__posicion_cadena_a_eliminar.end()+1):]
-            self.__actualizar_archivo_texto(self.informacion_del_archivo)
+            self.actualizar_archivo_texto(self.informacion_del_archivo)
             return True
         else:
             return False 
@@ -137,7 +137,7 @@ class Manejar_archivos():
 
 
 
-    def __actualizar_archivo_texto(self, informacion_sin_linea):
+    def actualizar_archivo_texto(self, informacion_sin_linea):
         """se elimina el anterior y se crea uno totalmente nuevo con el mismo nombre
             que el archivo eliminado anteriormente"""
         self.__eliminar_archivo_de_texto()

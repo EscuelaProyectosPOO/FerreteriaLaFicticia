@@ -171,7 +171,13 @@ class Ventas(Cerrar_Ventanas):
     def Registrar_venta(self):
         """Manda a la base de de datos la venta"""
         self.fecha_de_hoy = str(self.tiempo.day) + "/" + str(self.tiempo.month) + "/" + str(self.tiempo.year)
-        self.hora = str(self.tiempo.hour) + ":" + str(self.tiempo.minute)
+        if(len(str(self.tiempo.minute)) == 1):
+            self.minutos = "0" + str(self.tiempo.minute)
+        else:
+            self.minutos = str(self.tiempo.minute)
+
+        self.hora = str(self.tiempo.hour) + ":" + self.minutos
+    
         self.lista = self.tabla.get_children()
         try:
             if(len(self.lista)==0 ):

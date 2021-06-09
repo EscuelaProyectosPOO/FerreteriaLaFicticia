@@ -4,6 +4,7 @@ import Tkinter as tk
 from datetime import datetime
 import tkMessageBox as ms
 from funcionalidad.Manejo_archivos_corte_caja import Manejar_archivos_corte_caja
+from funcionalidad.Exepciones import Campos_vacios_en_ventas
 import ttk
 
 
@@ -21,6 +22,7 @@ class Abrir_corte():
         self.fondo = tk.Label(self.raiz, image=self.imagen).place(x=0, y=0, relwidth=1, relheight=1)
         self.Barra_menu_principal = tk.Menu(self.raiz)
         self.tiempo = datetime.now()
+        self.manejar_archivos_corte_caja = Manejar_archivos_corte_caja()
         self.datos_numero_caja = tk.StringVar()
         self.datos_nombre_usuario = tk.StringVar()
         self.datos_fecha = tk.StringVar()
@@ -29,6 +31,9 @@ class Abrir_corte():
 
 
     def ventana_principal(self):
+        self.imagen_fondo_a_entregar = tk.PhotoImage(file="imagenes/fondo_a_entregar.GIF")
+        self.label_fondo_a_entregar = tk.Label(self.raiz, image=self.imagen_fondo_a_entregar, width=180, height=20)
+        
         self.entry_numero_caja = tk.Entry(self.raiz, fg="grey", textvariable=self.datos_numero_caja)
         self.entry_numero_caja.place(x=90, y=27)
         self.entry_numero_caja.insert(0,"Numero de caja")
@@ -76,21 +81,63 @@ class Abrir_corte():
             if(index == 0):
                 if(self.Boton_cerrar_corte.place_info() != {}):
                     self.Boton_cerrar_corte.place_forget()
+                    self.label_fondo_a_entregar.place_forget()
                 self.Boton_abrir_corte.place(x=330, y=260)
             else:
                 if (self.Boton_abrir_corte.place_info() != {}):
                     self.Boton_abrir_corte.place_forget()
                 self.Boton_cerrar_corte.place(x=330, y=260)
+                self.label_fondo_a_entregar.place(x=90, y=148)
         except Exception as e:
             ms.showerror("Error!!!", e)
 
 
     def abrir_corte(self):
-        self.uno = Manejar_archivos_corte_caja()
-        #self.uno.Insertar("1", "Estefania Llamas", "8/6/2021", "9:24", "400")
-        self.uno.d()
+        try:
+            
+            self.numero_caja = (self.datos_numero_caja.get()).strip()
+            self.nombre_usuario = (self.datos_nombre_usuario.get()).strip()
+            self.fecha = (self.datos_fecha.get()).strip()
+            self.hora = (self.datos_hora.get()).strip()
+            self.efectivo_dado = (self.datos_fondo_recibido.get()).strip()
+            if( self.numero_caja == "" or self.nombre_usuario == "" or self.fecha == "" or self.hora == "" or self.efectivo_dado == "" or 
+            self.numero_caja == "Numero de caja" or self.nombre_usuario == "Nombre de usuario" or self.fecha == "DD/M/AAAA" or self.hora == "Hora" ):
+                ms.showerror("Error!!!", "Debes llenar todos los campos para abrir el corte ")
+            else:
+                self.manejar_archivos_corte_caja.Insertar(self.numero_caja, self.nombre_usuario, self.fecha, self.hora, self.efectivo_dado)
+                ms.showinfo("info", "El corte de apertura se ha registrado con exito")
+                self.borrar_campos()
+        except ValueError as e:
+            ms.showerror("", "No se aceptan los caracteres especiales")
+        except Exception as e:
+            ms.showerror("", e)
+
     def cerrar_corte(self):
-        pass
+        try:
+            
+
+            self.numero_caja = (self.datos_numero_caja.get()).strip()
+            self.nombre_usuario = (self.datos_nombre_usuario.get()).strip()
+            self.fecha = (self.datos_fecha.get()).strip()
+            self.hora = (self.datos_hora.get()).strip()
+            self.efectivo_dado = (self.datos_fondo_recibido.get()).strip()
+            if( self.numero_caja == "" or self.nombre_usuario == "" or self.fecha == "" or self.hora == "" or self.efectivo_dado == "" or 
+            self.numero_caja == "Numero de caja" or self.nombre_usuario == "Nombre de usuario" or self.fecha == "DD/M/AAAA" or self.hora == "Hora" ):
+                ms.showerror("Error!!!", "Debes llenar todos los campos para Cerrar el corte ")
+            else:
+                self.respuesta = self.manejar_archivos_corte_caja.Insertar_cierre_caja(self.numero_caja, self.nombre_usuario, self.fecha, self.hora, self.efectivo_dado)
+
+                if(self.respuesta):
+            
+                    ms.showinfo("info", "El corte de cierre se ha registrado con exito")
+                else: 
+                    ms.showerror("Problema con corte de caja", "Necesita abrir primero el corte para cerrarlo")
+                self.borrar_campos()
+                    
+        except ValueError as e:
+            ms.showerror("", "No se aceptan los caracteres especiales")
+        except Exception as e:
+            ms.showerror("", e)
 
     def hora_correcta(self):
         if(len(str(self.tiempo.minute)) == 1):
@@ -98,6 +145,15 @@ class Abrir_corte():
         else:
             self.minutos = str(self.tiempo.minute)
         self.hora = str(self.tiempo.hour) + ":" + self.minutos
+
+    def borrar_campos(self):
+        self.entry_numero_caja.config(fg="grey")
+        self.entry_nombre_usuario.config(fg="grey")
+        self.entry_hora_apertura.config(fg="grey")
+        self.datos_numero_caja.set("Numero de caja")
+        self.datos_nombre_usuario.set("Nombre de usuario")
+        self.datos_hora.set("Hora")
+        self.datos_fondo_recibido.set("")
 
     def default(self, event, entry, texto_insertado):
         """ Coloca las indicaciones temporales en los entrys """
