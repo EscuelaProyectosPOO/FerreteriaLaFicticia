@@ -189,7 +189,7 @@ class Abrir_corte(Cerrar_Ventanas):
 
     def reporte(self):
         self.reporte = tk.Toplevel(self.raiz)
-        self.reporte.title('Reporte de proveedores')
+        self.reporte.title('Reporte de cortes')
         self.reporte.resizable(0, 0)
         self.reporte.iconbitmap('imagenes/logo.ico')
         self.tabla = ttk.Treeview(self.reporte, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6", "#7"), height=12)
@@ -228,10 +228,12 @@ class Abrir_corte(Cerrar_Ventanas):
             for linea in self.informacion:
 
                 self.nueva_linea = linea.split("  ")
-                self.tabla.insert("",tk.END,text="", values=(self.nueva_linea[1], self.nueva_linea[2], (self.nueva_linea[3] +" " + self.nueva_linea[4]), self.nueva_linea[5], 
-                (self.nueva_linea[9] + " "+ self.nueva_linea[10]), self.nueva_linea[8], self.nueva_linea[11] ))
-        except:
-            print ("Error en actualizar reporte corte de caja")
+
+                if(len(self.nueva_linea) == 12):
+                    self.tabla.insert("",tk.END,text="", values=(self.nueva_linea[1], self.nueva_linea[2], (self.nueva_linea[3] +" " + self.nueva_linea[4]), self.nueva_linea[5], 
+                    (self.nueva_linea[9] + " "+ self.nueva_linea[10]), self.nueva_linea[8], self.nueva_linea[11] ))
+        except Exception as e:
+            print ("Error en actualizar reporte corte de caja", e)
 
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
