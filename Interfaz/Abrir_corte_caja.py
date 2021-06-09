@@ -16,7 +16,7 @@ class Abrir_corte(Cerrar_Ventanas):
     def __init__(self, pantalla_principal):
         self.pantalla_principal1 = pantalla_principal
         self.raiz = tk.Toplevel(self.pantalla_principal1)
-        self.raiz.geometry('472x292')
+        self.raiz.geometry('472x310')
         self.raiz.title("Abrir corte caja")
         self.raiz.resizable(False, False)
         self.raiz.iconbitmap('imagenes/logo.ico')
@@ -30,11 +30,15 @@ class Abrir_corte(Cerrar_Ventanas):
         self.datos_fecha = tk.StringVar()
         self.datos_hora = tk.StringVar()
         self.datos_fondo_recibido = tk.StringVar()
+        self.Barra_menu_principal = tk.Menu(self.raiz)
+        self.raiz.config(menu=self.Barra_menu_principal)
         self.raiz.bind("<Destroy>", lambda event: self.volver_con_cerrado_ventana(event, self.pantalla_principal1))
         self.pantalla_principal1.withdraw()
 
 
     def ventana_principal(self):
+        self.Barra_menu_principal.add_command(label="Reporte", command=lambda:self.reporte())
+
         self.imagen_fondo_a_entregar = tk.PhotoImage(file="imagenes/fondo_a_entregar.GIF")
         self.label_fondo_a_entregar = tk.Label(self.raiz, image=self.imagen_fondo_a_entregar, width=180, height=20)
         
@@ -79,6 +83,7 @@ class Abrir_corte(Cerrar_Ventanas):
 
         self.imagen_boton_cerrar_corte = tk.PhotoImage(file="imagenes/cerrar_corte.GIF")
         self.Boton_cerrar_corte = tk.Button(self.raiz, image=self.imagen_boton_cerrar_corte, width=128, height=28,cursor="hand2", border=0, command=lambda: self.cerrar_corte())
+
 
     def obtener_combo(self, event, index):
         try:
@@ -181,6 +186,52 @@ class Abrir_corte(Cerrar_Ventanas):
 
             entry.insert(0, texto_insertado)
             entry.config(fg="grey")
+
+    def reporte(self):
+        self.reporte = tk.Toplevel(self.raiz)
+        self.reporte.title('Reporte de proveedores')
+        self.reporte.resizable(0, 0)
+        self.reporte.iconbitmap('imagenes/logo.ico')
+        self.tabla = ttk.Treeview(self.reporte, show='headings', columns=("#1", "#2", "#3", "#4", "#5", "#6", "#7"), height=12)
+        self.tabla.grid(row=0, column=0)
+
+        self.tabla.column("#1", width=95, anchor="center")
+        self.tabla.column("#2", width=160, anchor="center")
+        self.tabla.column("#3", width=100, anchor="center")
+        self.tabla.column("#4", width=100, anchor="center")
+        self.tabla.column("#5", width=100, anchor="center")
+        self.tabla.column("#6", width=160, anchor="center")
+        self.tabla.column("#7", width=90, anchor="center")
+
+        
+        self.tabla.heading("#1", text="Número de caja")
+        self.tabla.heading("#2", text="Nombre de usuario")
+        self.tabla.heading("#3", text="Apertura")
+        self.tabla.heading("#4", text="Fondo recibido")
+        self.tabla.heading("#5", text="Cierre")
+        self.tabla.heading("#6", text="Nombre de usuario")
+        self.tabla.heading("#7", text="Fondo dejado")
+
+        
+
+        self.barra = tk.Scrollbar(self.reporte, orient="vertical", command=self.tabla.yview())
+        self.barra.grid(row=0, column=2, sticky="ns")
+        self.tabla.config(yscrollcommand=self.barra.set)
+        self.Actualizar()
+
+    def Actualizar(self):
+        try:
+            
+            self.informacion = self.manejar_archivos_corte_caja.traer_informacion()
+            self.informacion = (self.informacion).splitlines()
+            
+            for linea in self.informacion:
+
+                self.nueva_linea = linea.split("  ")
+                self.tabla.insert("",tk.END,text="", values=(self.nueva_linea[1], self.nueva_linea[2], (self.nueva_linea[3] +" " + self.nueva_linea[4]), self.nueva_linea[5], 
+                (self.nueva_linea[9] + " "+ self.nueva_linea[10]), self.nueva_linea[8], self.nueva_linea[11] ))
+        except:
+            print ("Error en actualizar reporte corte de caja")
 
     def volver(self, nombre_ventana_actual, nombre_ventana_anterior):
         nombre_ventana_anterior.deiconify()
