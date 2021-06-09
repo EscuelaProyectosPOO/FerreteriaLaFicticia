@@ -31,18 +31,22 @@ class Proveedores(Cerrar_Ventanas):
         self.precioText.set('')
         self.productoText.set('')
         self.Nombre.insert(0, 'Nombre')
+        self.Nombre.config(fg="grey")
         self.Nombre.bind("<FocusIn>", lambda event: self.default(event, self.Nombre, "Nombre"))
         self.Nombre.bind("<FocusOut>", lambda event: self.default(event, self.Nombre, "Nombre"))
 
         self.Direccion.insert(0, 'Direccion')
+        self.Direccion.config(fg="grey")
         self.Direccion.bind("<FocusIn>", lambda event: self.default(event, self.Direccion, "Direccion"))
         self.Direccion.bind("<FocusOut>", lambda event: self.default(event, self.Direccion, "Direccion"))
 
-        self.Producto.insert(0, 'Precio')
+        self.Producto.insert(0, 'Producto')
+        self.Producto.config(fg="grey")
         self.Producto.bind("<FocusIn>", lambda event: self.default(event, self.Producto, "Producto"))
         self.Producto.bind("<FocusOut>", lambda event: self.default(event, self.Producto, "Producto"))
 
         self.Precio.insert(0, 'Precio')
+        self.Precio.config(fg="grey")
         self.Precio.bind("<FocusIn>", lambda event: self.default(event, self.Precio, "Precio"))
         self.Precio.bind("<FocusOut>", lambda event: self.default(event, self.Precio, "Precio"))
 
